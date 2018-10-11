@@ -19,9 +19,6 @@ input_DX::input_DX()
 	m_pDxInput = nullptr;
 	m_pDxKeypad = nullptr;
 	m_pDxMouse = nullptr;
-
-	m_dwElemts = 0;
-//	m_bImmediate = true;
 }
 
 bool input_DX::Init()
@@ -97,30 +94,12 @@ bool input_DX::InitDirectInput(bool keypad, bool mouse)
 			}
 		}
 
-		//if (!m_bImmediate) {
-		//	DIPROPDWORD dipdw;
-		//	dipdw.diph.dwSize = sizeof(DIPROPDWORD);
-		//	dipdw.diph.dwHeaderSize = sizeof(DIPROPHEADER);
-		//	dipdw.diph.dwObj = 0;
-		//	dipdw.diph.dwHow = DIPH_DEVICE;
-		//	dipdw.dwData = DataBufferSize;
-
-		//	if (FAILED(hr = m_pDxKeypad->SetProperty(DIPROP_BUFFERSIZE, &dipdw.diph))) {
-		//		return false;
-		//	}
-		//}
-
 		while (m_pDxKeypad->Acquire() == DIERR_INPUTLOST);
 	}
 
 	if (mouse) {
-		if (FAILED(m_pDxInput->CreateDevice(GUID_SysMouse, &m_pDxMouse, NULL))) {
-			return false;
-		}
-
-		if (FAILED(m_pDxMouse->SetDataFormat(&c_dfDIMouse))) {
-			return false;
-		}
+		V_FRETURN(m_pDxInput->CreateDevice(GUID_SysMouse, &m_pDxMouse, NULL));
+		V_FRETURN(m_pDxMouse->SetDataFormat(&c_dfDIMouse));
 
 		if (FAILED(m_pDxMouse->SetCooperativeLevel(g_hWnd, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND))) {
 			while (m_pDxMouse->Acquire() == DIERR_INPUTLOST);
@@ -168,50 +147,22 @@ void input_DX::SetAcquire(bool bActive)
 	}
 }
 
-void input_DX::PostProcess()
-{
+bool input_DX::KeyProcess()
+{	
 	memcpy(&m_KeyBefState, &m_KeyCurState, sizeof(BYTE) * KeyStateCount);
 	memcpy(&m_MouseBefState, &m_MouseCurState, sizeof(DIMOUSESTATE));
-}
 
-bool input_DX::KeyProcess()
-{
-//	HRESULT hr;
-	
-//	if (m_bImmediate) {
-		ZeroMemory(m_KeyCurState, sizeof(BYTE)*KeyStateCount);
-		if (!m_pDxKeypad) {
-			return false;
+	ZeroMemory(m_KeyCurState, sizeof(BYTE)*KeyStateCount);
+	if (!m_pDxKeypad) {
+		return false;
+	}
+
+	if (FAILED(m_pDxKeypad->GetDeviceState(KeyStateCount, m_KeyCurState))) {
+		while (m_pDxKeypad->Acquire() == DIERR_INPUTLOST) {
+			m_pDxKeypad->Acquire();
 		}
-
-		if (FAILED(m_pDxKeypad->GetDeviceState(KeyStateCount, m_KeyCurState))) {
-			while (m_pDxKeypad->Acquire() == DIERR_INPUTLOST) {
-				m_pDxKeypad->Acquire();
-			}
-			return true;
-		}
-//	}
-	//else {
-	//	if (m_pDxKeypad == nullptr) {
-	//		return false;
-	//	}
-	//	
-	//	ZeroMemory(&m_sDidod, sizeof(DIDEVICEOBJECTDATA)*DataBufferSize);
-
-	//	m_dwElemts = DataBufferSize;
-	//	
-	//	hr = m_pDxKeypad->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), m_sDidod, &m_dwElemts, 0);
-
-	//	if (hr != DI_OK) {
-	//		m_dwElemts = 0;
-	//		hr = m_pDxKeypad->Acquire();
-	//		while (hr == DIERR_INPUTLOST) {
-	//			hr = m_pDxKeypad->Acquire();
-	//		}
-
-	//		return true;
-	//	}
-	//}
+		return true;
+	}
 
 	return true;
 }
@@ -252,46 +203,22 @@ bool input_DX::ResetResource()
 
 bool input_DX::IsKeyDown(DWORD dwKey)
 {
-//	if (m_bImmediate) {
-		if (KEYDOWN(dwKey)) {
-			return true;
-		}
-//	}
-	//else {
-	//	for (DWORD i = 0; i < m_dwElemts; i++) {
-	//		if (m_sDidod[i].dwOfs == dwKey && (m_sDidod[i].dwData & 0x80)) {
-	//			return true;
-	//		}
-	//	}
-	//}
-
+	if (KEYDOWN(dwKey)) {
+		return true;
+	}
 	return false;
 }
 
 bool input_DX::IsKeyUP(DWORD dwKey)
 {
-//	if (m_bImmediate) {
-		if (m_KeyBefState[dwKey] & 0x80) {
-			if (KEYUP(dwKey)) {
-				return true;
-			}
+	if (m_KeyBefState[dwKey] & 0x80) {
+		if (KEYUP(dwKey)) {
+			return true;
 		}
-//	}
-	//else {
-	//	for (DWORD i = 0; i < m_dwElemts; i++) {
-	//		if (m_sDidod[i].dwOfs == dwKey && !(m_sDidod[i].dwData & 0x80)) {
-	//			return true;
-	//		}
-	//	}
-	//}
-
+	}
 	return false;
 }
 
-//원하는대로 작동안함.
-//디버그 포인트 잡아도 들어오질 않음. 
-
-//이전 버튼 상태가 UP일때 한번만 TRUE이도록 할것.
 bool input_DX::IsKeyDownOnce(DWORD dwKey)
 {
 	if (!(m_KeyBefState[dwKey] & 0x80)) {
@@ -299,7 +226,6 @@ bool input_DX::IsKeyDownOnce(DWORD dwKey)
 			return true;
 		}
 	}
-
 	return false;
 }
 

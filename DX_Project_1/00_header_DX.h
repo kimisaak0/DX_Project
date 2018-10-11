@@ -1,7 +1,7 @@
 #pragma once
 #pragma warning(disable : 4005)
 
-#define DIRECTINPUT_VERSION 0x0800
+#define DIRECTINPUT_VERSION  0x0800
 
 //DX11을 쓰려면 필요함
 #pragma comment (lib, "D3D11.lib")
@@ -25,6 +25,15 @@
 #pragma comment(lib, "dinput8.lib")
 #include "dinput.h"
 
+//쉐이더를 사용하기 위해서 추가----------
+#pragma comment(lib, "d3dx11.lib")
+#include "D3DX11.h"
+
+#pragma comment(lib, "d3dcompiler.lib")
+#include "D3Dcompiler.h"
+
+//DX벡터 사용
+#include "D3DX10math.h"
 
 //에러처리를 위한 헤더
 #include <assert.h>
@@ -39,7 +48,6 @@ using W_STR = std::basic_string<wchar_t>;
 using T_STR = std::basic_string<TCHAR>;
 
 using T_ITOR = std::basic_string<TCHAR>::iterator;
-
 
 
 //윈도우즈 코덱 사용
@@ -125,8 +133,6 @@ using HANDLE_LIST_ITOR = list<HANDLE>::iterator;
 
 
 //--------외부 변수 정의 영역----------//
-
-
 
 //WndC_DX
 extern HINSTANCE g_hInst;

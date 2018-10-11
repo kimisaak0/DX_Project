@@ -15,8 +15,6 @@ deviceC_DX::deviceC_DX()
 	m_pSwapChain = nullptr;
 
 	m_pRenderTagetView = nullptr;
-
-	m_bFullScrFlag = FALSE;
 }
 
 
@@ -285,19 +283,6 @@ ID3D11RenderTargetView*	 deviceC_DX::getRenderTargetView()
 	assert(m_pRenderTagetView);
 	return m_pRenderTagetView;
 }
-
-//스크린 모드 조정
-bool deviceC_DX::GetFullScrFlag()
-{
-	return m_bFullScrFlag;
-}
-
-void deviceC_DX::SetFullScrFlag(bool bFlag)
-{
-	m_bFullScrFlag = bFlag;
-}
-
-//기타 함수
 
 //화면 크기가 변경되면 백퍼버의 크기를 조정하고 조정된 값으로 렌더타켓뷰를 재생성한다.
 HRESULT deviceC_DX::ResizeDevice(UINT iWidth, UINT iHeight)

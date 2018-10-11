@@ -18,6 +18,24 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="00_header_DX.h" />
+    <ClInclude Include="01_deviceC_DX.h" />
+    <ClInclude Include="02_wndC_DX.h" />
+    <ClInclude Include="03_coreC_DX.h" />
+    <ClInclude Include="04_timerC_DX.h" />
+    <ClInclude Include="05_writeC_DX.h" />
+    <ClInclude Include="06_inputC_DX.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="00_main_DX.cpp" />
+    <ClCompile Include="01_deviceC_DX.cpp" />
+    <ClCompile Include="02_wndC_DX.cpp" />
+    <ClCompile Include="03_coreC_DX.cpp" />
+    <ClCompile Include="04_timerC_DX.cpp" />
+    <ClCompile Include="05_writeC_DX.cpp" />
+    <ClCompile Include="06_inputC_DX.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{63A659AF-9F16-46F7-A877-E1B153BF57D3}</ProjectGuid>
@@ -42,7 +60,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -69,7 +87,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>../output/game/</OutDir>
+    <IntDir>../output/middle/</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -84,7 +105,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>../../INPUT/DX11/inc/;../../INPUT/FMOD/inc/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>../../INPUT/DX11/lib/;../../INPUT/FMOD/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -114,8 +139,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

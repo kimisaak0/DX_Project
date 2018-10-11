@@ -6,7 +6,6 @@
 //-wndC_DX에서 DX11의 멤버 변수를 직접 접근하기 위해서 deviceC_DX가 더 위에 있다.-----//
 //------------------------------------------------------------------------------------//
 
-
 class deviceC_DX
 {
 protected:
@@ -20,9 +19,6 @@ protected:
 
 	ID3D11RenderTargetView*    m_pRenderTagetView;	   // 메인 렌더타켓 뷰
 	D3D11_VIEWPORT             m_d3dViewPort;		   // 뷰포트
-
-	BOOL m_bFullScrFlag; //풀스크린 상태 스위치
-
 
 public:
 	HRESULT CreateDevice();                                         // 디바이스 및 디바이스 컨텍스트를 생성한다.

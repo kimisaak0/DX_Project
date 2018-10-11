@@ -27,6 +27,7 @@ public:
 	double	         GetSPF();
 	int		         GetFPS();
 	double           GetGameTime();
+	LARGE_INTEGER    GetCurrent();
 
 public:
 	timerC_DX();

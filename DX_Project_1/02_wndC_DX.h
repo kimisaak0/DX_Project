@@ -19,6 +19,9 @@ public:
 	virtual bool runWindow();                   //윈도우 돌리기
 
 public:
+	//접근자, 설정자
+
+public:
 	virtual bool gameInit() = 0;            //게임 전체의 초기화를 담당
 	virtual bool gameRun() = 0;             //게임의 전 과정을 실행.
 	virtual bool gameFrame() = 0;           //게임의 매 프레임 계산을 담당.

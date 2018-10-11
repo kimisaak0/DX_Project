@@ -6,9 +6,12 @@
 
 class coreC_DX : public wndC_DX
 {
-protected:
 	timerC_DX m_GameTimer;
 	writeC_DX m_Font;
+
+private:
+	bool m_swTimerRender;
+	bool m_swKeyRender;
 
 public:
 	//게임 전체적인 처리 순서에 대한 함수들. 게임에 관한 부분과 윈도우 생성에 관한 부분을 분리

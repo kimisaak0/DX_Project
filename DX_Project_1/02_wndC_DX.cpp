@@ -33,44 +33,6 @@ LRESULT CALLBACK wndC_DX::MsgProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lP
 
 	switch (iMsg) {
 
-		case WM_KEYDOWN: {
-			switch (wParam) {
-				case '0': {
-					//전체화면과 윈도우 모드 변환
-					int w = GetSystemMetrics(SM_CXFULLSCREEN);
-					int h = GetSystemMetrics(SM_CYFULLSCREEN);
-
-					g_pWindow->m_pSwapChain->SetFullscreenState(!(g_pWindow->m_bFullScrFlag), NULL);
-					g_pWindow->SetFullScrFlag(!(g_pWindow->m_bFullScrFlag));
-
-					DXGI_SWAP_CHAIN_DESC desc;
-					g_pWindow->m_pSwapChain->GetDesc(&desc);
-
-					if ((g_pWindow->m_bFullScrFlag)==FALSE) {
-						//전체화면에서 창모드로 변경시 800,600으로 변경
-						desc.BufferDesc.Width = 800;
-						desc.BufferDesc.Height = 800;
-
-						g_pWindow->m_pSwapChain->ResizeTarget(&(desc.BufferDesc));
-						g_pWindow->CenterWindow(g_hWnd);
-
-					ShowWindow(g_hWnd, SW_SHOW);
-					}
-					else {
-						//전체화면으로 변경시 운영체제 해상도로 변경
-						desc.BufferDesc.Width = w;
-						desc.BufferDesc.Height = h;
-
-						g_pWindow->m_pSwapChain->ResizeTarget(&(desc.BufferDesc));
-					}
-				} break;
-
-				case VK_ESCAPE: {
-					SendMessage(g_hWnd, WM_CLOSE, 0, 0);
-				}break;
-			}
-		} break;
-
 		//윈도우를 생성할 때 발생하는 메시지
 		case WM_CREATE: {
 		}break;
@@ -80,7 +42,6 @@ LRESULT CALLBACK wndC_DX::MsgProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lP
 			if (SUCCEEDED(g_pWindow->InitDevice())) {
 				g_pWindow->ResizeDevice(LOWORD(lParam), HIWORD(lParam));
 				g_pWindow->ResetRT();
-				//g_pWindow->Init();
 			}
 		} break;
 
@@ -128,14 +89,14 @@ bool wndC_DX::registWnd(LPCTSTR LWndName)
 	}
 
 	//Create Window
-	RECT rc = { 0, 0, 800, 800 };
+	RECT rc = { 0, 0, 800, 600 };
 
 	//클라이언트 영역 크기를 원하는 크기로 지정해서 만들어줌.
 	AdjustWindowRect(&rc, WS_SYSMENU, true); //(작업영역, 윈도우 스타일, 메뉴여부)
 
 	g_hWnd = CreateWindowEx(NULL, //WS_EX_TOPMOST,     // 윈도우 창 확장 스타일
 		m_wndC.lpszClassName, m_wndC.lpszClassName,	   // 윈도우 클래스 이름(중요), 타이틀 바에 나타날 문자열.
-		WS_SYSMENU | WS_THICKFRAME | WS_VISIBLE,       // 생성될 윈도우 창의 스타일 지정 
+		WS_SYSMENU | WS_BORDER | WS_VISIBLE,           // 생성될 윈도우 창의 스타일 지정 
 		CW_USEDEFAULT, CW_USEDEFAULT,				   // 윈도우 X,Y 좌표
 		rc.right - rc.left, rc.bottom - rc.top,		   // 윈도우 수평, 수직 크기 (픽셀 단위)
 		NULL, NULL, g_hInst, 			               // 부모 윈도우의 핸들 지정, 메뉴 핸들 지정, 윈도우를 생성하는 인스턴스 핸들

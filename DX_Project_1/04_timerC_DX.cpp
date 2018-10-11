@@ -65,6 +65,7 @@ bool	timerC_DX::Frame()
 
 	return true;
 }
+
 bool	timerC_DX::Render()
 {
 	return true;
@@ -75,11 +76,11 @@ bool	timerC_DX::Release()
 }
 
 // get
-double	         timerC_DX::GetSPF()
+double	timerC_DX::GetSPF()
 {
 	return m_dSPF;
 }
-int	             timerC_DX::GetFPS()
+int		timerC_DX::GetFPS()
 {
 	return m_iFPS;
 }
@@ -87,6 +88,10 @@ int	             timerC_DX::GetFPS()
 double           timerC_DX::GetGameTime()
 {
 	return m_dGameTime;
+}
+LARGE_INTEGER    timerC_DX::GetCurrent()
+{
+	return m_liCurTime;
 }
 
 timerC_DX::~timerC_DX()
