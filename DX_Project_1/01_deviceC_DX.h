@@ -23,7 +23,7 @@ protected:
 public:
 	HRESULT CreateDevice();                                         // 디바이스 및 디바이스 컨텍스트를 생성한다.
 	HRESULT	CreateGIFactory();										// IDXGIFactory 객체 생성
-	HRESULT	CreateSwapChain(HWND hWnd, UINT iWidth, UINT iHeight);	// IDXGIFactory를 이용하여 스왑체인 생성
+	HRESULT	CreateSwapChain(HWND hWnd);	// IDXGIFactory를 이용하여 스왑체인 생성
 
 	HRESULT	SetRenderTargetView();									// 타겟 뷰 설정
 	HRESULT	SetViewPort();     										// 뷰 포트 설정
@@ -40,9 +40,6 @@ public:
 public:
 	HRESULT InitDevice();      // 장치를 순서대로 생성한다.
 	bool CreanupDevice();      // 생성한 것을 역순으로 삭제한다.
-
-	//화면 크기가 변경되면 그에 맞춰서 백퍼버의 크기를 조정하고 그에 맞는 뷰포트를 다시 세팅한다.
-	HRESULT ResizeDevice(UINT iWidth, UINT iHeight);
 
 public:
 	deviceC_DX();

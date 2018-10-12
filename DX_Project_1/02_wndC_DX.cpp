@@ -35,15 +35,8 @@ LRESULT CALLBACK wndC_DX::MsgProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lP
 
 		//윈도우를 생성할 때 발생하는 메시지
 		case WM_CREATE: {
-		}break;
 
-		//윈도우의 크기를 바꾸면 발생하는 메시지
-		case WM_SIZE: {
-			if (SUCCEEDED(g_pWindow->InitDevice())) {
-				g_pWindow->ResizeDevice(LOWORD(lParam), HIWORD(lParam));
-				g_pWindow->ResetRT();
-			}
-		} break;
+		}break;
 
 		//윈도우를 종료할 때 발생하는 메시지 (프로그램 종료와는 별도)
 		case WM_DESTROY: {
@@ -88,17 +81,11 @@ bool wndC_DX::registWnd(LPCTSTR LWndName)
 		return false;
 	}
 
-	//Create Window
-	RECT rc = { 0, 0, 800, 600 };
-
-	//클라이언트 영역 크기를 원하는 크기로 지정해서 만들어줌.
-	AdjustWindowRect(&rc, WS_SYSMENU, true); //(작업영역, 윈도우 스타일, 메뉴여부)
-
 	g_hWnd = CreateWindowEx(NULL, //WS_EX_TOPMOST,     // 윈도우 창 확장 스타일
 		m_wndC.lpszClassName, m_wndC.lpszClassName,	   // 윈도우 클래스 이름(중요), 타이틀 바에 나타날 문자열.
 		WS_SYSMENU | WS_BORDER | WS_VISIBLE,           // 생성될 윈도우 창의 스타일 지정 
 		CW_USEDEFAULT, CW_USEDEFAULT,				   // 윈도우 X,Y 좌표
-		rc.right - rc.left, rc.bottom - rc.top,		   // 윈도우 수평, 수직 크기 (픽셀 단위)
+		800, 800,		                               // 윈도우 수평, 수직 크기 (픽셀 단위)
 		NULL, NULL, g_hInst, 			               // 부모 윈도우의 핸들 지정, 메뉴 핸들 지정, 윈도우를 생성하는 인스턴스 핸들
 		NULL);                                         // WM_CREATE메시지의 lParam으로 전달될 CREATESTRUCT구조체 포인터
 		//창 스타일과 창 확장 스타일에 대한 부분은 문서 참조
@@ -107,12 +94,6 @@ bool wndC_DX::registWnd(LPCTSTR LWndName)
 	if (g_hWnd == NULL) {
 		return false;
 	}
-
-	//생성된 크기를 전역 변수에 대입한다.
-	GetWindowRect(g_hWnd, &g_rtWindow);
-	GetClientRect(g_hWnd, &g_rtClient);
-
-	CenterWindow(g_hWnd); //윈도우를 화면 중앙으로 이동시킨다.
 
 	return true;
 }

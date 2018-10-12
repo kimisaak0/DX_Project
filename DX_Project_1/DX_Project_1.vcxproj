@@ -27,6 +27,8 @@
     <ClInclude Include="05_writeC_DX.h" />
     <ClInclude Include="06_inputC_DX.h" />
     <ClInclude Include="07_soundC_DX.h" />
+    <ClInclude Include="08b_Actor_DX.h" />
+    <ClInclude Include="08a_Object_DX.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="00_main_DX.cpp" />
@@ -37,6 +39,12 @@
     <ClCompile Include="05_writeC_DX.cpp" />
     <ClCompile Include="06_inputC_DX.cpp" />
     <ClCompile Include="07_soundC_DX.cpp" />
+    <ClCompile Include="08b_Actor_DX.cpp" />
+    <ClCompile Include="08a_Object_DX.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="PixelShader.psh" />
+    <Text Include="VertexShader.vsh" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -90,8 +98,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>../output/game/</OutDir>
-    <IntDir>../output/middle/</IntDir>
+    <OutDir>../../game/</OutDir>
+    <IntDir>../../output/middle/</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

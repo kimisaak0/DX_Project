@@ -139,9 +139,11 @@ extern HINSTANCE g_hInst;
 extern HWND      g_hWnd;           //생성된 윈도우의 핸들값 (DC를 받아올 때 사용함)
 extern RECT      g_rtWindow;       //생성된 윈도우 전체영역 크기
 extern RECT      g_rtClient;       //생성된 윈도우 작업영역 크기
-extern UINT      g_uClientWidth;
-extern UINT      g_uClientHeight;
-
+extern UINT      g_uClientWidth;   //작업영역의 넓이 
+extern UINT      g_uClientHeight;  //작업영역의 높이
+extern wndC_DX*  g_pWindow;
 
 //타이머에서
 extern double g_GameTimer;
+
+//구조체 

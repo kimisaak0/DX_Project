@@ -3,15 +3,29 @@
 #include "04_timerC_DX.h"
 #include "05_writeC_DX.h"
 #include "06_inputC_DX.h"
+#include "08b_Actor_DX.h"
 
 class coreC_DX : public wndC_DX
 {
 	timerC_DX m_GameTimer;
 	writeC_DX m_Font;
 
+	Actor_DX   m_Actor;
+	PCT_VERTEX m_FrameVertexList[6];
+	ID3D11RasterizerState* m_pRSSolid;
+
 private:
 	bool m_swTimerRender;
 	bool m_swKeyRender;
+
+public:
+	//클래스 각각에 대한 처리 순서에 관한 함수들. 
+	bool Init();
+	bool Frame();
+	bool Render();
+	bool Release();
+
+	HRESULT SetRasterizerState();
 
 public:
 	//게임 전체적인 처리 순서에 대한 함수들. 게임에 관한 부분과 윈도우 생성에 관한 부분을 분리
@@ -23,14 +37,6 @@ public:
 	bool gamePostRender() override;
 	bool gameRelease() override;
 
-public:
-	//클래스 각각에 대한 처리 순서에 관한 함수들. 
-	virtual bool Init() { return true; };
-	virtual bool Frame() { return true; };
-	virtual bool PreRender() { return true; };
-	virtual bool Render() { return true; };
-	virtual bool PostRender() { return true; };
-	virtual bool Release() { return true; };
 
 public:
 	bool ResetRT();

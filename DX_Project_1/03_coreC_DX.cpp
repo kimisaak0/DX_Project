@@ -1,5 +1,114 @@
 #include "03_coreC_DX.h"
 
+#pragma region temp
+
+HRESULT coreC_DX::SetRasterizerState()
+{
+	HRESULT hr;
+	D3D11_RASTERIZER_DESC desc;
+	ZeroMemory(&desc, sizeof(D3D11_RASTERIZER_DESC));
+	desc.FillMode = D3D11_FILL_SOLID;
+	desc.CullMode = D3D11_CULL_NONE;
+	desc.DepthClipEnable = TRUE;
+
+	hr = m_pD3dDevice->CreateRasterizerState(&desc, &m_pRSSolid);
+	return hr;
+}
+
+bool coreC_DX::Init()
+{
+	RECT rt = { 0, 0, 800, 800 };
+	AdjustWindowRect(&rt, WS_SYSMENU | WS_BORDER, FALSE);
+	g_pWindow->CenterWindow(g_hWnd); //윈도우를 화면 중앙으로 이동시킨다.
+
+									 //생성된 크기를 전역 변수에 대입한다.
+	GetWindowRect(g_hWnd, &g_rtWindow);
+	GetClientRect(g_hWnd, &g_rtClient);
+
+	SetRasterizerState();
+
+	m_Actor.SetData(0, 0, g_rtWindow.right*0.5f, g_rtWindow.bottom * 0.5f);
+	m_Actor.m_vertexList[0].t.x = 1.0f;
+	m_Actor.m_vertexList[0].t.y = 1.0f;
+	m_Actor.m_vertexList[1].t.x = 0.0f;
+	m_Actor.m_vertexList[1].t.y = 0.0f;
+	m_Actor.m_vertexList[2].t.x = 0.0f;
+	m_Actor.m_vertexList[2].t.y = 0.0f;
+	m_Actor.m_vertexList[3].t.x = 0.0f;
+	m_Actor.m_vertexList[3].t.y = 0.0f;
+
+	m_Actor.Create(m_pD3dDevice, L"VertexShader.vsh", L"PixelShader.psh", L"skybox_top.JPG");
+
+	return true;
+}
+
+bool coreC_DX::Frame()
+{
+	static float fAngle = 0.0f;
+	fAngle += m_GameTimer.GetSPF();
+
+	int iRect = 0;
+
+	if (I_Input.IsKeyDown(0xcb)) { //Left
+		m_Actor.MoveX(m_GameTimer.GetSPF() * -0.3);
+	}
+
+	if (I_Input.IsKeyDown(0xcd)) { //Right
+		m_Actor.MoveX(m_GameTimer.GetSPF() * 0.3);
+	}
+
+	if (I_Input.IsKeyDown(0xc8)) { //Up
+		m_Actor.MoveY(m_GameTimer.GetSPF() * 0.3);
+	}
+
+	if (I_Input.IsKeyDown(0xd0)) { //Down
+		m_Actor.MoveY(m_GameTimer.GetSPF() * -0.3);
+	}
+
+	for (int iV = 0; iV < m_Actor.iVertexNum; iV++) {
+		m_FrameVertexList[iV] = m_Actor.m_vertexList[iV];
+
+		D3DXVECTOR3 vertex = m_Actor.m_vertexList[iV].p;
+		m_FrameVertexList[iV].p.x -= m_Actor.m_v3Center.x;
+		m_FrameVertexList[iV].p.y -= m_Actor.m_v3Center.y;
+
+		float S = sinf(fAngle);
+		float C = cosf(fAngle);
+
+		vertex.x = m_FrameVertexList[iV].p.x * C + m_FrameVertexList[iV].p.y * -S;
+		vertex.y = m_FrameVertexList[iV].p.x * S + m_FrameVertexList[iV].p.y * C;
+
+		vertex.x += m_Actor.m_v3Center.x;
+		vertex.y += m_Actor.m_v3Center.y;
+
+		m_FrameVertexList[iV].p = vertex;
+	}
+
+	m_pImmediateContext->UpdateSubresource(m_Actor.m_dxObj.m_pVertexBuffer, 0, NULL, m_FrameVertexList, 0, 0);
+
+	return true;
+}
+
+bool coreC_DX::Render()
+{
+	assert(m_pImmediateContext);
+	m_pImmediateContext->OMSetBlendState(0, 0, 0xffffffff);
+
+	m_pImmediateContext->RSSetState(m_pRSSolid);
+
+	m_Actor.Render(m_pImmediateContext);
+
+	return true;
+}
+
+bool coreC_DX::Release()
+{
+	m_Actor.Release();
+
+	return true;
+}
+
+#pragma endregion
 
 
 coreC_DX::coreC_DX(LPCTSTR LWndName) : wndC_DX(LWndName)
@@ -34,6 +143,8 @@ bool coreC_DX::gameInit()
 		return false;
 	}
 
+	Init();
+
 	return true;
 }
 
@@ -59,6 +170,8 @@ bool coreC_DX::gameFrame()
 	if (I_Input.IsKeyDownOnce(0x2b)) {
 		m_swKeyRender = !m_swKeyRender;
 	}
+
+	Frame();
 
 	return true;
 }
@@ -146,6 +259,9 @@ bool coreC_DX::gameRender()
 			}
 		}
 	}
+
+	Render();
+
 	return true;
 }
 
@@ -160,6 +276,8 @@ bool coreC_DX::gamePostRender()
 
 bool coreC_DX::gameRelease()
 {
+	Release();
+
 	if (!I_Input.Release()) { return false; }
 	if (!m_Font.Release()) { return false; }
 	if (!m_GameTimer.Release()) { return false; }

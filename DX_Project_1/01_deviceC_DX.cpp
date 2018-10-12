@@ -102,7 +102,7 @@ HRESULT	deviceC_DX::CreateGIFactory()
 }
 
 //DXGIFactory 인터페이스로부터 IDXGISwapChain 인터페이스를 생성한다.
-HRESULT	deviceC_DX::CreateSwapChain(HWND hWnd, UINT iWidth, UINT iHeight)
+HRESULT	deviceC_DX::CreateSwapChain(HWND hWnd)
 {
 	HRESULT hr = S_OK;
 	if (m_pGIFactory == nullptr) { return S_FALSE; }
@@ -112,23 +112,16 @@ HRESULT	deviceC_DX::CreateSwapChain(HWND hWnd, UINT iWidth, UINT iHeight)
 	ZeroMemory(&sd, sizeof(sd));
 
 	sd.BufferCount = 1;  //1이상 필수 입력         
-
-	sd.BufferDesc.Width = iWidth;                        //버퍼의 넓이
-	sd.BufferDesc.Height = iHeight;                      //버퍼의 높이
 	sd.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;   //버퍼의 색상 포맷 (필수)
 	sd.BufferDesc.RefreshRate.Numerator = 60;            //화면 주사율 (분자)
 	sd.BufferDesc.RefreshRate.Denominator = 1;           //화면 주사율 (분모)
-	//sd.BufferDesc.ScanlineOrdering                     //플릿핑한 뒤 버퍼 내용을 어떻게 처리할지
-	//sd.BufferDesc.Scaling                              //사이즈 조절.
-
 	sd.SampleDesc.Count = 1;      // 몇번 뿌릴지 (1이상 필수) 1이면 멀티샘플링 안하는거 (
 	sd.SampleDesc.Quality = 0;    //이미지 품질 수준
 	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT; //버퍼 용도
 	sd.OutputWindow = hWnd; //어느 윈도우에 뿌릴지 (필수)
 	sd.Windowed = true;     //0으로 초기화하면 전체화면으로 실행됨 (false 전체화면, true 창모드)
-	sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH; // IDXGISwapChain::ResizeTarget을 호출하여 모드를 전환할 수 있게 함.
+	//sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH; // IDXGISwapChain::ResizeTarget을 호출하여 모드를 전환할 수 있게 함.
 						                               // 전체화면 모드로 전환시 바탕 화면 해상도를 기준으로 윈도우 크기가 자동으로 변경되지 않게 함.
-	//sd.SwapEffect //기본값 사용
 
 	//스왑체인 생성
 	hr = m_pGIFactory->CreateSwapChain(m_pD3dDevice, &sd, &m_pSwapChain);
@@ -172,16 +165,11 @@ HRESULT	deviceC_DX::SetViewPort()
 	DXGI_SWAP_CHAIN_DESC Desc;
 	m_pSwapChain->GetDesc(&Desc);
 
-	g_uClientWidth = Desc.BufferDesc.Width;
-	g_uClientHeight = Desc.BufferDesc.Height;
-
 	//뷰포트의 높이와 넓이를 스왑체인 버퍼의 크기로 설정
 	m_d3dViewPort.Width = (FLOAT)Desc.BufferDesc.Width;
 	m_d3dViewPort.Height = (FLOAT)Desc.BufferDesc.Height;
 	m_d3dViewPort.MinDepth = 0.0f;  //깊이값은 0에서 1사이로 제한됨
 	m_d3dViewPort.MaxDepth = 1.0f;
-	m_d3dViewPort.TopLeftX = 0;     //작업영역의 시작 좌표값
-	m_d3dViewPort.TopLeftY = 0;
 
 	//렌더타켓뷰 세팅
 	m_pImmediateContext->RSSetViewports(1, &m_d3dViewPort);
@@ -195,30 +183,15 @@ HRESULT deviceC_DX::InitDevice()
 {
 	HRESULT hr = S_OK;
 
-	if (FAILED(hr = CreateDevice())) {
-		//MessageBox(0, _T("Failed Create Device"), _T("Fatal Error"), MB_OK);
-		return hr;
-	}
+	if (FAILED(hr = CreateDevice())) { return hr; }
 
-	if (FAILED(hr = CreateGIFactory())) {
-		//MessageBox(0, _T("Failed Create GIFactory"), _T("Fatal Error"), MB_OK);
-		return hr;
-	}
+	if (FAILED(hr = CreateGIFactory())) { return hr; }
 		
-	if (FAILED(hr = CreateSwapChain(g_hWnd, g_uClientWidth, g_uClientHeight))) {
-		//MessageBox(0, _T("Failed Create SwapChain"), _T("Fatal Error"), MB_OK);
-		return hr; 
-	}
+	if (FAILED(hr = CreateSwapChain(g_hWnd))) { return hr; }
 
-	if (FAILED(hr = SetRenderTargetView())) { 
-		//MessageBox(0, _T("Failed Set RenderTargetView"), _T("Fatal Error"), MB_OK);
-		return hr; 
-	}
+	if (FAILED(hr = SetRenderTargetView())) { return hr; }
 
-	if (FAILED(hr = SetViewPort())) { 
-		//MessageBox(0, _T("Failed Set ViewPort"), _T("Fatal Error"), MB_OK);
-		return hr;
-	}
+	if (FAILED(hr = SetViewPort())) { return hr; }
 
 	//ALT+ENTER와 메시지큐 모니터링을 막는다.
 	m_pGIFactory->MakeWindowAssociation(g_hWnd, DXGI_MWA_NO_ALT_ENTER  | DXGI_MWA_NO_WINDOW_CHANGES); 
@@ -253,6 +226,7 @@ bool deviceC_DX::CreanupDevice()
 	return true;
 }
 
+
 //get함수
 ID3D11Device *           deviceC_DX::getDevice()
 {
@@ -282,42 +256,6 @@ ID3D11RenderTargetView*	 deviceC_DX::getRenderTargetView()
 {
 	assert(m_pRenderTagetView);
 	return m_pRenderTagetView;
-}
-
-//화면 크기가 변경되면 백퍼버의 크기를 조정하고 조정된 값으로 렌더타켓뷰를 재생성한다.
-HRESULT deviceC_DX::ResizeDevice(UINT iWidth, UINT iHeight)
-{
-	//디바이스가 잡혀있지 않으면 false를 반환.
-	if (m_pD3dDevice == nullptr) { return false; }
-
-	HRESULT hr;
-
-	//렌더 타겟 뷰 해제 및 삭제
-	m_pImmediateContext->OMSetRenderTargets(0, NULL, NULL);
-	if (m_pRenderTagetView) { m_pRenderTagetView->Release(); }
-
-	//백버퍼의 크기를 조정한다.
-	DXGI_SWAP_CHAIN_DESC CurrentSD, AfterSD;
-	m_pSwapChain->GetDesc(&CurrentSD);
-	m_pSwapChain->ResizeBuffers(
-		CurrentSD.BufferCount,                  // 스왑체인 버퍼수
-		iWidth, 					            // 새롭게 설정할 백버퍼의 넓이
-		iHeight, 					            // 새롭게 설정할 백버퍼의 높이
-		CurrentSD.BufferDesc.Format,            // 새롭게 설정할 백버퍼의 색상포맷
-		DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH  // 새롭게 설정할 스왑체인 기능 플래그.  DXGI_SWAP_CHAIN_FLAG값중 하나
-	);								 
-
-	//변경된 백 버퍼의 크기를 얻는다.
-	m_pSwapChain->GetDesc(&AfterSD);
-	GetClientRect(g_hWnd, &g_rtClient);
-	g_uClientWidth = AfterSD.BufferDesc.Width;
-	g_uClientHeight = AfterSD.BufferDesc.Height;
-
-	//렌더타켓뷰와 뷰포트를 생성 및 적용한다.
-	if (FAILED(hr = SetRenderTargetView())) { return hr; }
-	if (FAILED(hr = SetViewPort())) { return hr; }
-
-	return S_OK;
 }
 
 deviceC_DX::~deviceC_DX()

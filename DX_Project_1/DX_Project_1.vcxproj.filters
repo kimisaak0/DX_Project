@@ -14,15 +14,15 @@
     <Filter Include="03%29object">
       <UniqueIdentifier>{57c310c3-df30-47de-911c-1c33b2f42c11}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03%29object\shader">
+      <UniqueIdentifier>{a555e17e-5ab7-403d-ad31-54880caa9838}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="01_deviceC_DX.h">
       <Filter>01%29 device</Filter>
     </ClInclude>
     <ClInclude Include="02_wndC_DX.h">
-      <Filter>01%29 device</Filter>
-    </ClInclude>
-    <ClInclude Include="03_coreC_DX.h">
       <Filter>01%29 device</Filter>
     </ClInclude>
     <ClInclude Include="00_header_DX.h">
@@ -40,6 +40,15 @@
     <ClInclude Include="07_soundC_DX.h">
       <Filter>02%29 function</Filter>
     </ClInclude>
+    <ClInclude Include="03_coreC_DX.h">
+      <Filter>00%29 base</Filter>
+    </ClInclude>
+    <ClInclude Include="08a_Object_DX.h">
+      <Filter>03%29object</Filter>
+    </ClInclude>
+    <ClInclude Include="08b_Actor_DX.h">
+      <Filter>03%29object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="04_timerC_DX.cpp">
@@ -50,9 +59,6 @@
     </ClCompile>
     <ClCompile Include="06_inputC_DX.cpp">
       <Filter>02%29 function</Filter>
-    </ClCompile>
-    <ClCompile Include="03_coreC_DX.cpp">
-      <Filter>01%29 device</Filter>
     </ClCompile>
     <ClCompile Include="01_deviceC_DX.cpp">
       <Filter>01%29 device</Filter>
@@ -66,5 +72,22 @@
     <ClCompile Include="07_soundC_DX.cpp">
       <Filter>02%29 function</Filter>
     </ClCompile>
+    <ClCompile Include="03_coreC_DX.cpp">
+      <Filter>00%29 base</Filter>
+    </ClCompile>
+    <ClCompile Include="08a_Object_DX.cpp">
+      <Filter>03%29object</Filter>
+    </ClCompile>
+    <ClCompile Include="08b_Actor_DX.cpp">
+      <Filter>03%29object</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="PixelShader.psh">
+      <Filter>03%29object\shader</Filter>
+    </Text>
+    <Text Include="VertexShader.vsh">
+      <Filter>03%29object\shader</Filter>
+    </Text>
   </ItemGroup>
 </Project>
