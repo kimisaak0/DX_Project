@@ -25,7 +25,7 @@
 #pragma comment(lib, "dinput8.lib")
 #include "dinput.h"
 
-//쉐이더를 사용하기 위해서 추가----------
+//쉐이더를 사용가
 #pragma comment(lib, "d3dx11.lib")
 #include "D3DX11.h"
 
@@ -133,6 +133,8 @@ using HANDLE_LIST_ITOR = list<HANDLE>::iterator;
 
 
 //--------외부 변수 정의 영역----------//
+
+class wndC_DX;
 
 //WndC_DX
 extern HINSTANCE g_hInst;

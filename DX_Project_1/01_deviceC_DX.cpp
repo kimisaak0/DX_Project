@@ -17,7 +17,6 @@ deviceC_DX::deviceC_DX()
 	m_pRenderTagetView = nullptr;
 }
 
-
 //ID3D11Device 인터페이스를 생성한다.
 HRESULT deviceC_DX::CreateDevice()
 {
@@ -86,13 +85,13 @@ HRESULT deviceC_DX::CreateDevice()
 HRESULT	deviceC_DX::CreateGIFactory()
 {
 	if (m_pD3dDevice == nullptr) { return E_FAIL; }
+	
 	HRESULT hr;
-
 	IDXGIDevice* pDXGIDevice;
 	IDXGIAdapter* pDXGIAdapter;
 
 	//생성되어 있는 ID3D11Device로부터 출발해서 IDXGIFactory를 넘겨받는다.
-	hr = m_pD3dDevice-> QueryInterface  (__uuidof(IDXGIDevice),  (LPVOID*)(&pDXGIDevice));
+	hr = m_pD3dDevice-> QueryInterface  (__uuidof(IDXGIDevice), (LPVOID*)(&pDXGIDevice));
 	hr = pDXGIDevice->  GetParent       (__uuidof(IDXGIAdapter), (LPVOID*)(&pDXGIAdapter));
 	hr = pDXGIAdapter-> GetParent       (__uuidof(IDXGIFactory), (LPVOID*)(&m_pGIFactory));
 
@@ -111,21 +110,18 @@ HRESULT	deviceC_DX::CreateSwapChain(HWND hWnd)
 	DXGI_SWAP_CHAIN_DESC sd;
 	ZeroMemory(&sd, sizeof(sd));
 
-	sd.BufferCount = 1;  //1이상 필수 입력         
+	sd.BufferCount = 1;                                  //버퍼 개수         
 	sd.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;   //버퍼의 색상 포맷 (필수)
 	sd.BufferDesc.RefreshRate.Numerator = 60;            //화면 주사율 (분자)
 	sd.BufferDesc.RefreshRate.Denominator = 1;           //화면 주사율 (분모)
-	sd.SampleDesc.Count = 1;      // 몇번 뿌릴지 (1이상 필수) 1이면 멀티샘플링 안하는거 (
-	sd.SampleDesc.Quality = 0;    //이미지 품질 수준
-	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT; //버퍼 용도
-	sd.OutputWindow = hWnd; //어느 윈도우에 뿌릴지 (필수)
-	sd.Windowed = true;     //0으로 초기화하면 전체화면으로 실행됨 (false 전체화면, true 창모드)
-	//sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH; // IDXGISwapChain::ResizeTarget을 호출하여 모드를 전환할 수 있게 함.
-						                               // 전체화면 모드로 전환시 바탕 화면 해상도를 기준으로 윈도우 크기가 자동으로 변경되지 않게 함.
+	sd.SampleDesc.Count = 1;                             //멀티샘플링용 
+	sd.SampleDesc.Quality = 0;                           //이미지 품질 수준
+	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;    //버퍼 용도
+	sd.OutputWindow = hWnd;                              //어느 윈도우에 뿌릴지 (필수)
+	sd.Windowed = true;                                  //false 전체화면, true 창모드
 
 	//스왑체인 생성
 	hr = m_pGIFactory->CreateSwapChain(m_pD3dDevice, &sd, &m_pSwapChain);
-
 	if (FAILED(hr)) {
 		return hr;
 	}
@@ -136,8 +132,7 @@ HRESULT	deviceC_DX::CreateSwapChain(HWND hWnd)
 //렌더타겟뷰 생성 및 세팅
 HRESULT	deviceC_DX::SetRenderTargetView()
 {
-	HRESULT hr = S_OK;
-
+	HRESULT hr;
 	ID3D11Texture2D* pBackBuffer;
 
 	//백버퍼를 받아옴
@@ -148,10 +143,11 @@ HRESULT	deviceC_DX::SetRenderTargetView()
 
 	//렌더 타겟 뷰 생성
 	hr = m_pD3dDevice->CreateRenderTargetView(pBackBuffer, nullptr, &m_pRenderTagetView);
-	pBackBuffer->Release();
 	if (FAILED(hr)) {
 		return hr;
 	}
+
+	pBackBuffer->Release();
 
 	//렌더타겟뷰 세팅
 	m_pImmediateContext->OMSetRenderTargets(1, &m_pRenderTagetView, nullptr);
@@ -177,20 +173,15 @@ HRESULT	deviceC_DX::SetViewPort()
 	return S_OK;
 }
 
-
 //전체 생성하기
 HRESULT deviceC_DX::InitDevice()
 {
-	HRESULT hr = S_OK;
+	HRESULT hr;
 
 	if (FAILED(hr = CreateDevice())) { return hr; }
-
 	if (FAILED(hr = CreateGIFactory())) { return hr; }
-		
 	if (FAILED(hr = CreateSwapChain(g_hWnd))) { return hr; }
-
 	if (FAILED(hr = SetRenderTargetView())) { return hr; }
-
 	if (FAILED(hr = SetViewPort())) { return hr; }
 
 	//ALT+ENTER와 메시지큐 모니터링을 막는다.
@@ -202,9 +193,6 @@ HRESULT deviceC_DX::InitDevice()
 //정리하기
 bool deviceC_DX::CreanupDevice()
 {
-	//창모드로 변경후 종료한다.
-	m_pSwapChain->SetFullscreenState(FALSE, NULL);
-
 	//삭제는 생성의 역순.
 	//세팅값을 복원시켜주고 삭제한다.
 	if (m_pImmediateContext) { m_pImmediateContext->ClearState(); }
@@ -225,7 +213,6 @@ bool deviceC_DX::CreanupDevice()
 
 	return true;
 }
-
 
 //get함수
 ID3D11Device *           deviceC_DX::getDevice()

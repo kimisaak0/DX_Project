@@ -17,25 +17,26 @@ HRESULT coreC_DX::SetRasterizerState()
 
 bool coreC_DX::Init()
 {
-	RECT rt = { 0, 0, 800, 800 };
-	AdjustWindowRect(&rt, WS_SYSMENU | WS_BORDER, FALSE);
 	g_pWindow->CenterWindow(g_hWnd); //윈도우를 화면 중앙으로 이동시킨다.
 
-									 //생성된 크기를 전역 변수에 대입한다.
+	//생성된 크기를 전역 변수에 대입한다.
 	GetWindowRect(g_hWnd, &g_rtWindow);
 	GetClientRect(g_hWnd, &g_rtClient);
 
+	g_uClientWidth = g_rtClient.right - g_rtClient.left;
+	g_uClientHeight = g_rtClient.bottom - g_rtClient.top;
+
 	SetRasterizerState();
 
-	m_Actor.SetData(0, 0, g_rtWindow.right*0.5f, g_rtWindow.bottom * 0.5f);
-	m_Actor.m_vertexList[0].t.x = 1.0f;
-	m_Actor.m_vertexList[0].t.y = 1.0f;
-	m_Actor.m_vertexList[1].t.x = 0.0f;
+	m_Actor.SetData(0, 0, g_rtClient.right * 0.1f, g_rtClient.bottom * 0.2f);
+	m_Actor.m_vertexList[0].t.x = 0.0f;
+	m_Actor.m_vertexList[0].t.y = 0.0f;
+	m_Actor.m_vertexList[1].t.x = 1.0f;
 	m_Actor.m_vertexList[1].t.y = 0.0f;
-	m_Actor.m_vertexList[2].t.x = 0.0f;
+	m_Actor.m_vertexList[2].t.x = 1.0f;
 	m_Actor.m_vertexList[2].t.y = 0.0f;
-	m_Actor.m_vertexList[3].t.x = 0.0f;
-	m_Actor.m_vertexList[3].t.y = 0.0f;
+	m_Actor.m_vertexList[3].t.x = 1.0f;
+	m_Actor.m_vertexList[3].t.y = 1.0f;
 
 	m_Actor.Create(m_pD3dDevice, L"VertexShader.vsh", L"PixelShader.psh", L"skybox_top.JPG");
 
@@ -45,7 +46,7 @@ bool coreC_DX::Init()
 bool coreC_DX::Frame()
 {
 	static float fAngle = 0.0f;
-	fAngle += m_GameTimer.GetSPF();
+	fAngle += 0;// m_GameTimer.GetSPF();
 
 	int iRect = 0;
 
@@ -178,9 +179,9 @@ bool coreC_DX::gameFrame()
 
 bool coreC_DX::gamePreRender()
 {
-	DXGI_SWAP_CHAIN_DESC CurrentSD;
-	m_pSwapChain->GetDesc(&CurrentSD);
-	GetClientRect(g_hWnd, &g_rtClient);
+	//DXGI_SWAP_CHAIN_DESC CurrentSD;
+//	m_pSwapChain->GetDesc(&CurrentSD);
+	//GetClientRect(g_hWnd, &g_rtClient);
 
 	m_Font.DrawTextBegin();
 	return true;

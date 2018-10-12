@@ -1,7 +1,7 @@
 #pragma once
 #include "02_wndC_DX.h"
 
-//전역변수로 선언
+//전역변수 선언
 HINSTANCE    g_hInst;              //윈도우의 인스턴스 핸들값
 HWND         g_hWnd;			   //생성된 윈도우의 핸들값
 RECT         g_rtWindow;		   //윈도우 영역
@@ -9,7 +9,7 @@ RECT         g_rtClient;		   //클라이언트 영역 (작업영역)
 UINT         g_uClientWidth;	   //작업영역 넓이
 UINT         g_uClientHeight;	   //작업영역 높이
 
-wndC_DX* g_pWindow;            //현재 생성된 윈도우에 대한 포인터
+wndC_DX* g_pWindow;                //현재 생성된 윈도우에 대한 포인터
 
 wndC_DX::wndC_DX(LPCTSTR LWndName)
 {
@@ -21,8 +21,8 @@ wndC_DX::wndC_DX(LPCTSTR LWndName)
 	bool debug = registWnd(LWndName);
 	assert(debug);
 
-	GetWindowRect(g_hWnd, &g_rtWindow);   //윈도우 RECT 가져오기
-	GetWindowRect(g_hWnd, &g_rtClient);   //클라이언트 RECT 가져오기
+//	GetWindowRect(g_hWnd, &g_rtWindow);   //윈도우 RECT 가져오기
+//	GetWindowRect(g_hWnd, &g_rtClient);   //클라이언트 RECT 가져오기
 }
 
 //static함수 (전역 외부 함수)
@@ -32,10 +32,8 @@ LRESULT CALLBACK wndC_DX::MsgProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lP
 	assert(g_pWindow);
 
 	switch (iMsg) {
-
 		//윈도우를 생성할 때 발생하는 메시지
 		case WM_CREATE: {
-
 		}break;
 
 		//윈도우를 종료할 때 발생하는 메시지 (프로그램 종료와는 별도)
@@ -47,23 +45,21 @@ LRESULT CALLBACK wndC_DX::MsgProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lP
 	return DefWindowProc(hWnd, iMsg, wParam, lParam);
 }
 
-
 //윈도우를 중앙으로 옮기는 함수.
 void wndC_DX::CenterWindow(HWND hwnd)
 {
+	g_rtWindow = { 0, 0, 1416, 739 }; //x+16, y+39
+
 	// 화면 스크린의 해상도(넓이와 높이)을 얻는다.
 	int iScreenWidth = GetSystemMetrics(SM_CXFULLSCREEN);
 	int iScreenHeight = GetSystemMetrics(SM_CYFULLSCREEN);
 
 	// 윈도우 클라이언트 중앙과 화면 스크린 중앙을 맞춘다.
-	int iDestX = (iScreenWidth - (g_rtWindow.right - g_rtWindow.left)) / 2;
-	int iDestY = (iScreenHeight - (g_rtWindow.bottom - g_rtWindow.top)) / 2;
+	int iDestX = (iScreenWidth - g_rtWindow.right) / 2;
+	int iDestY = (iScreenHeight - g_rtWindow.bottom) / 2;
 
 	// 윈도우를 화면중앙으로 이동시킨다.
-	MoveWindow(hwnd, iDestX, iDestY,
-		g_rtWindow.right - g_rtWindow.left,
-		g_rtWindow.bottom - g_rtWindow.top,
-		true);
+	MoveWindow(hwnd, iDestX, iDestY, g_rtWindow.right, g_rtWindow.bottom, true);
 }
 
 //윈도우 등록 및 생성
@@ -97,7 +93,6 @@ bool wndC_DX::registWnd(LPCTSTR LWndName)
 
 	return true;
 }
-
 
 //윈도우 돌리기
 bool wndC_DX::runWindow()

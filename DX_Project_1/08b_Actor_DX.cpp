@@ -19,8 +19,8 @@ D3DXVECTOR3 Actor_DX::Get(float x, float y)
 {
 	D3DXVECTOR3 vRet;
 
-	vRet.x = x / 800;
-	vRet.y = y / 800;
+	vRet.x = x / g_uClientWidth;
+	vRet.y = y / g_uClientHeight;
 
 	vRet.x = vRet.x * 2.0f - 1.0f;
 	vRet.y = -(vRet.y * 2.0f - 1.0f);
@@ -91,8 +91,8 @@ void Actor_DX::SetVertexData()
 bool Actor_DX::SetData(RECT rt)
 {
 	m_rtInit.left = rt.left;
-	m_rtInit.right = rt.right;
 	m_rtInit.top = rt.top;
+	m_rtInit.right = rt.right;
 	m_rtInit.bottom = rt.bottom;
 
 	SetVertexData();
