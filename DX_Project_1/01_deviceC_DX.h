@@ -36,10 +36,6 @@ public:
 	IDXGISwapChain*          getSwapChain();
 	ID3D11RenderTargetView*	 getRenderTargetView();
 
-	//풀스크린 세팅
-public:
-	bool GetFullScrFlag();
-	void SetFullScrFlag(bool bFlag);
 
 public:
 	HRESULT InitDevice();      // 장치를 순서대로 생성한다.

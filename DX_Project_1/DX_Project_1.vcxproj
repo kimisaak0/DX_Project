@@ -26,6 +26,7 @@
     <ClInclude Include="04_timerC_DX.h" />
     <ClInclude Include="05_writeC_DX.h" />
     <ClInclude Include="06_inputC_DX.h" />
+    <ClInclude Include="07_soundC_DX.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="00_main_DX.cpp" />
@@ -35,6 +36,7 @@
     <ClCompile Include="04_timerC_DX.cpp" />
     <ClCompile Include="05_writeC_DX.cpp" />
     <ClCompile Include="06_inputC_DX.cpp" />
+    <ClCompile Include="07_soundC_DX.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

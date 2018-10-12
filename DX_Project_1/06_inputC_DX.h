@@ -41,13 +41,10 @@ public:
 
 public:
 	static input_DX& GetInstance();
-	static input_DX* GetInstancePtr();
 
-private:
+protected:
 	input_DX();
 	virtual ~input_DX();
 };
 
 #define I_Input input_DX::GetInstance()
-#define I_InputPtr input_DX::GetInstancePtr()
-

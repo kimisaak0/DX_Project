@@ -7,13 +7,6 @@ input_DX& input_DX::GetInstance()
 	return inst;
 }
 
-input_DX* input_DX::GetInstancePtr()
-{
-	static input_DX inst;
-	return &inst;
-}
-
-
 input_DX::input_DX()
 {
 	m_pDxInput = nullptr;

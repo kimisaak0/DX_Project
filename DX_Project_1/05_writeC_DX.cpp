@@ -137,7 +137,7 @@ ColorF writeC_DX::SetTextColor(ColorF color)
 	return oldColor;
 }
 
-//·£´õ¸µ
+//DrawText
 void writeC_DX::DrawTextBegin()
 {
 	m_pD2dRT->BeginDraw();
