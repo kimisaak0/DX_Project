@@ -149,3 +149,36 @@ extern wndC_DX*  g_pWindow;
 extern double g_GameTimer;
 
 //±¸Á¶Ã¼ 
+struct PCT_VERTEX
+{
+	D3DXVECTOR3 p;
+	D3DXVECTOR4 c;
+	D3DXVECTOR2 t;
+
+	PCT_VERTEX() {}
+
+	PCT_VERTEX(D3DXVECTOR3 vp, D3DXVECTOR4 vc, D3DXVECTOR2 vt)
+	{
+		p = vp;
+		c = vc;
+		t = vt;
+	}
+
+	bool operator==  (const PCT_VERTEX& Vertex)
+	{
+		if (p == Vertex.p && c == Vertex.c && t == Vertex.t) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+};
+
+struct fRect
+{
+	float left;
+	float top;
+	float right;
+	float bottom;
+};

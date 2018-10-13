@@ -17,75 +17,21 @@ HRESULT coreC_DX::SetRasterizerState()
 
 bool coreC_DX::Init()
 {
-	g_pWindow->CenterWindow(g_hWnd); //윈도우를 화면 중앙으로 이동시킨다.
-
-	//생성된 크기를 전역 변수에 대입한다.
-	GetWindowRect(g_hWnd, &g_rtWindow);
-	GetClientRect(g_hWnd, &g_rtClient);
-
-	g_uClientWidth = g_rtClient.right - g_rtClient.left;
-	g_uClientHeight = g_rtClient.bottom - g_rtClient.top;
-
 	SetRasterizerState();
 
-	m_Actor.SetData(0, 0, g_rtClient.right * 0.1f, g_rtClient.bottom * 0.2f);
-	m_Actor.m_vertexList[0].t.x = 0.0f;
-	m_Actor.m_vertexList[0].t.y = 0.0f;
-	m_Actor.m_vertexList[1].t.x = 1.0f;
-	m_Actor.m_vertexList[1].t.y = 0.0f;
-	m_Actor.m_vertexList[2].t.x = 1.0f;
-	m_Actor.m_vertexList[2].t.y = 0.0f;
-	m_Actor.m_vertexList[3].t.x = 1.0f;
-	m_Actor.m_vertexList[3].t.y = 1.0f;
-
+	m_Actor.SetPosition(0, 0, g_rtClient.right * 0.1f, g_rtClient.bottom * 0.2f);
 	m_Actor.Create(m_pD3dDevice, L"VertexShader.vsh", L"PixelShader.psh", L"skybox_top.JPG");
+
+	m_Image.SetPosition(10,10,110,110);
+	m_Image.Create(m_pD3dDevice, L"VertexShader.vsh", L"PixelShader.psh", L"Koala.jpg");
 
 	return true;
 }
 
 bool coreC_DX::Frame()
 {
-	static float fAngle = 0.0f;
-	fAngle += 0;// m_GameTimer.GetSPF();
-
-	int iRect = 0;
-
-	if (I_Input.IsKeyDown(0xcb)) { //Left
-		m_Actor.MoveX(m_GameTimer.GetSPF() * -0.3);
-	}
-
-	if (I_Input.IsKeyDown(0xcd)) { //Right
-		m_Actor.MoveX(m_GameTimer.GetSPF() * 0.3);
-	}
-
-	if (I_Input.IsKeyDown(0xc8)) { //Up
-		m_Actor.MoveY(m_GameTimer.GetSPF() * 0.3);
-	}
-
-	if (I_Input.IsKeyDown(0xd0)) { //Down
-		m_Actor.MoveY(m_GameTimer.GetSPF() * -0.3);
-	}
-
-	for (int iV = 0; iV < m_Actor.iVertexNum; iV++) {
-		m_FrameVertexList[iV] = m_Actor.m_vertexList[iV];
-
-		D3DXVECTOR3 vertex = m_Actor.m_vertexList[iV].p;
-		m_FrameVertexList[iV].p.x -= m_Actor.m_v3Center.x;
-		m_FrameVertexList[iV].p.y -= m_Actor.m_v3Center.y;
-
-		float S = sinf(fAngle);
-		float C = cosf(fAngle);
-
-		vertex.x = m_FrameVertexList[iV].p.x * C + m_FrameVertexList[iV].p.y * -S;
-		vertex.y = m_FrameVertexList[iV].p.x * S + m_FrameVertexList[iV].p.y * C;
-
-		vertex.x += m_Actor.m_v3Center.x;
-		vertex.y += m_Actor.m_v3Center.y;
-
-		m_FrameVertexList[iV].p = vertex;
-	}
-
-	m_pImmediateContext->UpdateSubresource(m_Actor.m_dxObj.m_pVertexBuffer, 0, NULL, m_FrameVertexList, 0, 0);
+	//m_Actor.Frame(m_pImmediateContext);
+	m_Image.Frame(m_pImmediateContext);
 
 	return true;
 }
@@ -98,6 +44,8 @@ bool coreC_DX::Render()
 	m_pImmediateContext->RSSetState(m_pRSSolid);
 
 	m_Actor.Render(m_pImmediateContext);
+
+	m_Image.Render(m_pImmediateContext);
 
 	return true;
 }
@@ -144,8 +92,18 @@ bool coreC_DX::gameInit()
 		return false;
 	}
 
+	g_pWindow->CenterWindow(g_hWnd); //윈도우를 화면 중앙으로 이동시킨다.
+
+	 //생성된 크기를 전역 변수에 대입한다.
+	GetWindowRect(g_hWnd, &g_rtWindow);
+	GetClientRect(g_hWnd, &g_rtClient);
+
+	g_uClientWidth = g_rtClient.right - g_rtClient.left;
+	g_uClientHeight = g_rtClient.bottom - g_rtClient.top;
+
 	Init();
 
+	
 	return true;
 }
 

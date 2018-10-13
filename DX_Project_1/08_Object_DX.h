@@ -1,31 +1,7 @@
 #pragma once
 #include "00_header_DX.h"
-
-struct PCT_VERTEX
-{
-	D3DXVECTOR3 p;
-	D3DXVECTOR4 c;
-	D3DXVECTOR2 t;
-
-	bool operator==  (const PCT_VERTEX& Vertex)
-	{
-		if (p == Vertex.p && c == Vertex.c && t == Vertex.t) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	PCT_VERTEX() {}
-
-	PCT_VERTEX(D3DXVECTOR3 vp, D3DXVECTOR4 vc, D3DXVECTOR2 vt)
-	{
-		p = vp;
-		c = vc;
-		t = vt;
-	}
-};
+#include "06_inputC_DX.h"
+#include "04_timerC_DX.h"
 
 class Object_DX
 {
@@ -37,15 +13,39 @@ public:
 	ID3D11ShaderResourceView*   m_pTextureSRV;     // ÅØ½ºÃÄ SRV
 
 public:
-	UINT m_iNumVertex;
+	PCT_VERTEX m_pVertexList[4];
+
+	PCT_VERTEX m_pVLtemp[4];
+	
+	RECT m_rtSRegion;
+	fRect m_frtPRegion;
+
+	POINT m_ptCenter;
+	D3DXVECTOR3 m_v3Center;
 
 public:
-	HRESULT CreateVertexBuffer(ID3D11Device* pd3dDevice, PCT_VERTEX* pVertexList, int iNumCount);
+	timerC_DX m_timer;
+
+public:
+	HRESULT CreateVertexBuffer(ID3D11Device* pd3dDevice, PCT_VERTEX* pVertexList);
 	HRESULT CreateVSandInputLayout(ID3D11Device* pd3dDevice, const TCHAR* pName);
 	HRESULT CreatePS(ID3D11Device* pd3dDevice, const TCHAR* pName);
 	HRESULT LoadTexture(ID3D11Device* pd3dDevice, const TCHAR* pLoadFile);
 
+	HRESULT Create(ID3D11Device* pd3dDevive, const TCHAR* pVsFile, const TCHAR* pPsFile, const TCHAR* pTexFile);
+
+	void transStoP();
+	void transPtoS();
+
+	void UpdateCP();
+
+	void SetPosition(UINT sl, UINT st, UINT sr, UINT sb);
+	void MoveX(float fDis);
+	void MoveY(float fDis);
+	void spin();
+
 public:
+	bool Frame(ID3D11DeviceContext* pContext);
 	bool Render(ID3D11DeviceContext* pContext);
 	bool Release();
 

@@ -21,12 +21,11 @@ protected:
 	D3D11_VIEWPORT             m_d3dViewPort;		   // 뷰포트
 
 public:
-	HRESULT CreateDevice();                                         // 디바이스 및 디바이스 컨텍스트를 생성한다.
-	HRESULT	CreateGIFactory();										// IDXGIFactory 객체 생성
-	HRESULT	CreateSwapChain(HWND hWnd);	// IDXGIFactory를 이용하여 스왑체인 생성
-
-	HRESULT	SetRenderTargetView();									// 타겟 뷰 설정
-	HRESULT	SetViewPort();     										// 뷰 포트 설정
+	HRESULT CreateDevice();                 // 디바이스 및 디바이스 컨텍스트를 생성한다.
+	HRESULT	CreateGIFactory();				// IDXGIFactory 객체 생성
+	HRESULT	CreateSwapChain(HWND hWnd);	    // IDXGIFactory를 이용하여 스왑체인 생성
+	HRESULT	SetRenderTargetView();			// 타겟 뷰 설정
+	HRESULT	SetViewPort();     				// 뷰 포트 설정
 
 	//접근자 선언
 public:

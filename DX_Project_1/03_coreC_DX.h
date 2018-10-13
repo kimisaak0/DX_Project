@@ -3,16 +3,17 @@
 #include "04_timerC_DX.h"
 #include "05_writeC_DX.h"
 #include "06_inputC_DX.h"
-#include "08b_Actor_DX.h"
+#include "08_Object_DX.h"
 
 class coreC_DX : public wndC_DX
 {
 	timerC_DX m_GameTimer;
 	writeC_DX m_Font;
 
-	Actor_DX   m_Actor;
-	PCT_VERTEX m_FrameVertexList[6];
+	Object_DX   m_Actor;
 	ID3D11RasterizerState* m_pRSSolid;
+
+	Object_DX m_Image;
 
 private:
 	bool m_swTimerRender;

@@ -43,10 +43,7 @@
     <ClInclude Include="03_coreC_DX.h">
       <Filter>00%29 base</Filter>
     </ClInclude>
-    <ClInclude Include="08a_Object_DX.h">
-      <Filter>03%29object</Filter>
-    </ClInclude>
-    <ClInclude Include="08b_Actor_DX.h">
+    <ClInclude Include="08_Object_DX.h">
       <Filter>03%29object</Filter>
     </ClInclude>
   </ItemGroup>
@@ -75,10 +72,7 @@
     <ClCompile Include="03_coreC_DX.cpp">
       <Filter>00%29 base</Filter>
     </ClCompile>
-    <ClCompile Include="08a_Object_DX.cpp">
-      <Filter>03%29object</Filter>
-    </ClCompile>
-    <ClCompile Include="08b_Actor_DX.cpp">
+    <ClCompile Include="08_Object_DX.cpp">
       <Filter>03%29object</Filter>
     </ClCompile>
   </ItemGroup>
