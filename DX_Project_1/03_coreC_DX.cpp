@@ -92,14 +92,12 @@ bool coreC_DX::gameInit()
 		return false;
 	}
 
+
 	g_pWindow->CenterWindow(g_hWnd); //윈도우를 화면 중앙으로 이동시킨다.
 
 	 //생성된 크기를 전역 변수에 대입한다.
 	GetWindowRect(g_hWnd, &g_rtWindow);
 	GetClientRect(g_hWnd, &g_rtClient);
-
-	g_uClientWidth = g_rtClient.right - g_rtClient.left;
-	g_uClientHeight = g_rtClient.bottom - g_rtClient.top;
 
 	Init();
 
@@ -126,7 +124,7 @@ bool coreC_DX::gameFrame()
 		
 	}
 
-	if (I_Input.IsKeyDownOnce(0x2b)) {
+	if (I_Input.IsKeyDownOnce(DIK_0)) {
 		m_swKeyRender = !m_swKeyRender;
 	}
 

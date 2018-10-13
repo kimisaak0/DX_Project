@@ -221,14 +221,13 @@ void Object_DX::spin()
 	float C = cosf(fAngle);
 
 	for (int iV = 0; iV < 4; iV++) {
-		m_pVLtemp[iV] = m_pVertexList[iV];
 
 		D3DXVECTOR3 vertex = m_pVertexList[iV].p;
 
 		m_pVLtemp[iV].p.x -= m_v3Center.x;
 		m_pVLtemp[iV].p.y -= m_v3Center.y;
 
-		vertex.x = m_pVLtemp[iV].p.x * C + m_pVLtemp[iV].p.y * S;
+		vertex.x = m_pVLtemp[iV].p.x * C  + m_pVLtemp[iV].p.y * S;
 		vertex.y = m_pVLtemp[iV].p.x * -S + m_pVLtemp[iV].p.y * C;
 
 		vertex.x += m_v3Center.x;
@@ -258,8 +257,13 @@ bool Object_DX::Frame(ID3D11DeviceContext* pContext)
 		MoveY(m_timer.GetSPF() * -0.3);
 	}
 
-	spin();
+	for (int iV = 0; iV < 4; iV++) {
+		m_pVLtemp[iV] = m_pVertexList[iV];
+	}
 
+	if (I_Input.IsKeyDown(DIK_1)) { //Down
+		spin();
+	}
 	pContext->UpdateSubresource(m_pVertexBuffer, 0, NULL, m_pVLtemp, 0, 0);
 
 	return true;

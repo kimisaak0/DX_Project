@@ -48,7 +48,8 @@ LRESULT CALLBACK wndC_DX::MsgProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lP
 //윈도우를 중앙으로 옮기는 함수.
 void wndC_DX::CenterWindow(HWND hwnd)
 {
-	g_rtWindow = { 0, 0, 1416, 739 }; //x+16, y+39
+//	g_rtWindow = { 0, 0, 1416, 739 }; //x+16, y+39
+	g_rtWindow = { 0, 0, (LONG)g_uClientWidth, (LONG)g_uClientHeight }; //x+16, y+39
 
 	// 화면 스크린의 해상도(넓이와 높이)을 얻는다.
 	int iScreenWidth = GetSystemMetrics(SM_CXFULLSCREEN);
