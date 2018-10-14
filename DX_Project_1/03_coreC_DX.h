@@ -4,6 +4,7 @@
 #include "05_writeC_DX.h"
 #include "06_inputC_DX.h"
 #include "08_Object_DX.h"
+#include "09_CollisionC_DX.h"
 
 class coreC_DX : public wndC_DX
 {
@@ -14,6 +15,10 @@ class coreC_DX : public wndC_DX
 	ID3D11RasterizerState* m_pRSSolid;
 
 	Object_DX m_Image;
+
+	Object_DX m_sky;
+
+	Object_DX m_statue;
 
 private:
 	bool m_swTimerRender;

@@ -28,6 +28,13 @@
     <ClInclude Include="06_inputC_DX.h" />
     <ClInclude Include="07_soundC_DX.h" />
     <ClInclude Include="08_Object_DX.h" />
+    <ClInclude Include="09_CollisionC_DX.h" />
+    <ClInclude Include="10a_SceneLobby_DX.h" />
+    <ClInclude Include="10b_SceneOver_DX.h" />
+    <ClInclude Include="10c_SceneVictory_DX.h" />
+    <ClInclude Include="10d_SceneGame_1_DX.h" />
+    <ClInclude Include="10_SceneC_DX.h" />
+    <ClInclude Include="11_SceneMgr_DX.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="00_main_DX.cpp" />
@@ -39,6 +46,9 @@
     <ClCompile Include="06_inputC_DX.cpp" />
     <ClCompile Include="07_soundC_DX.cpp" />
     <ClCompile Include="08_Object_DX.cpp" />
+    <ClCompile Include="09_CollisionC_DX.cpp" />
+    <ClCompile Include="10a_SceneLobby_DX.cpp" />
+    <ClCompile Include="10_SceneC_DX.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="PixelShader.psh" />
@@ -96,8 +106,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>../../game/</OutDir>
-    <IntDir>../../output/middle/</IntDir>
+    <OutDir>../game/</OutDir>
+    <IntDir>../output/middle/</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -113,10 +123,10 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../INPUT/DX11/inc/;../../INPUT/FMOD/inc/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../INPUT/DX11/inc/;../INPUT/FMOD/inc/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>../../INPUT/DX11/lib/;../../INPUT/FMOD/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../INPUT/DX11/lib/;../INPUT/FMOD/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

@@ -48,7 +48,6 @@ LRESULT CALLBACK wndC_DX::MsgProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lP
 //윈도우를 중앙으로 옮기는 함수.
 void wndC_DX::CenterWindow(HWND hwnd)
 {
-//	g_rtWindow = { 0, 0, 1416, 739 }; //x+16, y+39
 	g_rtWindow = { 0, 0, (LONG)g_uClientWidth, (LONG)g_uClientHeight }; //x+16, y+39
 
 	// 화면 스크린의 해상도(넓이와 높이)을 얻는다.
@@ -56,8 +55,8 @@ void wndC_DX::CenterWindow(HWND hwnd)
 	int iScreenHeight = GetSystemMetrics(SM_CYFULLSCREEN);
 
 	// 윈도우 클라이언트 중앙과 화면 스크린 중앙을 맞춘다.
-	int iDestX = (iScreenWidth - g_rtWindow.right) / 2;
-	int iDestY = (iScreenHeight - g_rtWindow.bottom) / 2;
+	int iDestX =  (iScreenWidth - g_rtWindow.right) / 2;
+	int iDestY =  (iScreenHeight - g_rtWindow.bottom) / 2;
 
 	// 윈도우를 화면중앙으로 이동시킨다.
 	MoveWindow(hwnd, iDestX, iDestY, g_rtWindow.right, g_rtWindow.bottom, true);

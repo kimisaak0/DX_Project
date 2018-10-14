@@ -2,6 +2,13 @@
 #include "07_soundC_DX.h"
 
 
+Sound_DX& Sound_DX::GetInstance()
+{
+	static Sound_DX inst;
+	return inst;
+}
+
+
 Sound_DX::Sound_DX()
 {
 	m_iSoundList = 0;

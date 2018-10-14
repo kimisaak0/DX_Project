@@ -19,19 +19,28 @@ bool coreC_DX::Init()
 {
 	SetRasterizerState();
 
-	m_Actor.SetPosition(0, 0, g_rtClient.right * 0.1f, g_rtClient.bottom * 0.2f);
-	m_Actor.Create(m_pD3dDevice, L"VertexShader.vsh", L"PixelShader.psh", L"skybox_top.JPG");
+	m_Actor.SetPosition(10, 10, 110, 110);
+	m_Actor.Create(m_pD3dDevice, L"VertexShader.vsh", L"PixelShader.psh", L"Koala.jpg");
 
-	m_Image.SetPosition(10,10,110,110);
-	m_Image.Create(m_pD3dDevice, L"VertexShader.vsh", L"PixelShader.psh", L"Koala.jpg");
+	m_Image.SetPosition(300,300,500,500);
+	m_Image.Create(m_pD3dDevice, L"VertexShader.vsh", L"PixelShader.psh", L"../INPUT/DATA/image/Rock.png");
+
+	m_sky.SetPosition(0, 0, 1500, 150);
+	m_sky.Create(m_pD3dDevice, L"VertexShader.vsh", L"PixelShader.psh", L"../INPUT/DATA/image/st00_cm_front.bmp");
+
+	m_statue.SetPosition(500, 500, 800, 1000);
+	m_statue.Create(m_pD3dDevice, L"VertexShader.vsh", L"PixelShader.psh", L"../INPUT/DATA/image/statue.png");
 
 	return true;
 }
 
 bool coreC_DX::Frame()
 {
-	//m_Actor.Frame(m_pImmediateContext);
-	m_Image.Frame(m_pImmediateContext);
+	m_Actor.Frame(m_pImmediateContext);
+
+	I_ClsMgr.RectInRect(m_Image.m_rtSRegion, m_Actor.m_rtSRegion);
+	
+	//m_Image.Frame(m_pImmediateContext);
 
 	return true;
 }
@@ -43,9 +52,13 @@ bool coreC_DX::Render()
 
 	m_pImmediateContext->RSSetState(m_pRSSolid);
 
+	m_sky.Render(m_pImmediateContext);
+
 	m_Actor.Render(m_pImmediateContext);
 
 	m_Image.Render(m_pImmediateContext);
+
+	m_statue.Render(m_pImmediateContext);
 
 	return true;
 }

@@ -148,6 +148,16 @@ extern wndC_DX*  g_pWindow;
 //타이머에서
 extern double g_GameTimer;
 
+//열거형
+enum direction
+{
+	NO = 0,
+	LEFT = 1,
+	TOP = 2,
+	RIGHT = 3,
+	BOTTOM = 4,
+};
+
 //구조체 
 struct PCT_VERTEX
 {
@@ -181,4 +191,18 @@ struct fRect
 	float top;
 	float right;
 	float bottom;
+};
+
+struct circle
+{
+	POINT pCenter;
+	double dRadius;
+};
+
+struct ClsInfo
+{
+	bool bDoCls;
+	direction drClsSrc;
+	direction drClsDest;
+	POINT ptInLength;
 };

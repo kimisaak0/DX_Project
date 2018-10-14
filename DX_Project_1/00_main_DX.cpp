@@ -3,8 +3,8 @@
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
 {
 
-	g_uClientWidth = 716;  //원하는 크기 + 16
-	g_uClientHeight = 739; //원하는 크기 + 39
+	g_uClientWidth = 1500;  //원하는 크기 + 16
+	g_uClientHeight = 750; //원하는 크기 + 39
 
 	g_hInst = hInst;
 	
