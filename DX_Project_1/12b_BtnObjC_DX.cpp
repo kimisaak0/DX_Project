@@ -11,15 +11,15 @@ bool BtnObjC_DX::Init()
 	return true;
 }
 
-bool BtnObjC_DX::Frame(ID3D11DeviceContext* pContext)
+bool BtnObjC_DX::Frame()
 {
-	Object_DX::Frame(pContext);
+	Object_DX::Frame();
 	return true;
 }
 
-bool BtnObjC_DX::Render(ID3D11DeviceContext* pContext)
+bool BtnObjC_DX::Render()
 {
-	Object_DX::Render(pContext);
+	Object_DX::Render();
 	return true;
 }
 

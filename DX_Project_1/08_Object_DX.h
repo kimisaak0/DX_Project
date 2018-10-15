@@ -5,53 +5,49 @@
 
 class Object_DX
 {
-public:
+private:
 	ID3D11Buffer*               m_pVertexBuffer;   // 정점 버퍼
 	ID3D11VertexShader*         m_pVS;             // 정점 쉐이더
 	ID3D11PixelShader*          m_pPS;             // 픽셀 쉐이더
 	ID3D11InputLayout*          m_pInputLayout;    // 인풋 레이아웃
 	ID3D11ShaderResourceView*   m_pTextureSRV;     // 텍스쳐 SRV
 
-public:
+private:
 	PCT_VERTEX m_pVertexList[4];
-	D3DXVECTOR2 m_lt;
-	D3DXVECTOR2 m_rb;
 	
-	RECT m_rtSRegion;
-	fRect m_frtPRegion;
+	uWH   m_uImageSize;
+	uLTRB m_uImagePart;
+
+	uLTRB m_uSRegion;
+	fLTRB m_fPRegion;
 
 	POINT m_ptCenter;
 	D3DXVECTOR3 m_v3Center;
 
-public:
-	timerC_DX m_timer;
+private:
+	void transStoP(); //화면 -> 투영
+	void transPtoS(); //투영 -> 화면
+	void UpdateCP(); //중점 갱신
+	void UpdateVertexList(); //정점 리스트 갱신
 
-public:
-	HRESULT CreateVertexBuffer();
-	HRESULT CreateVSandInputLayout();
-	HRESULT CreatePS();
-	HRESULT LoadTexture(const TCHAR* pLoadFile);
-
+	void SetPosition(uXYWH _xywh);
+	void ImagePartialSelect(uXYWH imgXYWH, uWH imgSize);
 	HRESULT Create(const TCHAR* pTexFile);
 
-	void transStoP();
-	void transPtoS();
+public:
+	void CreateFullImgObj(uXYWH _xywh, const TCHAR* pTexFile);
+	void CreatePartImgObj(uXYWH _xywh, uXYWH imgXYWH, uWH imgSize, const TCHAR* pTexFile);
 
-	void UpdateCP();
+	void MoveX(UINT uDis);
+	void MoveY(UINT fDis);
 
-	void SetUV(UINT l, UINT t, UINT r, UINT b, UINT imgW, UINT imgH);
-	void SetPosition(UINT sl, UINT st, UINT width, UINT height);
-
-
-	void MoveX(float fDis);
-	void MoveY(float fDis);
-	void spin();
+	void spin(float fAngle);
 	void scale(float size);
 
 public:
 	virtual bool Init();
-	virtual bool Frame(ID3D11DeviceContext* pContext);
-	virtual bool Render(ID3D11DeviceContext* pContext);
+	virtual bool Frame();
+	virtual bool Render();
 	virtual bool Release();
 
 public:

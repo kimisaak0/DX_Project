@@ -197,12 +197,51 @@ struct PCT_VERTEX
 	}
 };
 
-struct fRect
+struct uWH
+{
+	UINT width;
+	UINT Height;
+};
+
+struct fLTRB
 {
 	float left;
 	float top;
 	float right;
 	float bottom;
+};
+
+struct uXYWH
+{
+	UINT ltx;
+	UINT lty;
+	UINT width;
+	UINT height;
+
+	//uXYWH& operator= (const uLTRB& _ltrb) {
+	//	ltx = _ltrb.left;
+	//	lty = _ltrb.top;
+	//	width = _ltrb.right - _ltrb.left;
+	//	height = _ltrb.bottom - _ltrb.top;
+	//}
+};
+
+
+struct uLTRB
+{
+	UINT left;
+	UINT top;
+	UINT right;
+	UINT bottom;
+
+	uLTRB& operator= (const uXYWH& _xywh) {
+		left = _xywh.ltx;
+		top = _xywh.lty;
+		right = _xywh.ltx + _xywh.width;
+		bottom = _xywh.lty + _xywh.height;
+
+		return *this;
+	}
 };
 
 struct circle

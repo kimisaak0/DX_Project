@@ -6,8 +6,8 @@ class BtnObjC_DX : public Object_DX
 
 public:
 	virtual bool Init();
-	virtual bool Frame(ID3D11DeviceContext* pContext);
-	virtual bool Render(ID3D11DeviceContext* pContext);
+	virtual bool Frame();
+	virtual bool Render();
 	virtual bool Release();
 
 public:

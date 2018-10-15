@@ -5,10 +5,9 @@ BgObc_DX::BgObc_DX()
 
 }
 
-bool BgObc_DX::setBgImage(ID3D11Device* pd3dDevice,const TCHAR* pTexFile)
+bool BgObc_DX::setBgImage(const TCHAR* pTexFile)
 {
-	SetPosition(0, 0, g_uClientWidth, g_uClientHeight);
-	Create(pd3dDevice, pTexFile);
+	CreateFullImgObj({ 0,0,g_uClientWidth, g_uClientHeight }, pTexFile);
 	return true;
 }
 
@@ -18,15 +17,15 @@ bool BgObc_DX::Init()
 	return true;
 }
 
-bool BgObc_DX::Frame(ID3D11DeviceContext* pContext)
+bool BgObc_DX::Frame()
 {
-	Object_DX::Frame(pContext);
+	Object_DX::Frame();
 	return true;
 }
 
-bool BgObc_DX::Render(ID3D11DeviceContext* pContext)
+bool BgObc_DX::Render()
 {
-	Object_DX::Render(pContext);
+	Object_DX::Render();
 	return true;
 }
 

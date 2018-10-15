@@ -22,7 +22,7 @@ bool coreC_DX::Init()
 	m_pLobby = new SceneLobby_DX;
 	m_pGame1 = new SceneGame_1_DX;
 
-	m_pScene = m_pLobby;
+	m_pScene = m_pGame1;
 
 	m_pScene->Init();
 

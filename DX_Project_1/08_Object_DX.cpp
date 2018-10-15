@@ -2,14 +2,102 @@
 
 Object_DX::Object_DX()
 {
-
+	
 }
 
-// 정점 버퍼 생성
-HRESULT Object_DX::CreateVertexBuffer()
+
+//화면좌표계 -> 투영좌표게
+void Object_DX::transStoP()
+{
+	m_fPRegion.left = (m_uSRegion.left / (float)g_uClientWidth) * 2 - 1.0f;
+	m_fPRegion.top = -((m_uSRegion.top / (float)g_uClientHeight) * 2 - 1.0f);
+	m_fPRegion.right = (m_uSRegion.right / (float)g_uClientWidth) * 2 - 1.0f;
+	m_fPRegion.bottom = -((m_uSRegion.bottom / (float)g_uClientHeight) * 2 - 1.0f);
+}
+
+//투영좌표계 -> 화면좌표계
+void Object_DX::transPtoS()
+{
+	m_uSRegion.left = (UINT)((m_fPRegion.left + 1.0f) / 2 * (float)g_uClientWidth);
+	m_uSRegion.top = (UINT)((m_fPRegion.top - 1.0f) / -2 * (float)g_uClientHeight);
+	m_uSRegion.right = (UINT)((m_fPRegion.right + 1.0f) / 2 * (float)g_uClientWidth);
+	m_uSRegion.bottom = (UINT)((m_fPRegion.bottom - 1.0f) / -2 * (float)g_uClientHeight);
+}
+
+
+
+//중점 갱신
+void Object_DX::UpdateCP()
+{
+	m_ptCenter.x = (m_uSRegion.right - m_uSRegion.left) / 2;
+	m_ptCenter.y = (m_uSRegion.bottom - m_uSRegion.top) / 2;
+
+	m_v3Center.x = 0.0f;
+	m_v3Center.y = 0.0f;
+	m_v3Center.z = 0.0f;
+
+	for (int iV = 0; iV < 4; iV++) {
+		m_v3Center.x += m_pVertexList[iV].p.x;
+		m_v3Center.y += m_pVertexList[iV].p.y;
+	}
+
+	m_v3Center.x /= 4;
+	m_v3Center.y /= 4;
+}
+
+//정점 리스트 갱신
+void Object_DX::UpdateVertexList()
+{
+	m_pVertexList[0].p = D3DXVECTOR3(m_fPRegion.left, m_fPRegion.top, 0.0f);
+	m_pVertexList[1].p = D3DXVECTOR3(m_fPRegion.left, m_fPRegion.bottom, 0.0f);
+	m_pVertexList[2].p = D3DXVECTOR3(m_fPRegion.right, m_fPRegion.top, 0.0f);
+	m_pVertexList[3].p = D3DXVECTOR3(m_fPRegion.right, m_fPRegion.bottom, 0.0f);
+
+	//중점 갱신
+	UpdateCP();
+}
+
+
+
+//생성 위치 지정하기
+void Object_DX::SetPosition(uXYWH _xywh)
+{
+	//화면 좌표계 저장
+	m_uSRegion = _xywh;
+
+	//투영 좌표계 변환
+	transStoP();
+
+	//정점 리스트 저장
+	UpdateVertexList();
+}
+
+//이미지 자르기
+void Object_DX::ImagePartialSelect(uXYWH imgXYWH, uWH imgSize)
+{
+	uLTRB imgLTRB;
+	m_uImagePart = imgLTRB = imgXYWH;
+	m_uImageSize = imgSize;
+
+	fLTRB fImageUV;
+	//이미지 화면 좌표를 uv좌표로 변환
+	fImageUV.left = (float)imgLTRB.left / imgSize.width;
+	fImageUV.top = (float)imgLTRB.top / imgSize.Height;
+	fImageUV.right = (float)imgLTRB.right / imgSize.width;
+	fImageUV.bottom = (float)imgLTRB.bottom / imgSize.Height;
+
+	m_pVertexList[0].t = D3DXVECTOR2(fImageUV.left, fImageUV.top);
+	m_pVertexList[1].t = D3DXVECTOR2(fImageUV.left, fImageUV.bottom);
+	m_pVertexList[2].t = D3DXVECTOR2(fImageUV.right, fImageUV.top);
+	m_pVertexList[3].t = D3DXVECTOR2(fImageUV.right, fImageUV.bottom);
+}
+
+//오브젝트 생성하기
+HRESULT Object_DX::Create(const TCHAR* pTexFile)
 {
 	HRESULT hr;
 
+	// 정점 버퍼 생성
 	D3D11_BUFFER_DESC sDesc;
 	ZeroMemory(&sDesc, sizeof(D3D11_BUFFER_DESC));
 	sDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -24,15 +112,10 @@ HRESULT Object_DX::CreateVertexBuffer()
 		return hr;
 	}
 
-	return hr;
-}
-
-//정점 쉐이더 생성
-HRESULT Object_DX::CreateVSandInputLayout()
-{
-	HRESULT hr;
+	//정점 쉐이더 생성
 	ID3DBlob*  pErrorBlob;
 	ID3DBlob*  pVSBlob;
+
 
 	hr = D3DX11CompileFromFile(L"VertexShader.vsh", NULL, NULL, "VS", "vs_5_0", NULL, NULL, NULL, &pVSBlob, &pErrorBlob, NULL);
 	if (FAILED(hr)) {
@@ -45,12 +128,13 @@ HRESULT Object_DX::CreateVSandInputLayout()
 		return hr;
 	}
 
+	//레이아웃 생성
 	if (pVSBlob == NULL) { return E_FAIL; }
 
 	D3D11_INPUT_ELEMENT_DESC ied[] = {
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 28, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 28, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 	};
 
 	int iNumElement = sizeof(ied) / sizeof(D3D11_INPUT_ELEMENT_DESC);
@@ -60,19 +144,8 @@ HRESULT Object_DX::CreateVSandInputLayout()
 		return hr;
 	}
 
-	SAFE_RELEASE(pErrorBlob);
-	SAFE_RELEASE(pVSBlob);
-
-	return hr;
-}
-
-//픽셀 쉐이더 생성
-HRESULT Object_DX::CreatePS()
-{
-	HRESULT hr;
+	//픽셀 쉐이더 생성
 	ID3DBlob*  pPSBlop;
-	ID3DBlob*  pErrorBlob;
-
 	hr = D3DX11CompileFromFile(L"PixelShader.psh", NULL, NULL, "PS", "ps_5_0", NULL, NULL, NULL, &pPSBlop, &pErrorBlob, NULL);
 	if (FAILED(hr)) {
 		OutputDebugStringA((char*)pErrorBlob->GetBufferPointer());
@@ -87,15 +160,10 @@ HRESULT Object_DX::CreatePS()
 
 	SAFE_RELEASE(pErrorBlob);
 	SAFE_RELEASE(pPSBlop);
-	return hr;
-}
+	SAFE_RELEASE(pVSBlob);
 
-//텍스쳐 불러오기
-HRESULT Object_DX::LoadTexture(const TCHAR* pLoadFile)
-{
-	HRESULT hr;
-
-	hr = D3DX11CreateShaderResourceViewFromFile(g_pD3dDevice, pLoadFile, NULL, NULL, &m_pTextureSRV, NULL);
+	//텍스쳐 로드
+	hr = D3DX11CreateShaderResourceViewFromFile(g_pD3dDevice, pTexFile, NULL, NULL, &m_pTextureSRV, NULL);
 	if (FAILED(hr)) {
 		return hr;
 	}
@@ -103,129 +171,54 @@ HRESULT Object_DX::LoadTexture(const TCHAR* pLoadFile)
 	return hr;
 }
 
-//전부 생성하기
-HRESULT Object_DX::Create(const TCHAR* pTexFile)
+
+
+//전체 이미지 오브젝트 생성
+void Object_DX::CreateFullImgObj(uXYWH _xywh, const TCHAR* pTexFile) {
+	SetPosition(_xywh);
+	ImagePartialSelect({ 0,0,1,1 }, { 1,1 });
+	Create(pTexFile);
+}
+
+//부분 이미지 오브젝트 생성
+void Object_DX::CreatePartImgObj(uXYWH _xywh, uXYWH imgXYWH, uWH imgSize, const TCHAR* pTexFile)
 {
-	HRESULT hr;
-
-	hr = CreateVertexBuffer(); if (hr) { return hr; }
-	hr = CreateVSandInputLayout(); if (hr) { return hr; }
-	hr = CreatePS(); if (hr) { return hr; }
-	hr = LoadTexture(pTexFile); if (hr) { return hr; }
-
-	return hr;
+	SetPosition(_xywh);
+	ImagePartialSelect(imgXYWH, imgSize);
+	Create(pTexFile);
 }
 
 
-void Object_DX::transStoP()
+
+//x축 이동
+void Object_DX::MoveX(UINT uDis)
 {
-	m_frtPRegion.left = (m_rtSRegion.left / (float)g_uClientWidth) * 2 - 1.0f;
-	m_frtPRegion.top = -((m_rtSRegion.top / (float)g_uClientHeight) * 2 - 1.0f);
-	m_frtPRegion.right = (m_rtSRegion.right / (float)g_uClientWidth) * 2 - 1.0f;
-	m_frtPRegion.bottom = -((m_rtSRegion.bottom / (float)g_uClientHeight) * 2 - 1.0f);
-}
+	m_uSRegion.left += uDis;
+	m_uSRegion.right += uDis;
 
-void Object_DX::transPtoS()
-{
-	m_rtSRegion.left = (m_frtPRegion.left+1.0f) / 2 * (float)g_uClientWidth;
-	m_rtSRegion.top = (m_frtPRegion.top - 1.0f) / -2 * (float)g_uClientHeight;
-	m_rtSRegion.right = (m_frtPRegion.right + 1.0f) / 2 * (float)g_uClientWidth;
-	m_rtSRegion.bottom = (m_frtPRegion.bottom - 1.0f) / -2 * (float)g_uClientHeight;
-}
-
-void Object_DX::UpdateCP()
-{
-	m_ptCenter.x = (m_rtSRegion.right - m_rtSRegion.left) / 2;
-	m_ptCenter.y = (m_rtSRegion.bottom - m_rtSRegion.top) / 2;
-
-	m_v3Center.x = 0.0f;
-	m_v3Center.y = 0.0f;
-
-	for (int iV = 0; iV < 4; iV++) {
-		D3DXVECTOR3 vertex = m_pVertexList[iV].p;
-		m_v3Center.x += vertex.x;
-		m_v3Center.y += vertex.y;
-	}
-
-	m_v3Center.x /= 4.0f;
-	m_v3Center.y /= 4.0f;
-
-	m_v3Center.z = 0.0f;
-}
-
-void Object_DX::SetUV(UINT l, UINT t, UINT r, UINT b, UINT imgW, UINT imgH)
-{
-	m_lt.x = l / imgW;
-	m_lt.y = t / imgH;
-	m_rb.x = r / imgW;
-	m_rb.y = b / imgH;
-}
-
-//위치 지정하기
-void Object_DX::SetPosition(UINT sl, UINT st, UINT width, UINT height)
-{
-	//화면 좌표계 저장
-	m_rtSRegion.left = sl;
-	m_rtSRegion.top = st;
-	m_rtSRegion.right = sl+width;
-	m_rtSRegion.bottom = st+height;
-
-	//투영 좌표계 저장
 	transStoP();
 
-	//uv변환 필요
-	ZeroMemory(&m_pVertexList, sizeof(m_pVertexList[0])*4);
-	m_pVertexList[0].p = D3DXVECTOR3(m_frtPRegion.left, m_frtPRegion.top, 0.0f);
-	m_pVertexList[0].t = D3DXVECTOR2(0.0f, 0.0f);
-
-	m_pVertexList[1].p = D3DXVECTOR3(m_frtPRegion.left, m_frtPRegion.bottom, 0.0f);
-	m_pVertexList[1].t = D3DXVECTOR2(0.0f, 1.0f);
-
-	m_pVertexList[2].p = D3DXVECTOR3(m_frtPRegion.right, m_frtPRegion.top, 0.0f);
-	m_pVertexList[2].t = D3DXVECTOR2(1.0f, 0.0f);
-
-	m_pVertexList[3].p = D3DXVECTOR3(m_frtPRegion.right, m_frtPRegion.bottom, 0.0f);
-	m_pVertexList[3].t = D3DXVECTOR2(1.0f, 1.0f);
-
-
-	//중점 저장
-	UpdateCP();
-
-}
-
-void Object_DX::MoveX(float fDis)
-{
-	for (int iV = 0; iV < 4; iV++) {
-		m_pVertexList[iV].p.x += fDis;
-	}
-
-	m_frtPRegion.left += fDis;
-	m_frtPRegion.right += fDis;
-
-	transPtoS();
+	UpdateVertexList();
 
 	UpdateCP();
 }
 
-void Object_DX::MoveY(float fDis)
+//y축 이동
+void Object_DX::MoveY(UINT uDis)
 {
-	for (int iV = 0; iV < 4; iV++) {
-		m_pVertexList[iV].p.y += fDis;
-	}
+	m_uSRegion.top += uDis;
+	m_uSRegion.bottom += uDis;
 
-	m_frtPRegion.top += fDis;
-	m_frtPRegion.bottom += fDis;
+	transStoP();
 
-	transPtoS();
+	UpdateVertexList();
 
 	UpdateCP();
 }
 
-void Object_DX::spin()
+//회전
+void Object_DX::spin(float fAngle)
 {
-	static float fAngle = 0.0f;
-	fAngle = m_timer.GetSPF();
-
 	float S = sinf(fAngle);
 	float C = cosf(fAngle);
 
@@ -247,69 +240,75 @@ void Object_DX::spin()
 	}
 }
 
+//크기 조절
 void Object_DX::scale(float size)
 {
 	for (int iV = 0; iV < 4; iV++) {
 		m_pVertexList[iV].p.x -= m_v3Center.x;
 		m_pVertexList[iV].p.y -= m_v3Center.y;
 
-		m_pVertexList[iV].p.x *= (1 - size);
-		m_pVertexList[iV].p.y *= (1 - size);
+		m_pVertexList[iV].p.x *= size;
+		m_pVertexList[iV].p.y *= size;
 
 		m_pVertexList[iV].p.x += m_v3Center.x;
 		m_pVertexList[iV].p.y += m_v3Center.y;
 	}
 }
 
+
+
 bool Object_DX::Init()
 {
+	ZeroMemory(&m_pVertexList, sizeof(m_pVertexList[0]) * 4);
 	return true;
 }
 
-bool Object_DX::Frame(ID3D11DeviceContext* pContext)
+bool Object_DX::Frame()
 {
-	m_timer.Frame();
+	static double befTime;
 
 	if (I_Input.IsKeyDown(0xcb)) { //Left
-		MoveX(m_timer.GetSPF() * -0.3);
+		MoveX(-1);
 	}
 
 	if (I_Input.IsKeyDown(0xcd)) { //Right
-		MoveX(m_timer.GetSPF() * 0.3);
+		MoveX(1);
 	}
 
 	if (I_Input.IsKeyDown(0xc8)) { //Up
-		MoveY(m_timer.GetSPF() * 0.3);
-		scale(0.0005f);
+		MoveY(-1);
+		//scale(-0.5f);
 	}
 
 	if (I_Input.IsKeyDown(0xd0)) { //Down
-		MoveY(m_timer.GetSPF() * -0.3);
-		scale(-0.0005f);
+		MoveY(1);
+		//scale(0.5f);
+	}
+	
+	if (I_Input.IsKeyDown(DIK_1)) { //Down
+		spin(0.1f);
 	}
 
-	if (I_Input.IsKeyDown(DIK_1)) { //Down
-		spin();
-	}
-	pContext->UpdateSubresource(m_pVertexBuffer, 0, NULL, m_pVertexList, 0, 0);
+	g_pD3dContext->UpdateSubresource(m_pVertexBuffer, 0, NULL, m_pVertexList, 0, 0);
+
+	befTime = g_GameTimer;
 
 	return true;
 }
 
-//그리기
-bool Object_DX::Render(ID3D11DeviceContext* pContext)
+bool Object_DX::Render()
 {
 	UINT pStrides = sizeof(PCT_VERTEX);
 	UINT pOffsets = 0;
 
-	pContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &pStrides, &pOffsets);
-	pContext->IASetInputLayout(m_pInputLayout);
-	pContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	pContext->VSSetShader(m_pVS, NULL, NULL);
-	pContext->PSSetShader(m_pPS, NULL, NULL);
-	pContext->PSSetShaderResources(0, 1, &m_pTextureSRV);
+	g_pD3dContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &pStrides, &pOffsets);
+	g_pD3dContext->IASetInputLayout(m_pInputLayout);
+	g_pD3dContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	g_pD3dContext->VSSetShader(m_pVS, NULL, NULL);
+	g_pD3dContext->PSSetShader(m_pPS, NULL, NULL);
+	g_pD3dContext->PSSetShaderResources(0, 1, &m_pTextureSRV);
 
-	pContext->Draw(4, 0);
+	g_pD3dContext->Draw(4, 0);
 
 	return true;
 }
@@ -324,6 +323,9 @@ bool Object_DX::Release()
 
 	return true;
 }
+
+
+
 
 Object_DX::~Object_DX()
 {
