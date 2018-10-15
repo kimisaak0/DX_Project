@@ -1,8 +1,13 @@
 #pragma once
 #include "10_SceneC_DX.h"
+#include "12a_BgObjC_DX.h"
+#include "12b_BtnObjC_DX.h"
 
 class SceneLobby_DX : public SceneC_DX
 {
+	BgObc_DX m_bg;
+	BtnObjC_DX m_btnStart;
+
 public:
 	virtual bool	Init();
 	virtual bool	Frame();

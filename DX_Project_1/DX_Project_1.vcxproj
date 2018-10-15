@@ -35,6 +35,8 @@
     <ClInclude Include="10d_SceneGame_1_DX.h" />
     <ClInclude Include="10_SceneC_DX.h" />
     <ClInclude Include="11_SceneMgr_DX.h" />
+    <ClInclude Include="12a_BgObjC_DX.h" />
+    <ClInclude Include="12b_BtnObjC_DX.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="00_main_DX.cpp" />
@@ -48,7 +50,10 @@
     <ClCompile Include="08_Object_DX.cpp" />
     <ClCompile Include="09_CollisionC_DX.cpp" />
     <ClCompile Include="10a_SceneLobby_DX.cpp" />
+    <ClCompile Include="10d_SceneGame_1_DX.cpp" />
     <ClCompile Include="10_SceneC_DX.cpp" />
+    <ClCompile Include="12a_BgObjC_DX.cpp" />
+    <ClCompile Include="12b_BtnObjC_DX.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="PixelShader.psh" />

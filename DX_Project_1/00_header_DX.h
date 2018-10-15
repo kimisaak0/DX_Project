@@ -136,6 +136,10 @@ using HANDLE_LIST_ITOR = list<HANDLE>::iterator;
 
 class wndC_DX;
 
+//device_DX
+extern ID3D11Device*              g_pD3dDevice;
+extern ID3D11DeviceContext*       g_pD3dContext;
+
 //WndC_DX
 extern HINSTANCE g_hInst;
 extern HWND      g_hWnd;           //생성된 윈도우의 핸들값 (DC를 받아올 때 사용함)
@@ -151,11 +155,19 @@ extern double g_GameTimer;
 //열거형
 enum direction
 {
-	NO = 0,
-	LEFT = 1,
-	TOP = 2,
-	RIGHT = 3,
-	BOTTOM = 4,
+	d_NO = 0,
+	d_LEFT = 1,
+	d_TOP = 2,
+	d_RIGHT = 3,
+	d_BOTTOM = 4,
+};
+
+enum push
+{
+	p_FREE = 0,
+	p_DOWN = 1,
+	p_HOLD = 2,
+	p_UP = 3,
 };
 
 //구조체 
@@ -205,4 +217,14 @@ struct ClsInfo
 	direction drClsSrc;
 	direction drClsDest;
 	POINT ptInLength;
+};
+
+struct MouseInfo
+{
+	LONG x;
+	LONG y;
+	
+	push left;
+	push right;
+	push middle;
 };

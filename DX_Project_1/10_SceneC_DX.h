@@ -1,6 +1,13 @@
 #pragma once
 #include "00_header_DX.h"
 
+#include "04_timerC_DX.h"
+#include "05_writeC_DX.h"
+#include "06_inputC_DX.h"
+#include "09_CollisionC_DX.h"
+
+
+
 class SceneC_DX
 {
 protected:

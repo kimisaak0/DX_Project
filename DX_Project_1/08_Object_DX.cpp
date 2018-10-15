@@ -6,7 +6,7 @@ Object_DX::Object_DX()
 }
 
 // 정점 버퍼 생성
-HRESULT Object_DX::CreateVertexBuffer(ID3D11Device* pd3dDevice, PCT_VERTEX* pVertexList)
+HRESULT Object_DX::CreateVertexBuffer()
 {
 	HRESULT hr;
 
@@ -18,9 +18,9 @@ HRESULT Object_DX::CreateVertexBuffer(ID3D11Device* pd3dDevice, PCT_VERTEX* pVer
 
 	D3D11_SUBRESOURCE_DATA sInitData;
 	ZeroMemory(&sInitData, sizeof(D3D11_SUBRESOURCE_DATA));
-	sInitData.pSysMem = pVertexList;
+	sInitData.pSysMem = m_pVertexList;
 
-	if (FAILED(hr = pd3dDevice->CreateBuffer(&sDesc, &sInitData, &m_pVertexBuffer))) {
+	if (FAILED(hr = g_pD3dDevice->CreateBuffer(&sDesc, &sInitData, &m_pVertexBuffer))) {
 		return hr;
 	}
 
@@ -28,19 +28,19 @@ HRESULT Object_DX::CreateVertexBuffer(ID3D11Device* pd3dDevice, PCT_VERTEX* pVer
 }
 
 //정점 쉐이더 생성
-HRESULT Object_DX::CreateVSandInputLayout(ID3D11Device* pd3dDevice, const TCHAR* pName)
+HRESULT Object_DX::CreateVSandInputLayout()
 {
 	HRESULT hr;
 	ID3DBlob*  pErrorBlob;
 	ID3DBlob*  pVSBlob;
 
-	hr = D3DX11CompileFromFile(pName, NULL, NULL, "VS", "vs_5_0", NULL, NULL, NULL, &pVSBlob, &pErrorBlob, NULL);
+	hr = D3DX11CompileFromFile(L"VertexShader.vsh", NULL, NULL, "VS", "vs_5_0", NULL, NULL, NULL, &pVSBlob, &pErrorBlob, NULL);
 	if (FAILED(hr)) {
 		OutputDebugStringA((char*)pErrorBlob->GetBufferPointer());
 		return false;
 	}
 
-	hr = pd3dDevice->CreateVertexShader(pVSBlob->GetBufferPointer(), pVSBlob->GetBufferSize(), NULL, &m_pVS);
+	hr = g_pD3dDevice->CreateVertexShader(pVSBlob->GetBufferPointer(), pVSBlob->GetBufferSize(), NULL, &m_pVS);
 	if (FAILED(hr)) {
 		return hr;
 	}
@@ -55,7 +55,7 @@ HRESULT Object_DX::CreateVSandInputLayout(ID3D11Device* pd3dDevice, const TCHAR*
 
 	int iNumElement = sizeof(ied) / sizeof(D3D11_INPUT_ELEMENT_DESC);
 
-	hr = pd3dDevice->CreateInputLayout(ied, iNumElement, pVSBlob->GetBufferPointer(), pVSBlob->GetBufferSize(), &m_pInputLayout);
+	hr = g_pD3dDevice->CreateInputLayout(ied, iNumElement, pVSBlob->GetBufferPointer(), pVSBlob->GetBufferSize(), &m_pInputLayout);
 	if (FAILED(hr)) {
 		return hr;
 	}
@@ -67,19 +67,19 @@ HRESULT Object_DX::CreateVSandInputLayout(ID3D11Device* pd3dDevice, const TCHAR*
 }
 
 //픽셀 쉐이더 생성
-HRESULT Object_DX::CreatePS(ID3D11Device* pd3dDevice, const TCHAR* pName)
+HRESULT Object_DX::CreatePS()
 {
 	HRESULT hr;
 	ID3DBlob*  pPSBlop;
 	ID3DBlob*  pErrorBlob;
 
-	hr = D3DX11CompileFromFile(pName, NULL, NULL, "PS", "ps_5_0", NULL, NULL, NULL, &pPSBlop, &pErrorBlob, NULL);
+	hr = D3DX11CompileFromFile(L"PixelShader.psh", NULL, NULL, "PS", "ps_5_0", NULL, NULL, NULL, &pPSBlop, &pErrorBlob, NULL);
 	if (FAILED(hr)) {
 		OutputDebugStringA((char*)pErrorBlob->GetBufferPointer());
 		return false;
 	}
 
-	hr = pd3dDevice->CreatePixelShader(pPSBlop->GetBufferPointer(), pPSBlop->GetBufferSize(), NULL, &m_pPS);
+	hr = g_pD3dDevice->CreatePixelShader(pPSBlop->GetBufferPointer(), pPSBlop->GetBufferSize(), NULL, &m_pPS);
 	if (FAILED(hr)) {
 		SAFE_RELEASE(pPSBlop);
 		return NULL;
@@ -91,11 +91,11 @@ HRESULT Object_DX::CreatePS(ID3D11Device* pd3dDevice, const TCHAR* pName)
 }
 
 //텍스쳐 불러오기
-HRESULT Object_DX::LoadTexture(ID3D11Device* pd3dDevice, const TCHAR* pLoadFile)
+HRESULT Object_DX::LoadTexture(const TCHAR* pLoadFile)
 {
 	HRESULT hr;
 
-	hr = D3DX11CreateShaderResourceViewFromFile(pd3dDevice, pLoadFile, NULL, NULL, &m_pTextureSRV, NULL);
+	hr = D3DX11CreateShaderResourceViewFromFile(g_pD3dDevice, pLoadFile, NULL, NULL, &m_pTextureSRV, NULL);
 	if (FAILED(hr)) {
 		return hr;
 	}
@@ -104,14 +104,14 @@ HRESULT Object_DX::LoadTexture(ID3D11Device* pd3dDevice, const TCHAR* pLoadFile)
 }
 
 //전부 생성하기
-HRESULT Object_DX::Create(ID3D11Device* pd3dDevice, const TCHAR* pVsFile, const TCHAR* pPsFile, const TCHAR* pTexFile)
+HRESULT Object_DX::Create(const TCHAR* pTexFile)
 {
 	HRESULT hr;
 
-	hr = CreateVertexBuffer(pd3dDevice, m_pVertexList); if (hr) { return hr; }
-	hr = CreateVSandInputLayout(pd3dDevice, pVsFile); if (hr) { return hr; }
-	hr = CreatePS(pd3dDevice, pPsFile); if (hr) { return hr; }
-	hr = LoadTexture(pd3dDevice, pTexFile); if (hr) { return hr; }
+	hr = CreateVertexBuffer(); if (hr) { return hr; }
+	hr = CreateVSandInputLayout(); if (hr) { return hr; }
+	hr = CreatePS(); if (hr) { return hr; }
+	hr = LoadTexture(pTexFile); if (hr) { return hr; }
 
 	return hr;
 }
@@ -153,18 +153,27 @@ void Object_DX::UpdateCP()
 	m_v3Center.z = 0.0f;
 }
 
+void Object_DX::SetUV(UINT l, UINT t, UINT r, UINT b, UINT imgW, UINT imgH)
+{
+	m_lt.x = l / imgW;
+	m_lt.y = t / imgH;
+	m_rb.x = r / imgW;
+	m_rb.y = b / imgH;
+}
+
 //위치 지정하기
-void Object_DX::SetPosition(UINT sl, UINT st, UINT sr, UINT sb)
+void Object_DX::SetPosition(UINT sl, UINT st, UINT width, UINT height)
 {
 	//화면 좌표계 저장
 	m_rtSRegion.left = sl;
 	m_rtSRegion.top = st;
-	m_rtSRegion.right = sr;
-	m_rtSRegion.bottom = sb;
+	m_rtSRegion.right = sl+width;
+	m_rtSRegion.bottom = st+height;
 
 	//투영 좌표계 저장
 	transStoP();
 
+	//uv변환 필요
 	ZeroMemory(&m_pVertexList, sizeof(m_pVertexList[0])*4);
 	m_pVertexList[0].p = D3DXVECTOR3(m_frtPRegion.left, m_frtPRegion.top, 0.0f);
 	m_pVertexList[0].t = D3DXVECTOR2(0.0f, 0.0f);
@@ -215,7 +224,7 @@ void Object_DX::MoveY(float fDis)
 void Object_DX::spin()
 {
 	static float fAngle = 0.0f;
-	fAngle += m_timer.GetSPF();
+	fAngle = m_timer.GetSPF();
 
 	float S = sinf(fAngle);
 	float C = cosf(fAngle);
@@ -224,17 +233,37 @@ void Object_DX::spin()
 
 		D3DXVECTOR3 vertex = m_pVertexList[iV].p;
 
-		m_pVLtemp[iV].p.x -= m_v3Center.x;
-		m_pVLtemp[iV].p.y -= m_v3Center.y;
+		m_pVertexList[iV].p.x -= m_v3Center.x;
+		m_pVertexList[iV].p.y -= m_v3Center.y;
 
-		vertex.x = m_pVLtemp[iV].p.x * C  + m_pVLtemp[iV].p.y * S;
-		vertex.y = m_pVLtemp[iV].p.x * -S + m_pVLtemp[iV].p.y * C;
+		vertex.x = m_pVertexList[iV].p.x * C + m_pVertexList[iV].p.y * S / 2;
+		vertex.y = m_pVertexList[iV].p.x *-S * 2 + m_pVertexList[iV].p.y * C;
 
 		vertex.x += m_v3Center.x;
 		vertex.y += m_v3Center.y;
 
-		m_pVLtemp[iV].p = vertex;
+		m_pVertexList[iV].p = vertex;
+
 	}
+}
+
+void Object_DX::scale(float size)
+{
+	for (int iV = 0; iV < 4; iV++) {
+		m_pVertexList[iV].p.x -= m_v3Center.x;
+		m_pVertexList[iV].p.y -= m_v3Center.y;
+
+		m_pVertexList[iV].p.x *= (1 - size);
+		m_pVertexList[iV].p.y *= (1 - size);
+
+		m_pVertexList[iV].p.x += m_v3Center.x;
+		m_pVertexList[iV].p.y += m_v3Center.y;
+	}
+}
+
+bool Object_DX::Init()
+{
+	return true;
 }
 
 bool Object_DX::Frame(ID3D11DeviceContext* pContext)
@@ -251,20 +280,18 @@ bool Object_DX::Frame(ID3D11DeviceContext* pContext)
 
 	if (I_Input.IsKeyDown(0xc8)) { //Up
 		MoveY(m_timer.GetSPF() * 0.3);
+		scale(0.0005f);
 	}
 
 	if (I_Input.IsKeyDown(0xd0)) { //Down
 		MoveY(m_timer.GetSPF() * -0.3);
-	}
-
-	for (int iV = 0; iV < 4; iV++) {
-		m_pVLtemp[iV] = m_pVertexList[iV];
+		scale(-0.0005f);
 	}
 
 	if (I_Input.IsKeyDown(DIK_1)) { //Down
 		spin();
 	}
-	pContext->UpdateSubresource(m_pVertexBuffer, 0, NULL, m_pVLtemp, 0, 0);
+	pContext->UpdateSubresource(m_pVertexBuffer, 0, NULL, m_pVertexList, 0, 0);
 
 	return true;
 }

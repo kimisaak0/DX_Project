@@ -1,5 +1,8 @@
 #include "01_deviceC_DX.h"
 
+ID3D11Device*              g_pD3dDevice;           // 디바이스 객체
+ID3D11DeviceContext*       g_pD3dContext;	       // 디바이스 컨텍스트
+
 deviceC_DX::deviceC_DX()
 {
 	//어댑터(그래픽카드)를 사용하여 디바이스 객체를 생성해야 하므로 NULL로 선택.
@@ -78,6 +81,10 @@ HRESULT deviceC_DX::CreateDevice()
 	if (FAILED(hr)) {
 		return false;
 	}
+
+	g_pD3dDevice = m_pD3dDevice;
+	g_pD3dContext = m_pImmediateContext;
+
 	return S_OK;
 }
 

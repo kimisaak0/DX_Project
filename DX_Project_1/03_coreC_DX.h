@@ -6,19 +6,22 @@
 #include "08_Object_DX.h"
 #include "09_CollisionC_DX.h"
 
+#include "10_SceneC_DX.h"
+#include "10a_SceneLobby_DX.h"
+#include "10d_SceneGame_1_DX.h"
+
 class coreC_DX : public wndC_DX
 {
 	timerC_DX m_GameTimer;
 	writeC_DX m_Font;
 
-	Object_DX   m_Actor;
 	ID3D11RasterizerState* m_pRSSolid;
 
-	Object_DX m_Image;
+	SceneC_DX*  m_pScene;
 
-	Object_DX m_sky;
+	SceneC_DX*  m_pLobby;
+	SceneC_DX*  m_pGame1;
 
-	Object_DX m_statue;
 
 private:
 	bool m_swTimerRender;

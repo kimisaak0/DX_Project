@@ -19,54 +19,37 @@ bool coreC_DX::Init()
 {
 	SetRasterizerState();
 
-	m_Actor.SetPosition(10, 10, 110, 110);
-	m_Actor.Create(m_pD3dDevice, L"VertexShader.vsh", L"PixelShader.psh", L"Koala.jpg");
+	m_pLobby = new SceneLobby_DX;
+	m_pGame1 = new SceneGame_1_DX;
 
-	m_Image.SetPosition(300,300,500,500);
-	m_Image.Create(m_pD3dDevice, L"VertexShader.vsh", L"PixelShader.psh", L"../INPUT/DATA/image/Rock.png");
+	m_pScene = m_pLobby;
 
-	m_sky.SetPosition(0, 0, 1500, 150);
-	m_sky.Create(m_pD3dDevice, L"VertexShader.vsh", L"PixelShader.psh", L"../INPUT/DATA/image/st00_cm_front.bmp");
-
-	m_statue.SetPosition(500, 500, 800, 1000);
-	m_statue.Create(m_pD3dDevice, L"VertexShader.vsh", L"PixelShader.psh", L"../INPUT/DATA/image/statue.png");
+	m_pScene->Init();
 
 	return true;
 }
 
 bool coreC_DX::Frame()
 {
-	m_Actor.Frame(m_pImmediateContext);
 
-	I_ClsMgr.RectInRect(m_Image.m_rtSRegion, m_Actor.m_rtSRegion);
-	
-	//m_Image.Frame(m_pImmediateContext);
+	m_pScene->Frame();
 
 	return true;
 }
 
 bool coreC_DX::Render()
 {
-	assert(m_pImmediateContext);
-	m_pImmediateContext->OMSetBlendState(0, 0, 0xffffffff);
-
 	m_pImmediateContext->RSSetState(m_pRSSolid);
 
-	m_sky.Render(m_pImmediateContext);
-
-	m_Actor.Render(m_pImmediateContext);
-
-	m_Image.Render(m_pImmediateContext);
-
-	m_statue.Render(m_pImmediateContext);
+	m_pScene->Render();
 
 	return true;
 }
 
 bool coreC_DX::Release()
 {
-	m_Actor.Release();
 
+	m_pScene->Release();
 	return true;
 }
 
@@ -148,9 +131,6 @@ bool coreC_DX::gameFrame()
 
 bool coreC_DX::gamePreRender()
 {
-	//DXGI_SWAP_CHAIN_DESC CurrentSD;
-//	m_pSwapChain->GetDesc(&CurrentSD);
-	//GetClientRect(g_hWnd, &g_rtClient);
 
 	m_Font.DrawTextBegin();
 	return true;
@@ -189,21 +169,15 @@ bool coreC_DX::gameRender()
 
 		int iCount = 0;
 
-		static LONG MousePosX = I_Input.m_MouseCurState.lX;
-		static LONG MousePosY = I_Input.m_MouseCurState.lY;
-		static LONG MousePosZ = I_Input.m_MouseCurState.lZ;
+		MouseInfo Mouse = I_Input.getMouseInfo();
 
-		MousePosX += I_Input.m_MouseCurState.lX;
-		MousePosY += I_Input.m_MouseCurState.lY;
-		MousePosZ += I_Input.m_MouseCurState.lZ;
-
-		_stprintf_s(pBuffer, _T("Mouse X:%ld, Y:%ld, Z:%ld"), MousePosX, MousePosY, MousePosZ);
+		_stprintf_s(pBuffer, _T("Mouse X:%ld, Y:%ld"), Mouse.x, Mouse.y);
 
 		UINT iStartX = 0;
 		UINT iStartY = 30 + (20 * iCount);
 		m_Font.SetlayoutRt((FLOAT)iStartX, (FLOAT)iStartY, (FLOAT)g_uClientWidth, (FLOAT)g_uClientHeight);
 		m_Font.DrawText(pBuffer);
-		iCount++;
+		iCount++;		
 
 		for (int iKey = 0; iKey < KeyStateCount; iKey++) {
 			if (I_Input.m_KeyCurState[iKey] & 0x80) {
@@ -217,17 +191,7 @@ bool coreC_DX::gameRender()
 			}
 		}
 
-		for (int iKey = 0; iKey < 4; iKey++) {
-			if (I_Input.m_MouseCurState.rgbButtons[iKey] & 0x80) {
-				_stprintf_s(pBuffer, _T("Mouse Button State : %02d"), iKey);
-				UINT iStartX = 0;
-				UINT iStartY = 30 + (20 * iCount);
-				m_Font.SetlayoutRt((FLOAT)iStartX, (FLOAT)iStartY, (FLOAT)g_uClientWidth, (FLOAT)g_uClientHeight);
-				m_Font.DrawText(pBuffer);
 
-				iCount++;
-			}
-		}
 	}
 
 	Render();

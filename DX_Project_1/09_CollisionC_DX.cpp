@@ -45,15 +45,15 @@ ClsInfo CollisionC_DX::RectInRect(RECT rtDest, RECT rtSrc)
 		if (ptClsPos.x * ptDestSize.y < ptClsPos.y * ptDestSize.x) {
 			if (-1 * ptClsPos.x * ptDestSize.y < ptClsPos.y * ptDestSize.x) {
 				//위에서 아래로
-				ret.drClsDest = TOP;
-				ret.drClsSrc = BOTTOM;
+				ret.drClsDest = d_TOP;
+				ret.drClsSrc = d_BOTTOM;
 				ret.ptInLength.x = 0;
 				ret.ptInLength.y = rtDest.top - rtSrc.bottom;
 			}
 			else {
 				//왼쪽에서 오른쪽으로
-				ret.drClsDest = RIGHT;
-				ret.drClsSrc = LEFT;
+				ret.drClsDest = d_RIGHT;
+				ret.drClsSrc = d_LEFT;
 				ret.ptInLength.x = rtDest.right - rtSrc.left;
 				ret.ptInLength.y = 0;
 			}	
@@ -61,15 +61,15 @@ ClsInfo CollisionC_DX::RectInRect(RECT rtDest, RECT rtSrc)
 		else {
 			if (-1 * ptClsPos.x * ptDestSize.y < ptClsPos.y * ptDestSize.x) {
 				//오른쪽에서 왼쪽으로
-				ret.drClsDest = LEFT;
-				ret.drClsSrc = RIGHT;
+				ret.drClsDest = d_LEFT;
+				ret.drClsSrc = d_RIGHT;
 				ret.ptInLength.x = rtDest.left - rtSrc.right;
 				ret.ptInLength.y = 0;
 			}
 			else {
 				//위에서 아래로
-				ret.drClsDest = BOTTOM;
-				ret.drClsSrc = TOP;
+				ret.drClsDest = d_BOTTOM;
+				ret.drClsSrc = d_TOP;
 				ret.ptInLength.x = 0;
 				ret.ptInLength.y = rtDest.bottom - rtSrc.top;
 			}
@@ -120,30 +120,30 @@ ClsInfo CollisionC_DX::CircleInCircle(RECT rtDest, RECT rtSrc)
 		if (ptClsPos.x * ptDestSize.y < ptClsPos.y * ptDestSize.x) {
 			if (-1 * ptClsPos.x * ptDestSize.y < ptClsPos.y * ptDestSize.x) {
 				//아래에서 위로
-				ret.drClsDest = BOTTOM;
-				ret.drClsSrc = TOP;
+				ret.drClsDest = d_BOTTOM;
+				ret.drClsSrc = d_TOP;
 				ret.ptInLength.x = 0;
 				ret.ptInLength.y = rtDest.bottom - rtSrc.top;
 			}
 			else {
 				//왼쪽에서 오른쪽으로
-				ret.drClsDest = LEFT;
-				ret.drClsSrc = RIGHT;
+				ret.drClsDest = d_LEFT;
+				ret.drClsSrc = d_RIGHT;
 				ret.ptInLength.x = rtDest.left - rtSrc.right;
 			}	ret.ptInLength.y = 0;
 		}
 		else {
 			if (-1 * ptClsPos.x * ptDestSize.y < ptClsPos.y * ptDestSize.x) {
 				//오른쪽에서 왼쪽으로
-				ret.drClsDest = RIGHT;
-				ret.drClsSrc = LEFT;
+				ret.drClsDest = d_RIGHT;
+				ret.drClsSrc = d_LEFT;
 				ret.ptInLength.x = rtDest.right - rtSrc.left;
 				ret.ptInLength.y = 0;
 			}
 			else {
 				//위에서 아래로
-				ret.drClsDest = TOP;
-				ret.drClsSrc = BOTTOM;
+				ret.drClsDest = d_TOP;
+				ret.drClsSrc = d_BOTTOM;
 				ret.ptInLength.x = 0;
 				ret.ptInLength.y = rtDest.top - rtSrc.bottom;
 			}

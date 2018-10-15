@@ -16,7 +16,6 @@ input_DX::input_DX()
 
 bool input_DX::Init()
 {
-
 	//프로그램 시작시 한번만 초기화 되면 되는 거면 생성자에서,
 	//필요할 때 한번씩 초기화 시켜줘야하는 거면 Init에서.
 	ZeroMemory(&m_KeyBefState, sizeof(BYTE)*KeyStateCount);
@@ -143,7 +142,7 @@ void input_DX::SetAcquire(bool bActive)
 bool input_DX::KeyProcess()
 {	
 	memcpy(&m_KeyBefState, &m_KeyCurState, sizeof(BYTE) * KeyStateCount);
-	memcpy(&m_MouseBefState, &m_MouseCurState, sizeof(DIMOUSESTATE));
+
 
 	ZeroMemory(m_KeyCurState, sizeof(BYTE)*KeyStateCount);
 	if (!m_pDxKeypad) {
@@ -162,6 +161,8 @@ bool input_DX::KeyProcess()
 
 bool input_DX::MouseProcess()
 {
+	memcpy(&m_MouseBefState, &m_MouseCurState, sizeof(DIMOUSESTATE));
+
 	ZeroMemory(&m_MouseCurState, sizeof(DIMOUSESTATE));
 
 	if (!m_pDxMouse) { 
@@ -220,6 +221,58 @@ bool input_DX::IsKeyDownOnce(DWORD dwKey)
 		}
 	}
 	return false;
+}
+
+MouseInfo input_DX::getMouseInfo()
+{
+	MouseInfo ret;
+	POINT MousePos;
+
+	for (int iB = 0; iB < 3; iB++) {
+		m_MouseBefState.rgbButtons[iB] = m_MouseCurState.rgbButtons[iB];
+	}
+
+	GetCursorPos(&MousePos);
+	ScreenToClient(g_hWnd, &MousePos);
+
+	ret.x = MousePos.x;
+	ret.y = MousePos.y;
+
+	for (int iB = 0; iB < 3; iB++)
+	if (m_MouseBefState.rgbButtons[iB] & 0x80) {
+		if (m_MouseCurState.rgbButtons[iB] & 0x80) {
+			switch (iB) {
+				case 0: ret.left = p_HOLD;
+				case 1: ret.right = p_HOLD;
+				case 2: ret.middle = p_HOLD;
+			}
+		}
+		else {
+			switch (iB) {
+				case 0: ret.left = p_UP;
+				case 1: ret.right = p_UP;
+				case 2: ret.middle = p_UP;
+			}
+		}
+	}
+	else {
+		if (m_MouseCurState.rgbButtons[iB] & 0x80) {
+			switch (iB) {
+				case 0: ret.left = p_DOWN;
+				case 1: ret.right = p_DOWN;
+				case 2: ret.middle = p_DOWN;
+			}
+		}
+		else {
+			switch (iB) {
+				case 0: ret.left = p_FREE;
+				case 1: ret.right = p_FREE;
+				case 2: ret.middle = p_FREE;
+			}
+		}
+	}
+
+	return ret;
 }
 
 input_DX::~input_DX()

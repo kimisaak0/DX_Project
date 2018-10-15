@@ -32,17 +32,20 @@
     <Filter Include="01%29 device\0_h">
       <UniqueIdentifier>{29fc7414-fdea-443a-b074-6914ebaf2c75}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04%29 scene">
+    <Filter Include="03%29 scene">
       <UniqueIdentifier>{778120bf-f5d4-47d7-9bfb-103f8cd37df5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04%29 scene\1_cpp">
+    <Filter Include="03%29 scene\1_cpp">
       <UniqueIdentifier>{f062d959-c21a-4084-a254-9dd902bddcc4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04%29 scene\0_h">
+    <Filter Include="03%29 scene\0_h">
       <UniqueIdentifier>{413383c6-1b41-435f-8b2b-bd3039c9e9c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03%29 UIObj">
+    <Filter Include="04%29 UIObj">
       <UniqueIdentifier>{31622c8d-70c0-4a06-87f7-80ad450fc1ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04%29 UIObj\a%29 UIObj">
+      <UniqueIdentifier>{a105aff4-ad3c-4b6b-97df-447dd33358ea}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -77,22 +80,28 @@
       <Filter>02%29 function\0_h</Filter>
     </ClInclude>
     <ClInclude Include="10_SceneC_DX.h">
-      <Filter>04%29 scene\0_h</Filter>
+      <Filter>03%29 scene\0_h</Filter>
     </ClInclude>
     <ClInclude Include="10a_SceneLobby_DX.h">
-      <Filter>04%29 scene\0_h</Filter>
+      <Filter>03%29 scene\0_h</Filter>
     </ClInclude>
     <ClInclude Include="10b_SceneOver_DX.h">
-      <Filter>04%29 scene\0_h</Filter>
+      <Filter>03%29 scene\0_h</Filter>
     </ClInclude>
     <ClInclude Include="10c_SceneVictory_DX.h">
-      <Filter>04%29 scene\0_h</Filter>
+      <Filter>03%29 scene\0_h</Filter>
     </ClInclude>
     <ClInclude Include="10d_SceneGame_1_DX.h">
-      <Filter>04%29 scene\0_h</Filter>
+      <Filter>03%29 scene\0_h</Filter>
     </ClInclude>
     <ClInclude Include="11_SceneMgr_DX.h">
-      <Filter>04%29 scene\0_h</Filter>
+      <Filter>03%29 scene\0_h</Filter>
+    </ClInclude>
+    <ClInclude Include="12a_BgObjC_DX.h">
+      <Filter>04%29 UIObj\a%29 UIObj</Filter>
+    </ClInclude>
+    <ClInclude Include="12b_BtnObjC_DX.h">
+      <Filter>04%29 UIObj\a%29 UIObj</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -127,10 +136,19 @@
       <Filter>02%29 function\1_cpp</Filter>
     </ClCompile>
     <ClCompile Include="10_SceneC_DX.cpp">
-      <Filter>04%29 scene\1_cpp</Filter>
+      <Filter>03%29 scene\1_cpp</Filter>
     </ClCompile>
     <ClCompile Include="10a_SceneLobby_DX.cpp">
-      <Filter>04%29 scene\1_cpp</Filter>
+      <Filter>03%29 scene\1_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="10d_SceneGame_1_DX.cpp">
+      <Filter>03%29 scene\1_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="12a_BgObjC_DX.cpp">
+      <Filter>04%29 UIObj\a%29 UIObj</Filter>
+    </ClCompile>
+    <ClCompile Include="12b_BtnObjC_DX.cpp">
+      <Filter>04%29 UIObj\a%29 UIObj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -14,8 +14,8 @@ public:
 
 public:
 	PCT_VERTEX m_pVertexList[4];
-
-	PCT_VERTEX m_pVLtemp[4];
+	D3DXVECTOR2 m_lt;
+	D3DXVECTOR2 m_rb;
 	
 	RECT m_rtSRegion;
 	fRect m_frtPRegion;
@@ -27,27 +27,32 @@ public:
 	timerC_DX m_timer;
 
 public:
-	HRESULT CreateVertexBuffer(ID3D11Device* pd3dDevice, PCT_VERTEX* pVertexList);
-	HRESULT CreateVSandInputLayout(ID3D11Device* pd3dDevice, const TCHAR* pName);
-	HRESULT CreatePS(ID3D11Device* pd3dDevice, const TCHAR* pName);
-	HRESULT LoadTexture(ID3D11Device* pd3dDevice, const TCHAR* pLoadFile);
+	HRESULT CreateVertexBuffer();
+	HRESULT CreateVSandInputLayout();
+	HRESULT CreatePS();
+	HRESULT LoadTexture(const TCHAR* pLoadFile);
 
-	HRESULT Create(ID3D11Device* pd3dDevive, const TCHAR* pVsFile, const TCHAR* pPsFile, const TCHAR* pTexFile);
+	HRESULT Create(const TCHAR* pTexFile);
 
 	void transStoP();
 	void transPtoS();
 
 	void UpdateCP();
 
-	void SetPosition(UINT sl, UINT st, UINT sr, UINT sb);
+	void SetUV(UINT l, UINT t, UINT r, UINT b, UINT imgW, UINT imgH);
+	void SetPosition(UINT sl, UINT st, UINT width, UINT height);
+
+
 	void MoveX(float fDis);
 	void MoveY(float fDis);
 	void spin();
+	void scale(float size);
 
 public:
-	bool Frame(ID3D11DeviceContext* pContext);
-	bool Render(ID3D11DeviceContext* pContext);
-	bool Release();
+	virtual bool Init();
+	virtual bool Frame(ID3D11DeviceContext* pContext);
+	virtual bool Render(ID3D11DeviceContext* pContext);
+	virtual bool Release();
 
 public:
 	Object_DX();

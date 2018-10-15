@@ -16,6 +16,8 @@ public:
 	DIMOUSESTATE m_MouseCurState;
 	DIMOUSESTATE m_MouseBefState;
 
+	MouseInfo m_MouseState;
+
 public:
 	bool Init();
 	bool Frame();
@@ -30,6 +32,7 @@ public:
 	bool KeyProcess();
 	bool MouseProcess();
 	
+	void SetAcquire(bool bActive);
 	void DeviceAcquire();
 	void DeviceUnacquire();
 
@@ -37,7 +40,7 @@ public:
 	bool IsKeyUP(DWORD dwKey);
 	bool IsKeyDownOnce(DWORD dwKey);
 
-	void SetAcquire(bool bActive);
+	MouseInfo getMouseInfo();
 
 public:
 	static input_DX& GetInstance();
