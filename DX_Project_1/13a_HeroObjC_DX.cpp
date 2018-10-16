@@ -9,17 +9,39 @@ HeroObjC_DX::HeroObjC_DX()
 
 }
 
+void HeroObjC_DX::Shot1Fire(uPOINT mousePos)
+{
+	uXYWH temp = { m_ptCenter.x, m_ptCenter.y, 50,50 };
+
+	float dx = mousePos.x - m_ptCenter.x;
+	float dy = mousePos.y - m_ptCenter.y;
+	double distance = sqrt(pow(dx, 2) + pow(dy, 2));
+
+	shot1 shot;
+	shot.CreateFullImgObj(temp, L"../INPUT/DATA/image/shot1.png");
+	shot.setSpeed((dx / distance) / 100 , (dy / distance) / 100);
+
+	shot1_list.push_back(shot);
+}
 
 bool HeroObjC_DX::Init()
 {
-	m_y = m_v3Center.y;
+	m_BefCentery = m_v3Center.y;
 	return true;
 }
 
 bool HeroObjC_DX::Frame() 
 {
+	if (I_Input.getMouseInfo().left == p_HOLD) {
+		Shot1Fire(I_Input.getMouseInfo().xy);
+	}
+
+	list<shot1>::iterator shot1It;
+	for (shot1It = shot1_list.begin(); shot1It != shot1_list.end(); shot1It++) {
+		shot1It->Frame();
+	}
+
 	//¿Ãµø
-	
 	MoveX(m_fSpeedX);
 	MoveY(m_fSpeedY);
 
@@ -65,8 +87,8 @@ bool HeroObjC_DX::Frame()
 		m_uSpriteX = 0;
 	}
 
-	scale(m_v3Center.y - m_y);
-	m_y = m_v3Center.y;
+	scale(m_v3Center.y - m_BefCentery);
+	m_BefCentery = m_v3Center.y;
 
 	ImagePartialChange({ m_uSpriteX,m_uSpriteY,100,100 });
 

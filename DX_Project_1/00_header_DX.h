@@ -205,6 +205,19 @@ struct uWH
 	UINT Height;
 };
 
+struct uPOINT
+{
+	UINT x;
+	UINT y;
+
+	uPOINT& operator= (const POINT& pt) {
+		x = pt.x;
+		y = pt.y;
+
+		return *this;
+	}
+};
+
 struct fLTRB
 {
 	float left;
@@ -241,7 +254,7 @@ struct uLTRB
 
 struct circle
 {
-	POINT pCenter;
+	uPOINT pCenter;
 	double dRadius;
 };
 
@@ -250,14 +263,16 @@ struct ClsInfo
 	bool bDoCls;
 	direction drClsSrc;
 	direction drClsDest;
-	POINT ptInLength;
+	uPOINT ptInLength;
 };
 
 struct MouseInfo
 {
-	POINT xy;
+	uPOINT xy;
 	
 	push left;
 	push right;
 	push middle;
+
+
 };

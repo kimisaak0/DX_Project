@@ -8,9 +8,9 @@ public:
 
 public:
 	ClsInfo RectInRect(uLTRB rtDest, uLTRB rtSrc);
-	bool RectInPt(uLTRB rtDest, POINT pt);
+	bool RectInPt(uLTRB rtDest, uPOINT pt);
 	ClsInfo CircleInCircle(uLTRB rtDest, uLTRB rtSrc);
-	bool CircleInPt(uLTRB rtDest, POINT pt);
+	bool CircleInPt(uLTRB rtDest, uPOINT pt);
 
 protected:
 	CollisionC_DX();

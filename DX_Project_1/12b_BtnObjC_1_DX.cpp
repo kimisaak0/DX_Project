@@ -31,6 +31,7 @@ bool BtnObjC_1_DX::Frame()
 		ImagePartialChange({ 0,0,300,75 });
 	}
 
+	g_pD3dContext->UpdateSubresource(m_pVertexBuffer, 0, NULL, m_pVertexList, 0, 0);
 	return false;
 }
 

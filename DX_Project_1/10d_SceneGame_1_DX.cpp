@@ -20,7 +20,6 @@ bool	SceneGame_1_DX::Init()
 	m_Hero.CreatePartImgObj({ 300,450,80,80 }, { 0,200,100,100 }, { 300,400 }, L"../INPUT/DATA/image/ship.png");
 	m_Hero.Init();
 	
-	
 	return true;
 }
 
@@ -68,6 +67,7 @@ bool	SceneGame_1_DX::Render()
 	{
 		m_Actor.Render();
 	}
+
 
 	return true;
 }

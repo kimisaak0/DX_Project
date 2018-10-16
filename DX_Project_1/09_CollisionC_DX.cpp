@@ -79,7 +79,7 @@ ClsInfo CollisionC_DX::RectInRect(uLTRB rtDest, uLTRB rtSrc)
 	return ret;
 }
 
-bool CollisionC_DX::RectInPt(uLTRB rtDest, POINT pt)
+bool CollisionC_DX::RectInPt(uLTRB rtDest, uPOINT pt)
 {
 	if ((rtDest.left <= pt.x && rtDest.right >= pt.x) &&
 		(rtDest.top <= pt.y && rtDest.bottom >= pt.y)) {
@@ -94,7 +94,7 @@ ClsInfo CollisionC_DX::CircleInCircle(uLTRB rtDest, uLTRB rtSrc)
 	ZeroMemory(&ret, sizeof(ClsInfo));
 
 	//두 물체의 사이즈 구하기
-	POINT ptDestSize, ptSrcSize;
+	uPOINT ptDestSize, ptSrcSize;
 	ptDestSize.x = rtDest.right - rtDest.left;
 	ptDestSize.y = rtDest.bottom - rtDest.top;
 	ptSrcSize.x = rtSrc.right - rtSrc.left;
@@ -110,7 +110,7 @@ ClsInfo CollisionC_DX::CircleInCircle(uLTRB rtDest, uLTRB rtSrc)
 	oSrc.dRadius = sqrt(pow(ptSrcSize.x, 2) + pow(ptSrcSize.y, 2)) / 2;
 	
 	//두 중점간의 길이 구하기
-	POINT ptClsPos;
+	uPOINT ptClsPos;
 	ptClsPos.x = oDest.pCenter.x - oSrc.pCenter.x;
 	ptClsPos.y = oDest.pCenter.y - oSrc.pCenter.y;
 	double dDistance = sqrt(pow(ptClsPos.x, 2) +pow(ptClsPos.y, 2));
@@ -153,9 +153,9 @@ ClsInfo CollisionC_DX::CircleInCircle(uLTRB rtDest, uLTRB rtSrc)
 	return ret;
 }
 
-bool CollisionC_DX::CircleInPt(uLTRB rtDest, POINT pt)
+bool CollisionC_DX::CircleInPt(uLTRB rtDest, uPOINT pt)
 {
-	POINT ptDestSize;
+	uPOINT ptDestSize;
 	ptDestSize.x = rtDest.right - rtDest.left;
 	ptDestSize.y = rtDest.bottom - rtDest.top;
 

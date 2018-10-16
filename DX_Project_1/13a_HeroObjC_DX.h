@@ -1,5 +1,6 @@
 #pragma once
 #include "08_Object_DX.h"
+#include "14a_shot1.h"
 
 class HeroObjC_DX : public Object_DX
 {
@@ -9,7 +10,14 @@ class HeroObjC_DX : public Object_DX
 	float m_fSpeedX;
 	float m_fSpeedY;
 
-	float m_y;
+	float m_BefCentery;
+
+
+public:
+	list<shot1> shot1_list;
+
+public:
+	void Shot1Fire(uPOINT mousePos);
 
 public:
 	virtual bool Init();

@@ -58,6 +58,7 @@
     <ClCompile Include="12a_BgObjC_DX.cpp" />
     <ClCompile Include="12b_BtnObjC_1_DX.cpp" />
     <ClCompile Include="13a_HeroObjC_DX.cpp" />
+    <ClCompile Include="14a_shot1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="PixelShader.psh" />

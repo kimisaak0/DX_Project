@@ -147,6 +147,9 @@
     <ClCompile Include="00_main_DX.cpp">
       <Filter>00%29 base</Filter>
     </ClCompile>
+    <ClCompile Include="14a_shot1.cpp">
+      <Filter>04%29 Obj\d%29 shot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="VertexShader.vsh">

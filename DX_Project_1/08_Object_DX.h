@@ -23,7 +23,7 @@ protected:
 	uLTRB m_uSRegion;
 	fLTRB m_fPRegion;
 
-	POINT m_ptCenter;
+	uPOINT m_ptCenter;
 	D3DXVECTOR3 m_v3Center;
 
 	timerC_DX m_Timer;
