@@ -1,6 +1,6 @@
 #include "03_coreC_DX.h"
 
-#pragma region temp
+#pragma region function
 
 HRESULT coreC_DX::SetRasterizerState()
 {
@@ -13,44 +13,6 @@ HRESULT coreC_DX::SetRasterizerState()
 
 	hr = m_pD3dDevice->CreateRasterizerState(&desc, &m_pRSSolid);
 	return hr;
-}
-
-bool coreC_DX::Init()
-{
-	SetRasterizerState();
-
-	m_pLobby = new SceneLobby_DX;
-	m_pGame1 = new SceneGame_1_DX;
-
-	m_pScene = m_pGame1;
-
-	m_pScene->Init();
-
-	return true;
-}
-
-bool coreC_DX::Frame()
-{
-
-	m_pScene->Frame();
-
-	return true;
-}
-
-bool coreC_DX::Render()
-{
-	m_pImmediateContext->RSSetState(m_pRSSolid);
-
-	m_pScene->Render();
-
-	return true;
-}
-
-bool coreC_DX::Release()
-{
-
-	m_pScene->Release();
-	return true;
 }
 
 #pragma endregion
@@ -95,8 +57,13 @@ bool coreC_DX::gameInit()
 	GetWindowRect(g_hWnd, &g_rtWindow);
 	GetClientRect(g_hWnd, &g_rtClient);
 
-	Init();
 
+	//init
+	{
+		SetRasterizerState();
+
+		m_SceneMgr.Init();
+	}
 	
 	return true;
 }
@@ -124,7 +91,10 @@ bool coreC_DX::gameFrame()
 		m_swKeyRender = !m_swKeyRender;
 	}
 
-	Frame();
+	//frame
+	{
+		m_SceneMgr.Frame();
+	}
 
 	return true;
 }
@@ -157,7 +127,7 @@ bool coreC_DX::gameRender()
 		m_Font.SetTextColor(ColorF(1, 1, 1, 1));
 
 		_stprintf_s(pBuffer, _T("FPS:%d, SPF:%10.5f, GameTime:%10.2f"),
-			m_GameTimer.GetFPS(), m_GameTimer.GetSPF(), m_GameTimer.GetGameTime());
+			g_iFPS, g_dSPF, g_dGameTime);
 		m_Font.DrawText(pBuffer);
 	}
 
@@ -171,7 +141,7 @@ bool coreC_DX::gameRender()
 
 		MouseInfo Mouse = I_Input.getMouseInfo();
 
-		_stprintf_s(pBuffer, _T("Mouse X:%ld, Y:%ld"), Mouse.x, Mouse.y);
+		_stprintf_s(pBuffer, _T("Mouse X:%ld, Y:%ld"), Mouse.xy.x, Mouse.xy.y);
 
 		UINT iStartX = 0;
 		UINT iStartY = 30 + (20 * iCount);
@@ -194,8 +164,12 @@ bool coreC_DX::gameRender()
 
 	}
 
-	Render();
+	//render
+	{
+		m_pImmediateContext->RSSetState(m_pRSSolid);
 
+		m_SceneMgr.Render();
+	}
 	return true;
 }
 
@@ -210,7 +184,10 @@ bool coreC_DX::gamePostRender()
 
 bool coreC_DX::gameRelease()
 {
-	Release();
+	//release
+	{
+		m_SceneMgr.Release();
+	}
 
 	if (!I_Input.Release()) { return false; }
 	if (!m_Font.Release()) { return false; }

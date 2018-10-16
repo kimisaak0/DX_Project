@@ -19,7 +19,7 @@ bool BgObc_DX::Init()
 
 bool BgObc_DX::Frame()
 {
-	Object_DX::Frame();
+	g_pD3dContext->UpdateSubresource(m_pVertexBuffer, 0, NULL, m_pVertexList, 0, 0);
 	return true;
 }
 

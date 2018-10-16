@@ -75,16 +75,15 @@ void Object_DX::SetPosition(uXYWH _xywh)
 //이미지 자르기
 void Object_DX::ImagePartialSelect(uXYWH imgXYWH, uWH imgSize)
 {
-	uLTRB imgLTRB;
-	m_uImagePart = imgLTRB = imgXYWH;
+	m_uImagePart = imgXYWH;
 	m_uImageSize = imgSize;
 
 	fLTRB fImageUV;
 	//이미지 화면 좌표를 uv좌표로 변환
-	fImageUV.left = (float)imgLTRB.left / imgSize.width;
-	fImageUV.top = (float)imgLTRB.top / imgSize.Height;
-	fImageUV.right = (float)imgLTRB.right / imgSize.width;
-	fImageUV.bottom = (float)imgLTRB.bottom / imgSize.Height;
+	fImageUV.left = (float)m_uImagePart.left / imgSize.width;
+	fImageUV.top = (float)m_uImagePart.top / imgSize.Height;
+	fImageUV.right = (float)m_uImagePart.right / imgSize.width;
+	fImageUV.bottom = (float)m_uImagePart.bottom / imgSize.Height;
 
 	m_pVertexList[0].t = D3DXVECTOR2(fImageUV.left, fImageUV.top);
 	m_pVertexList[1].t = D3DXVECTOR2(fImageUV.left, fImageUV.bottom);
@@ -133,8 +132,8 @@ HRESULT Object_DX::Create(const TCHAR* pTexFile)
 
 	D3D11_INPUT_ELEMENT_DESC ied[] = {
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 28, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 28, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 	};
 
 	int iNumElement = sizeof(ied) / sizeof(D3D11_INPUT_ELEMENT_DESC);
@@ -171,7 +170,10 @@ HRESULT Object_DX::Create(const TCHAR* pTexFile)
 	return hr;
 }
 
-
+void Object_DX::ImageFileChange(const TCHAR* pTexFile)
+{
+	D3DX11CreateShaderResourceViewFromFile(g_pD3dDevice, pTexFile, NULL, NULL, &m_pTextureSRV, NULL);
+}
 
 //전체 이미지 오브젝트 생성
 void Object_DX::CreateFullImgObj(uXYWH _xywh, const TCHAR* pTexFile) {
@@ -188,30 +190,43 @@ void Object_DX::CreatePartImgObj(uXYWH _xywh, uXYWH imgXYWH, uWH imgSize, const 
 	Create(pTexFile);
 }
 
+//이미지 선택 영역 변경
+void Object_DX::ImagePartialChange(uXYWH _uXYWH)
+{
+	ImagePartialSelect(_uXYWH, m_uImageSize);
+}
 
+uLTRB Object_DX::getPos()
+{
+	return m_uSRegion;
+}
 
 //x축 이동
-void Object_DX::MoveX(UINT uDis)
+void Object_DX::MoveX(float fDis)
 {
-	m_uSRegion.left += uDis;
-	m_uSRegion.right += uDis;
+	for (int iV = 0; iV < 4; iV++) {
+		m_pVertexList[iV].p.x += fDis;
+	}
 
-	transStoP();
+	m_fPRegion.left += fDis;
+	m_fPRegion.right += fDis;
 
-	UpdateVertexList();
+	transPtoS();
 
 	UpdateCP();
 }
 
 //y축 이동
-void Object_DX::MoveY(UINT uDis)
+void Object_DX::MoveY(float fDis)
 {
-	m_uSRegion.top += uDis;
-	m_uSRegion.bottom += uDis;
+	for (int iV = 0; iV < 4; iV++) {
+		m_pVertexList[iV].p.y += fDis;
+	}
 
-	transStoP();
+	m_fPRegion.top += fDis;
+	m_fPRegion.bottom+= fDis;
 
-	UpdateVertexList();
+	transPtoS();
 
 	UpdateCP();
 }
@@ -242,13 +257,14 @@ void Object_DX::spin(float fAngle)
 
 //크기 조절
 void Object_DX::scale(float size)
-{
+{//값 넣을 때 주의
+
 	for (int iV = 0; iV < 4; iV++) {
 		m_pVertexList[iV].p.x -= m_v3Center.x;
 		m_pVertexList[iV].p.y -= m_v3Center.y;
 
-		m_pVertexList[iV].p.x *= size;
-		m_pVertexList[iV].p.y *= size;
+		m_pVertexList[iV].p.x *= (1-size);
+		m_pVertexList[iV].p.y *= (1-size);
 
 		m_pVertexList[iV].p.x += m_v3Center.x;
 		m_pVertexList[iV].p.y += m_v3Center.y;
@@ -259,39 +275,11 @@ void Object_DX::scale(float size)
 
 bool Object_DX::Init()
 {
-	ZeroMemory(&m_pVertexList, sizeof(m_pVertexList[0]) * 4);
 	return true;
 }
 
 bool Object_DX::Frame()
 {
-	static double befTime;
-
-	if (I_Input.IsKeyDown(0xcb)) { //Left
-		MoveX(-1);
-	}
-
-	if (I_Input.IsKeyDown(0xcd)) { //Right
-		MoveX(1);
-	}
-
-	if (I_Input.IsKeyDown(0xc8)) { //Up
-		MoveY(-1);
-		//scale(-0.5f);
-	}
-
-	if (I_Input.IsKeyDown(0xd0)) { //Down
-		MoveY(1);
-		//scale(0.5f);
-	}
-	
-	if (I_Input.IsKeyDown(DIK_1)) { //Down
-		spin(0.1f);
-	}
-
-	g_pD3dContext->UpdateSubresource(m_pVertexBuffer, 0, NULL, m_pVertexList, 0, 0);
-
-	befTime = g_GameTimer;
 
 	return true;
 }

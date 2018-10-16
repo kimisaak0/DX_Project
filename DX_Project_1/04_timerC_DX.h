@@ -9,13 +9,12 @@ private:
 	LARGE_INTEGER  m_liBefTime;    //이전 프레임에서의 시간
 	LARGE_INTEGER  m_liBef1sTime;  //1초전 시간
 
-	double         m_dSPF;         //1프레임당 시간
-	int            m_iFPS;         //1초당 프레임
 	int            m_iFPSGether;   //초당 프레임 누적용
 
-	double         m_dGameTime;    //게임 진행 시간
-
 	//개별 타이머는 타이머 클래스를 상속받아서 만드는걸로...
+	LARGE_INTEGER m_BefTickTime;
+	LARGE_INTEGER m_curTickTime;
+
 
 public:
 	bool	Init();
@@ -23,12 +22,7 @@ public:
 	bool	Render();
 	bool	Release();
 
-	// get
-	double	         GetSPF();
-	int		         GetFPS();
-	double           GetGameTime();
-	LARGE_INTEGER    GetCurrent();
-
+	bool    tickAlram(double tick);
 public:
 	timerC_DX();
 	virtual ~timerC_DX();

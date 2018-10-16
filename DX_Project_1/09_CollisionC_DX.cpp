@@ -12,7 +12,7 @@ CollisionC_DX::CollisionC_DX()
 
 }
 
-ClsInfo CollisionC_DX::RectInRect(RECT rtDest, RECT rtSrc)
+ClsInfo CollisionC_DX::RectInRect(uLTRB rtDest, uLTRB rtSrc)
 {
 	ClsInfo ret;
 	ZeroMemory(&ret, sizeof(ClsInfo));
@@ -79,7 +79,7 @@ ClsInfo CollisionC_DX::RectInRect(RECT rtDest, RECT rtSrc)
 	return ret;
 }
 
-bool CollisionC_DX::RectInPt(RECT rtDest, POINT pt)
+bool CollisionC_DX::RectInPt(uLTRB rtDest, POINT pt)
 {
 	if ((rtDest.left <= pt.x && rtDest.right >= pt.x) &&
 		(rtDest.top <= pt.y && rtDest.bottom >= pt.y)) {
@@ -88,7 +88,7 @@ bool CollisionC_DX::RectInPt(RECT rtDest, POINT pt)
 	return false;
 }
 
-ClsInfo CollisionC_DX::CircleInCircle(RECT rtDest, RECT rtSrc)
+ClsInfo CollisionC_DX::CircleInCircle(uLTRB rtDest, uLTRB rtSrc)
 {
 	ClsInfo ret;
 	ZeroMemory(&ret, sizeof(ClsInfo));
@@ -153,7 +153,7 @@ ClsInfo CollisionC_DX::CircleInCircle(RECT rtDest, RECT rtSrc)
 	return ret;
 }
 
-bool CollisionC_DX::CircleInPt(RECT rtDest, POINT pt)
+bool CollisionC_DX::CircleInPt(uLTRB rtDest, POINT pt)
 {
 	POINT ptDestSize;
 	ptDestSize.x = rtDest.right - rtDest.left;

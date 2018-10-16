@@ -4,11 +4,9 @@
 #include "05_writeC_DX.h"
 #include "06_inputC_DX.h"
 #include "08_Object_DX.h"
-#include "09_CollisionC_DX.h"
 
-#include "10_SceneC_DX.h"
-#include "10a_SceneLobby_DX.h"
-#include "10d_SceneGame_1_DX.h"
+
+#include "11_SceneMgr_DX.h"
 
 class coreC_DX : public wndC_DX
 {
@@ -17,22 +15,12 @@ class coreC_DX : public wndC_DX
 
 	ID3D11RasterizerState* m_pRSSolid;
 
-	SceneC_DX*  m_pScene;
-
-	SceneC_DX*  m_pLobby;
-	SceneC_DX*  m_pGame1;
+	SceneMgrC_DX m_SceneMgr;
 
 
 private:
 	bool m_swTimerRender;
 	bool m_swKeyRender;
-
-public:
-	//클래스 각각에 대한 처리 순서에 관한 함수들. 
-	bool Init();
-	bool Frame();
-	bool Render();
-	bool Release();
 
 	HRESULT SetRasterizerState();
 

@@ -11,152 +11,149 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="02%29 function\1_cpp">
-      <UniqueIdentifier>{99abf4d2-988e-41bf-b379-3756ea100a77}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02%29 function\0_h">
-      <UniqueIdentifier>{62bacf90-416b-4af3-8151-7bd653ae08c0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00%29 base\0_h">
-      <UniqueIdentifier>{99f57470-9ff7-4d3d-8119-a5dd5eaec975}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00%29 base\1_cpp">
-      <UniqueIdentifier>{cbcb001b-d97e-4a28-a71e-5bbfa5b8c376}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00%29 base\2_shader">
-      <UniqueIdentifier>{57c310c3-df30-47de-911c-1c33b2f42c11}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01%29 device\1_cpp">
-      <UniqueIdentifier>{605234b4-c660-4255-b80d-35d3d0794ae0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01%29 device\0_h">
-      <UniqueIdentifier>{29fc7414-fdea-443a-b074-6914ebaf2c75}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03%29 scene">
       <UniqueIdentifier>{778120bf-f5d4-47d7-9bfb-103f8cd37df5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03%29 scene\1_cpp">
-      <UniqueIdentifier>{f062d959-c21a-4084-a254-9dd902bddcc4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03%29 scene\0_h">
-      <UniqueIdentifier>{413383c6-1b41-435f-8b2b-bd3039c9e9c0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04%29 UIObj">
+    <Filter Include="04%29 Obj">
       <UniqueIdentifier>{31622c8d-70c0-4a06-87f7-80ad450fc1ec}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04%29 UIObj\a%29 UIObj">
+    <Filter Include="04%29 Obj\a%29 Obj">
+      <UniqueIdentifier>{5e0a88bc-b974-47ab-9013-4e8e5e740ac7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04%29 Obj\b%29 UIObj">
       <UniqueIdentifier>{a105aff4-ad3c-4b6b-97df-447dd33358ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04%29 Obj\c%29 Character">
+      <UniqueIdentifier>{110df9b8-d87b-4e0d-af2f-2e3da7121b8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00%29 base\shader">
+      <UniqueIdentifier>{57c310c3-df30-47de-911c-1c33b2f42c11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04%29 Obj\d%29 shot">
+      <UniqueIdentifier>{096d56d4-286c-4780-ae41-1ddbf3f91c0d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="00_header_DX.h">
-      <Filter>00%29 base\0_h</Filter>
+    <ClInclude Include="12a_BgObjC_DX.h">
+      <Filter>04%29 Obj\b%29 UIObj</Filter>
     </ClInclude>
-    <ClInclude Include="03_coreC_DX.h">
-      <Filter>00%29 base\0_h</Filter>
-    </ClInclude>
-    <ClInclude Include="02_wndC_DX.h">
-      <Filter>01%29 device\0_h</Filter>
-    </ClInclude>
-    <ClInclude Include="01_deviceC_DX.h">
-      <Filter>01%29 device\0_h</Filter>
-    </ClInclude>
-    <ClInclude Include="04_timerC_DX.h">
-      <Filter>02%29 function\0_h</Filter>
-    </ClInclude>
-    <ClInclude Include="05_writeC_DX.h">
-      <Filter>02%29 function\0_h</Filter>
-    </ClInclude>
-    <ClInclude Include="06_inputC_DX.h">
-      <Filter>02%29 function\0_h</Filter>
-    </ClInclude>
-    <ClInclude Include="07_soundC_DX.h">
-      <Filter>02%29 function\0_h</Filter>
+    <ClInclude Include="12b_BtnObjC_1_DX.h">
+      <Filter>04%29 Obj\b%29 UIObj</Filter>
     </ClInclude>
     <ClInclude Include="08_Object_DX.h">
-      <Filter>02%29 function\0_h</Filter>
+      <Filter>04%29 Obj\a%29 Obj</Filter>
     </ClInclude>
-    <ClInclude Include="09_CollisionC_DX.h">
-      <Filter>02%29 function\0_h</Filter>
+    <ClInclude Include="13a_HeroObjC_DX.h">
+      <Filter>04%29 Obj\c%29 Character</Filter>
     </ClInclude>
     <ClInclude Include="10_SceneC_DX.h">
-      <Filter>03%29 scene\0_h</Filter>
+      <Filter>03%29 scene</Filter>
     </ClInclude>
     <ClInclude Include="10a_SceneLobby_DX.h">
-      <Filter>03%29 scene\0_h</Filter>
+      <Filter>03%29 scene</Filter>
     </ClInclude>
     <ClInclude Include="10b_SceneOver_DX.h">
-      <Filter>03%29 scene\0_h</Filter>
+      <Filter>03%29 scene</Filter>
     </ClInclude>
     <ClInclude Include="10c_SceneVictory_DX.h">
-      <Filter>03%29 scene\0_h</Filter>
+      <Filter>03%29 scene</Filter>
     </ClInclude>
     <ClInclude Include="10d_SceneGame_1_DX.h">
-      <Filter>03%29 scene\0_h</Filter>
+      <Filter>03%29 scene</Filter>
     </ClInclude>
     <ClInclude Include="11_SceneMgr_DX.h">
-      <Filter>03%29 scene\0_h</Filter>
+      <Filter>03%29 scene</Filter>
     </ClInclude>
-    <ClInclude Include="12a_BgObjC_DX.h">
-      <Filter>04%29 UIObj\a%29 UIObj</Filter>
+    <ClInclude Include="07_soundC_DX.h">
+      <Filter>02%29 function</Filter>
     </ClInclude>
-    <ClInclude Include="12b_BtnObjC_DX.h">
-      <Filter>04%29 UIObj\a%29 UIObj</Filter>
+    <ClInclude Include="09_CollisionC_DX.h">
+      <Filter>02%29 function</Filter>
+    </ClInclude>
+    <ClInclude Include="04_timerC_DX.h">
+      <Filter>02%29 function</Filter>
+    </ClInclude>
+    <ClInclude Include="05_writeC_DX.h">
+      <Filter>02%29 function</Filter>
+    </ClInclude>
+    <ClInclude Include="06_inputC_DX.h">
+      <Filter>02%29 function</Filter>
+    </ClInclude>
+    <ClInclude Include="02_wndC_DX.h">
+      <Filter>01%29 device</Filter>
+    </ClInclude>
+    <ClInclude Include="01_deviceC_DX.h">
+      <Filter>01%29 device</Filter>
+    </ClInclude>
+    <ClInclude Include="03_coreC_DX.h">
+      <Filter>00%29 base</Filter>
+    </ClInclude>
+    <ClInclude Include="00_header_DX.h">
+      <Filter>00%29 base</Filter>
+    </ClInclude>
+    <ClInclude Include="14a_shot1.h">
+      <Filter>04%29 Obj\d%29 shot</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="03_coreC_DX.cpp">
-      <Filter>00%29 base\1_cpp</Filter>
+    <ClCompile Include="12a_BgObjC_DX.cpp">
+      <Filter>04%29 Obj\b%29 UIObj</Filter>
     </ClCompile>
-    <ClCompile Include="00_main_DX.cpp">
-      <Filter>00%29 base\1_cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="02_wndC_DX.cpp">
-      <Filter>01%29 device\1_cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="01_deviceC_DX.cpp">
-      <Filter>01%29 device\1_cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="04_timerC_DX.cpp">
-      <Filter>02%29 function\1_cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="05_writeC_DX.cpp">
-      <Filter>02%29 function\1_cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="06_inputC_DX.cpp">
-      <Filter>02%29 function\1_cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="07_soundC_DX.cpp">
-      <Filter>02%29 function\1_cpp</Filter>
+    <ClCompile Include="12b_BtnObjC_1_DX.cpp">
+      <Filter>04%29 Obj\b%29 UIObj</Filter>
     </ClCompile>
     <ClCompile Include="08_Object_DX.cpp">
-      <Filter>02%29 function\1_cpp</Filter>
+      <Filter>04%29 Obj\a%29 Obj</Filter>
     </ClCompile>
-    <ClCompile Include="09_CollisionC_DX.cpp">
-      <Filter>02%29 function\1_cpp</Filter>
+    <ClCompile Include="13a_HeroObjC_DX.cpp">
+      <Filter>04%29 Obj\c%29 Character</Filter>
+    </ClCompile>
+    <ClCompile Include="11_SceneMgrC_DX.cpp">
+      <Filter>03%29 scene</Filter>
     </ClCompile>
     <ClCompile Include="10_SceneC_DX.cpp">
-      <Filter>03%29 scene\1_cpp</Filter>
+      <Filter>03%29 scene</Filter>
     </ClCompile>
     <ClCompile Include="10a_SceneLobby_DX.cpp">
-      <Filter>03%29 scene\1_cpp</Filter>
+      <Filter>03%29 scene</Filter>
     </ClCompile>
     <ClCompile Include="10d_SceneGame_1_DX.cpp">
-      <Filter>03%29 scene\1_cpp</Filter>
+      <Filter>03%29 scene</Filter>
     </ClCompile>
-    <ClCompile Include="12a_BgObjC_DX.cpp">
-      <Filter>04%29 UIObj\a%29 UIObj</Filter>
+    <ClCompile Include="09_CollisionC_DX.cpp">
+      <Filter>02%29 function</Filter>
     </ClCompile>
-    <ClCompile Include="12b_BtnObjC_DX.cpp">
-      <Filter>04%29 UIObj\a%29 UIObj</Filter>
+    <ClCompile Include="05_writeC_DX.cpp">
+      <Filter>02%29 function</Filter>
+    </ClCompile>
+    <ClCompile Include="06_inputC_DX.cpp">
+      <Filter>02%29 function</Filter>
+    </ClCompile>
+    <ClCompile Include="07_soundC_DX.cpp">
+      <Filter>02%29 function</Filter>
+    </ClCompile>
+    <ClCompile Include="04_timerC_DX.cpp">
+      <Filter>02%29 function</Filter>
+    </ClCompile>
+    <ClCompile Include="02_wndC_DX.cpp">
+      <Filter>01%29 device</Filter>
+    </ClCompile>
+    <ClCompile Include="01_deviceC_DX.cpp">
+      <Filter>01%29 device</Filter>
+    </ClCompile>
+    <ClCompile Include="03_coreC_DX.cpp">
+      <Filter>00%29 base</Filter>
+    </ClCompile>
+    <ClCompile Include="00_main_DX.cpp">
+      <Filter>00%29 base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="VertexShader.vsh">
-      <Filter>00%29 base\2_shader</Filter>
+      <Filter>00%29 base\shader</Filter>
     </Text>
     <Text Include="PixelShader.psh">
-      <Filter>00%29 base\2_shader</Filter>
+      <Filter>00%29 base\shader</Filter>
     </Text>
   </ItemGroup>
 </Project>

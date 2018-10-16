@@ -3,16 +3,18 @@
 #include "06_inputC_DX.h"
 #include "04_timerC_DX.h"
 
+#include "09_CollisionC_DX.h"
+
 class Object_DX
 {
-private:
+protected:
 	ID3D11Buffer*               m_pVertexBuffer;   // Á¤Á¡ ¹öÆÛ
 	ID3D11VertexShader*         m_pVS;             // Á¤Á¡ ½¦ÀÌ´õ
 	ID3D11PixelShader*          m_pPS;             // ÇÈ¼¿ ½¦ÀÌ´õ
 	ID3D11InputLayout*          m_pInputLayout;    // ÀÎÇ² ·¹ÀÌ¾Æ¿ô
 	ID3D11ShaderResourceView*   m_pTextureSRV;     // ÅØ½ºÃÄ SRV
 
-private:
+protected:
 	PCT_VERTEX m_pVertexList[4];
 	
 	uWH   m_uImageSize;
@@ -23,6 +25,8 @@ private:
 
 	POINT m_ptCenter;
 	D3DXVECTOR3 m_v3Center;
+
+	timerC_DX m_Timer;
 
 private:
 	void transStoP(); //È­¸é -> Åõ¿µ
@@ -38,8 +42,14 @@ public:
 	void CreateFullImgObj(uXYWH _xywh, const TCHAR* pTexFile);
 	void CreatePartImgObj(uXYWH _xywh, uXYWH imgXYWH, uWH imgSize, const TCHAR* pTexFile);
 
-	void MoveX(UINT uDis);
-	void MoveY(UINT fDis);
+	void ImagePartialChange(uXYWH);
+
+	void ImageFileChange(const TCHAR* pTexFile);
+
+	void MoveX(float fDis);
+	void MoveY(float fDis);
+
+	uLTRB getPos();
 
 	void spin(float fAngle);
 	void scale(float size);

@@ -150,7 +150,9 @@ extern UINT      g_uClientHeight;  //작업영역의 높이
 extern wndC_DX*  g_pWindow;
 
 //타이머에서
-extern double g_GameTimer;
+extern double g_dGameTime;
+extern double g_dSPF;
+extern int    g_iFPS;
 
 //열거형
 enum direction
@@ -217,13 +219,6 @@ struct uXYWH
 	UINT lty;
 	UINT width;
 	UINT height;
-
-	//uXYWH& operator= (const uLTRB& _ltrb) {
-	//	ltx = _ltrb.left;
-	//	lty = _ltrb.top;
-	//	width = _ltrb.right - _ltrb.left;
-	//	height = _ltrb.bottom - _ltrb.top;
-	//}
 };
 
 
@@ -260,8 +255,7 @@ struct ClsInfo
 
 struct MouseInfo
 {
-	LONG x;
-	LONG y;
+	POINT xy;
 	
 	push left;
 	push right;

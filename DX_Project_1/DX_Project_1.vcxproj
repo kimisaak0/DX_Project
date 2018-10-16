@@ -36,7 +36,9 @@
     <ClInclude Include="10_SceneC_DX.h" />
     <ClInclude Include="11_SceneMgr_DX.h" />
     <ClInclude Include="12a_BgObjC_DX.h" />
-    <ClInclude Include="12b_BtnObjC_DX.h" />
+    <ClInclude Include="12b_BtnObjC_1_DX.h" />
+    <ClInclude Include="13a_HeroObjC_DX.h" />
+    <ClInclude Include="14a_shot1.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="00_main_DX.cpp" />
@@ -52,8 +54,10 @@
     <ClCompile Include="10a_SceneLobby_DX.cpp" />
     <ClCompile Include="10d_SceneGame_1_DX.cpp" />
     <ClCompile Include="10_SceneC_DX.cpp" />
+    <ClCompile Include="11_SceneMgrC_DX.cpp" />
     <ClCompile Include="12a_BgObjC_DX.cpp" />
-    <ClCompile Include="12b_BtnObjC_DX.cpp" />
+    <ClCompile Include="12b_BtnObjC_1_DX.cpp" />
+    <ClCompile Include="13a_HeroObjC_DX.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="PixelShader.psh" />
@@ -111,8 +115,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>../game/</OutDir>
-    <IntDir>../output/middle/</IntDir>
+    <OutDir>../../game/</OutDir>
+    <IntDir>../../output/middle/</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

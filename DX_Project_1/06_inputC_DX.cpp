@@ -235,8 +235,8 @@ MouseInfo input_DX::getMouseInfo()
 	GetCursorPos(&MousePos);
 	ScreenToClient(g_hWnd, &MousePos);
 
-	ret.x = MousePos.x;
-	ret.y = MousePos.y;
+	ret.xy = MousePos;
+
 
 	for (int iB = 0; iB < 3; iB++)
 	if (m_MouseBefState.rgbButtons[iB] & 0x80) {
