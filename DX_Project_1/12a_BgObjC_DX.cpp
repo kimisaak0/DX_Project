@@ -7,7 +7,7 @@ BgObc_DX::BgObc_DX()
 
 bool BgObc_DX::setBgImage(const TCHAR* pTexFile)
 {
-	CreateFullImgObj({ 0,0,g_uClientWidth, g_uClientHeight }, pTexFile);
+	CreateFullImgObj({ 0,0,(UINT)g_rtClient.right, (UINT)g_rtClient.bottom }, pTexFile);
 	return true;
 }
 

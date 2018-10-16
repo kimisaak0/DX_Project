@@ -3,6 +3,9 @@
 
 #define DIRECTINPUT_VERSION  0x0800
 
+
+#pragma region //헤더 및 lib 포함
+
 //DX11을 쓰려면 필요함
 #pragma comment (lib, "D3D11.lib")
 #include "D3D11.h"
@@ -69,7 +72,9 @@ using T_ITOR = std::basic_string<TCHAR>::iterator;
 using namespace std;
 using namespace D2D1;
 
-//타입 정의
+#pragma endregion
+
+#pragma region //타입 정의
 using T_STR_VECTOR = vector<basic_string<TCHAR>>;
 using C_STR_VECTOR = vector<string>;
 
@@ -85,7 +90,9 @@ using DWORD_LIST_ITOR = list<DWORD>::iterator;
 using HANDLE_LIST = list<HANDLE>;
 using HANDLE_LIST_ITOR = list<HANDLE>::iterator;
 
-//DX 메소드 호출에 대한 반환값 처리 매크로
+#pragma endregion
+
+#pragma region //매크로 정의
 
 #ifndef V
 #define V(x)       { hr = (x); }
@@ -131,22 +138,22 @@ using HANDLE_LIST_ITOR = list<HANDLE>::iterator;
 #define NEW_ARRAY_CLEAR( A, B, C )  { if (!A && C) A = new B[C]; if(A) memset( A, 0, sizeof(B)*C ); };
 #endif
 
+#pragma endregion
 
-//--------외부 변수 정의 영역----------//
+#pragma region //외부 변수 정의
 
 class wndC_DX;
 
 //device_DX
 extern ID3D11Device*              g_pD3dDevice;
 extern ID3D11DeviceContext*       g_pD3dContext;
+extern IDXGISwapChain*            g_pSwapChain;
 
 //WndC_DX
 extern HINSTANCE g_hInst;
-extern HWND      g_hWnd;           //생성된 윈도우의 핸들값 (DC를 받아올 때 사용함)
-extern RECT      g_rtWindow;       //생성된 윈도우 전체영역 크기
-extern RECT      g_rtClient;       //생성된 윈도우 작업영역 크기
-extern UINT      g_uClientWidth;   //작업영역의 넓이 
-extern UINT      g_uClientHeight;  //작업영역의 높이
+extern HWND      g_hWnd;           
+extern RECT      g_rtWindow;      
+extern RECT      g_rtClient;      
 extern wndC_DX*  g_pWindow;
 
 //타이머에서
@@ -154,7 +161,9 @@ extern double g_dGameTime;
 extern double g_dSPF;
 extern int    g_iFPS;
 
-//열거형
+#pragma endregion
+
+#pragma region //열거형 정의
 enum direction
 {
 	d_NO = 0,
@@ -172,7 +181,9 @@ enum push
 	p_UP = 3,
 };
 
-//구조체 
+#pragma endregion
+
+#pragma region //구조체 정의
 struct PCT_VERTEX
 {
 	D3DXVECTOR3 p;
@@ -276,3 +287,5 @@ struct MouseInfo
 
 
 };
+
+#pragma endregion

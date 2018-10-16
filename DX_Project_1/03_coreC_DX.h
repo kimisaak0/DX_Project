@@ -5,7 +5,6 @@
 #include "06_inputC_DX.h"
 #include "08_Object_DX.h"
 
-
 #include "11_SceneMgr_DX.h"
 
 class coreC_DX : public wndC_DX
@@ -16,7 +15,6 @@ class coreC_DX : public wndC_DX
 	ID3D11RasterizerState* m_pRSSolid;
 
 	SceneMgrC_DX m_SceneMgr;
-
 
 private:
 	bool m_swTimerRender;
@@ -33,7 +31,6 @@ public:
 	bool gameRender() override;
 	bool gamePostRender() override;
 	bool gameRelease() override;
-
 
 public:
 	bool ResetRT();

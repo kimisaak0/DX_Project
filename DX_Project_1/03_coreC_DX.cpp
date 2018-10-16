@@ -1,6 +1,11 @@
 #include "03_coreC_DX.h"
 
-#pragma region function
+
+coreC_DX::coreC_DX(LPCTSTR LWndName) : wndC_DX(LWndName)
+{
+	m_swTimerRender = false;
+	m_swKeyRender = false;
+}
 
 HRESULT coreC_DX::SetRasterizerState()
 {
@@ -11,17 +16,8 @@ HRESULT coreC_DX::SetRasterizerState()
 	desc.CullMode = D3D11_CULL_NONE;
 	desc.DepthClipEnable = TRUE;
 
-	hr = m_pD3dDevice->CreateRasterizerState(&desc, &m_pRSSolid);
+	hr = g_pD3dDevice->CreateRasterizerState(&desc, &m_pRSSolid);
 	return hr;
-}
-
-#pragma endregion
-
-
-coreC_DX::coreC_DX(LPCTSTR LWndName) : wndC_DX(LWndName)
-{
-	m_swTimerRender = false;
-	m_swKeyRender = false;
 }
 
 bool coreC_DX::gameInit()
@@ -32,7 +28,7 @@ bool coreC_DX::gameInit()
 
 	//SwapChain의 백버퍼 정보로 DXWrite객체 생성 
 	IDXGISurface1* pBackBuffer = nullptr;
-	HRESULT hr = getSwapChain()->GetBuffer(0, __uuidof(IDXGISurface), (void**)&pBackBuffer);
+	HRESULT hr = g_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface), (void**)&pBackBuffer);
 	m_Font.Init();
 	m_Font.Set(pBackBuffer);
 
@@ -50,18 +46,11 @@ bool coreC_DX::gameInit()
 		return false;
 	}
 
-
-	g_pWindow->CenterWindow(g_hWnd); //윈도우를 화면 중앙으로 이동시킨다.
-
-	 //생성된 크기를 전역 변수에 대입한다.
-	GetWindowRect(g_hWnd, &g_rtWindow);
-	GetClientRect(g_hWnd, &g_rtClient);
-
-
+	g_pWindow->CenterWindow(); //윈도우를 화면 중앙으로 이동시킨다.
+	
 	//init
 	{
 		SetRasterizerState();
-
 		m_SceneMgr.Init();
 	}
 	
@@ -84,7 +73,6 @@ bool coreC_DX::gameFrame()
 	
 	if (I_Input.IsKeyDownOnce(0x0d)) {
 		m_swTimerRender = !m_swTimerRender;
-		
 	}
 
 	if (I_Input.IsKeyDownOnce(DIK_0)) {
@@ -101,7 +89,6 @@ bool coreC_DX::gameFrame()
 
 bool coreC_DX::gamePreRender()
 {
-
 	m_Font.DrawTextBegin();
 	return true;
 }
@@ -114,13 +101,13 @@ bool coreC_DX::gameRender()
 	float b = 0.45f;
 
 	float ClearColor[4] = { r, g, b, 0.0f }; //r,g,b,a
-	m_pImmediateContext->ClearRenderTargetView(m_pRenderTagetView, ClearColor);
+	g_pD3dContext->ClearRenderTargetView(m_pRenderTagetView, ClearColor);
 
 	TCHAR pBuffer[256];
 	memset(pBuffer, 0, sizeof(TCHAR) * 256);	
 
 	m_Font.SetTextPos();
-	m_Font.SetlayoutRt(0, 0, (FLOAT)g_uClientWidth, (FLOAT)g_uClientHeight);
+	m_Font.SetlayoutRt(0, 0, (FLOAT)g_rtClient.right, (FLOAT)g_rtClient.bottom);
 
 	if (m_swTimerRender) {
 		m_Font.SetAlignment(DWRITE_TEXT_ALIGNMENT_LEADING, DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
@@ -136,7 +123,6 @@ bool coreC_DX::gameRender()
 		//m_Font.SetTextPos(Matrix3x2F::Rotation(g_GameTimer*100, Point2F(400, 300)));
 		m_Font.SetTextColor(ColorF(1, 0.3f, 0, 1));
 
-
 		int iCount = 0;
 
 		MouseInfo Mouse = I_Input.getMouseInfo();
@@ -145,7 +131,7 @@ bool coreC_DX::gameRender()
 
 		UINT iStartX = 0;
 		UINT iStartY = 30 + (20 * iCount);
-		m_Font.SetlayoutRt((FLOAT)iStartX, (FLOAT)iStartY, (FLOAT)g_uClientWidth, (FLOAT)g_uClientHeight);
+		m_Font.SetlayoutRt((FLOAT)iStartX, (FLOAT)iStartY, (FLOAT)g_rtClient.right, (FLOAT)g_rtClient.bottom);
 		m_Font.DrawText(pBuffer);
 		iCount++;		
 
@@ -154,19 +140,17 @@ bool coreC_DX::gameRender()
 				_stprintf_s(pBuffer, _T("Key State : 0x%02x : %d"), iKey, I_Input.m_KeyCurState[iKey]);
 				UINT iStartX = 0;
 				UINT iStartY = 30 + (20 * iCount);
-				m_Font.SetlayoutRt((FLOAT)iStartX, (FLOAT)iStartY, (FLOAT)g_uClientWidth, (FLOAT)g_uClientHeight);
+				m_Font.SetlayoutRt((FLOAT)iStartX, (FLOAT)iStartY, (FLOAT)g_rtClient.right, (FLOAT)g_rtClient.bottom);
 				m_Font.DrawText(pBuffer);
 
 				iCount++;
 			}
 		}
-
-
 	}
 
 	//render
 	{
-		m_pImmediateContext->RSSetState(m_pRSSolid);
+		g_pD3dContext->RSSetState(m_pRSSolid);
 
 		m_SceneMgr.Render();
 	}
@@ -178,7 +162,7 @@ bool coreC_DX::gamePostRender()
 	//IDXGISwapChain 객체를 사용하여 시연(출력)한다.
 	//모든 렌더링 작업들은 present앞에서 이뤄져야 한다.
 	m_Font.DrawTextEnd();
-	m_pSwapChain->Present(0, 0);
+	g_pSwapChain->Present(0, 0);
 	return true;
 }
 
@@ -199,7 +183,7 @@ bool coreC_DX::gameRelease()
 bool coreC_DX::ResetRT()
 {
 	IDXGISurface1* pBackBuffer = nullptr;
-	HRESULT hr = getSwapChain()->GetBuffer(0, __uuidof(IDXGISurface), (void**)&pBackBuffer);
+	HRESULT hr = g_pSwapChain->GetBuffer(0, __uuidof(IDXGISurface), (void**)&pBackBuffer);
 	m_Font.Set(pBackBuffer);
 
 	if (pBackBuffer) {
@@ -208,7 +192,6 @@ bool coreC_DX::ResetRT()
 
 	return true;
 }
-
 
 coreC_DX::~coreC_DX()
 {

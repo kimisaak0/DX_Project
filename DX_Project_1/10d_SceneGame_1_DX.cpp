@@ -13,7 +13,7 @@ bool	SceneGame_1_DX::Init()
 	m_bNextScene = false;
 
 	m_gameBg1.setBgImage(L"../INPUT/DATA/image/GameBg.png");
-	m_gameBg2.CreateFullImgObj({ g_uClientWidth,0,g_uClientWidth, g_uClientHeight}, L"../INPUT/DATA/image/GameBg.png");
+	m_gameBg2.CreateFullImgObj({ (UINT)g_rtClient.right, 0, (UINT)g_rtClient.right, (UINT)g_rtClient.bottom}, L"../INPUT/DATA/image/GameBg.png");
 
 	m_Actor.CreatePartImgObj({ 100,100,50,50 }, { 20,6,50,50 }, { 350,272 }, L"../INPUT/DATA/image/Rock.png");
 

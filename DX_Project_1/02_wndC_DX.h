@@ -8,13 +8,14 @@ protected:
 	LPCWSTR      m_lWndName;    //윈도우 이름
 
 public:
-	void CenterWindow(HWND hwnd);       //윈도우를 중앙으로 옮기는 함수
+	void CenterWindow();       //윈도우를 중앙으로 옮기는 함수
 
 	//윈도우 프로시저 - 아예 전역 함수화 시켜둠.
 	static LRESULT CALLBACK MsgProc(HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam);
-	bool registWnd(LPCTSTR LWndName);   //윈도우 등록.
-	virtual bool runWindow();           //윈도우 돌리기
 
+	bool registWnd(LPCTSTR LWndName);   //윈도우 등록.
+	
+	virtual bool runWindow();           //윈도우 돌리기
 
 public:
 	virtual bool gameInit() = 0;            //게임 전체의 초기화를 담당

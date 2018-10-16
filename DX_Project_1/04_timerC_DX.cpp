@@ -57,7 +57,6 @@ bool	timerC_DX::Frame()
 		m_iFPSGether = 0;
 	}
 
-
 	m_iFPSGether++;
 
 	return true;

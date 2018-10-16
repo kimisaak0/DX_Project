@@ -9,19 +9,19 @@ Object_DX::Object_DX()
 //È­¸éÁÂÇ¥°è -> Åõ¿µÁÂÇ¥°Ô
 void Object_DX::transStoP()
 {
-	m_fPRegion.left = (m_uSRegion.left / (float)g_uClientWidth) * 2 - 1.0f;
-	m_fPRegion.top = -((m_uSRegion.top / (float)g_uClientHeight) * 2 - 1.0f);
-	m_fPRegion.right = (m_uSRegion.right / (float)g_uClientWidth) * 2 - 1.0f;
-	m_fPRegion.bottom = -((m_uSRegion.bottom / (float)g_uClientHeight) * 2 - 1.0f);
+	m_fPRegion.left = (m_uSRegion.left / (float)g_rtClient.right) * 2 - 1.0f;
+	m_fPRegion.top = -((m_uSRegion.top / (float)g_rtClient.bottom) * 2 - 1.0f);
+	m_fPRegion.right = (m_uSRegion.right / (float)g_rtClient.right) * 2 - 1.0f;
+	m_fPRegion.bottom = -((m_uSRegion.bottom / (float)g_rtClient.bottom) * 2 - 1.0f);
 }
 
 //Åõ¿µÁÂÇ¥°è -> È­¸éÁÂÇ¥°è
 void Object_DX::transPtoS()
 {
-	m_uSRegion.left = (UINT)((m_fPRegion.left + 1.0f) / 2 * (float)g_uClientWidth);
-	m_uSRegion.top = (UINT)((m_fPRegion.top - 1.0f) / -2 * (float)g_uClientHeight);
-	m_uSRegion.right = (UINT)((m_fPRegion.right + 1.0f) / 2 * (float)g_uClientWidth);
-	m_uSRegion.bottom = (UINT)((m_fPRegion.bottom - 1.0f) / -2 * (float)g_uClientHeight);
+	m_uSRegion.left = (UINT)((m_fPRegion.left + 1.0f) / 2 * (float)g_rtClient.right);
+	m_uSRegion.top = (UINT)((m_fPRegion.top - 1.0f) / -2 * (float)g_rtClient.bottom);
+	m_uSRegion.right = (UINT)((m_fPRegion.right + 1.0f) / 2 * (float)g_rtClient.right);
+	m_uSRegion.bottom = (UINT)((m_fPRegion.bottom - 1.0f) / -2 * (float)g_rtClient.bottom);
 }
 
 
