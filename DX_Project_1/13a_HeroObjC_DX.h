@@ -10,7 +10,7 @@ class HeroObjC_DX : public Object_DX
 	float m_fSpeedX;
 	float m_fSpeedY;
 
-	float m_BefCentery;
+	float m_BefCenterY;
 
 
 public:

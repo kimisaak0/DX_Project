@@ -26,7 +26,7 @@ void HeroObjC_DX::Shot1Fire(POINT mousePos)
 
 bool HeroObjC_DX::Init()
 {
-	m_BefCentery = m_v3Center.y;
+	m_BefCenterY = m_v3Center.y;
 	return true;
 }
 
@@ -99,8 +99,8 @@ bool HeroObjC_DX::Frame()
 		m_uSpriteX = 0;
 	}
 
-	scale(m_v3Center.y - m_BefCentery);
-	m_BefCentery = m_v3Center.y;
+	scale(m_v3Center.y - m_BefCenterY);
+	m_BefCenterY = m_v3Center.y;
 
 	ImagePartialChange({ m_uSpriteX,m_uSpriteY,99,99 });
 
@@ -109,8 +109,7 @@ bool HeroObjC_DX::Frame()
 		spin(0.01f);
 	}
 
-	g_pD3dContext->UpdateSubresource(m_pVertexBuffer, 0, NULL, m_pVertexList, 0, 0);
-
+	Object_DX::Frame();
 	return true;
 }
 

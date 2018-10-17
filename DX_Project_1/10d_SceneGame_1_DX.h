@@ -3,7 +3,8 @@
 
 #include "12a_BgObjC_DX.h"
 #include "13a_HeroObjC_DX.h"
-#include "14a_shot1.h"
+#include "13b_MobObjC_1_DX.h"
+
 
 
 class SceneGame_1_DX : public SceneC_DX
@@ -11,15 +12,13 @@ class SceneGame_1_DX : public SceneC_DX
 	float m_iWaveX;
 	float m_iWaveY;
 
-	BgObc_DX     m_gameBg1;
-	BgObc_DX     m_gameBg2;
+	BgObj_DX     m_gameBg1;
+	BgObj_DX     m_gameBg2;
 
 	HeroObjC_DX  m_Hero;
-
-	Object_DX    m_Actor;
-
-	shot1 temp;
-
+	MobC_1       m_mob1;
+	
+		
 public:
 	virtual bool	Init();
 	virtual bool	Frame();

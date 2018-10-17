@@ -153,6 +153,9 @@
     <ClCompile Include="14a_shot1.cpp">
       <Filter>04%29 Obj\d%29 shot</Filter>
     </ClCompile>
+    <ClCompile Include="13b_MobObjC_1_DX.cpp">
+      <Filter>04%29 Obj\c%29 Character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="VertexShader.vsh">

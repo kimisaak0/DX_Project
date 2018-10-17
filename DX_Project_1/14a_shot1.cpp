@@ -24,7 +24,7 @@ bool shot1::Frame()
 	MoveX(m_fSpeedX);
 	MoveY(m_fSpeedY);
 
-	g_pD3dContext->UpdateSubresource(m_pVertexBuffer, 0, NULL, m_pVertexList, 0, 0);
+	Object_DX::Frame();
 
 	scale(m_v3Center.y - m_BefCentery);
 	m_BefCentery = m_v3Center.y;
@@ -32,6 +32,11 @@ bool shot1::Frame()
 	if (m_ExistTimer.tickAlram(2)) {
 		m_bExist = false;
 	}
+
+	static float angle;
+	angle += (float)g_dSPF;
+
+	spin(angle);
 
 	return true;
 }

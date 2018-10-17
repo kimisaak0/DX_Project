@@ -7,7 +7,7 @@ class SceneLobby_DX : public SceneC_DX
 {
 	bool sw;
 
-	BgObc_DX m_bg;
+	BgObj_DX m_bg;
 	BtnObjC_1_DX m_btnStart;
 
 public:

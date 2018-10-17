@@ -1,7 +1,7 @@
 #pragma once
 #include "08_Object_DX.h"
 
-class BgObc_DX : public Object_DX
+class BgObj_DX : public Object_DX
 {
 public:
 	bool setBgImage( const TCHAR* pTexFile);
@@ -13,6 +13,6 @@ public:
 	virtual bool Release();
 
 public:
-	BgObc_DX();
-	virtual ~BgObc_DX();
+	BgObj_DX();
+	virtual ~BgObj_DX();
 };
