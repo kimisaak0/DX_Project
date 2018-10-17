@@ -2,9 +2,9 @@
 
 HeroObjC_DX::HeroObjC_DX()
 {
-	m_uSpriteX = 0;
-	m_uSpriteY = 200;
-	m_fSpeedX = 0;
+	m_uSpriteX = 128;
+	m_uSpriteY = 0;
+	m_fSpeedX = 0.0001;
 	m_fSpeedY = 0;
 
 }
@@ -77,32 +77,73 @@ bool HeroObjC_DX::Frame()
 
 
 	//½ºÇÁ¶óÀÌÆ®
-	if (abs(m_fSpeedX) >= abs(m_fSpeedY)) {
-		if (m_fSpeedX > 0) {
-			m_uSpriteY = 200; //¿ì
+	if (m_fSpeedX > 0) {
+		if (m_fSpeedY > 0) {
+			if (abs(m_fSpeedX) > abs(m_fSpeedY) * 2) {
+				m_uSpriteX = 128; //¿ì
+			}
+			else if (abs(m_fSpeedY) > abs(m_fSpeedX) * 2) {
+				m_uSpriteX = 256; //»ó
+			}
+			else {
+				m_uSpriteX = 192; //¿ì»ó
+			}
 		}
-		else if (m_fSpeedX < 0) {
-			m_uSpriteY = 100; //ÁÂ
+		else {
+			if (abs(m_fSpeedX) > abs(m_fSpeedY) * 2) {
+				m_uSpriteX = 128; //¿ì
+			}
+			else if (abs(m_fSpeedY) > abs(m_fSpeedX) * 2) {
+				m_uSpriteX = 0; //ÇÏ
+			}
+			else {
+				m_uSpriteX = 64; //¿ìÇÏ
+			}
 		}
 	}
 	else {
 		if (m_fSpeedY > 0) {
-			m_uSpriteY = 300;   //ÇÏ
+			if (abs(m_fSpeedX) > abs(m_fSpeedY) * 2) {
+				m_uSpriteX = 384; // ÁÂ
+			}
+			else if (abs(m_fSpeedY) > abs(m_fSpeedX) * 2) {
+				m_uSpriteX = 256; //»ó
+			}
+			else {
+				m_uSpriteX = 320; //ÁÂ»ó
+			}
 		}
-		else if (m_fSpeedY < 0) {
-			m_uSpriteY = 0; //»ó
+		else {
+			if (abs(m_fSpeedX) > abs(m_fSpeedY) * 2) {
+				m_uSpriteX = 384; //ÁÂ
+			}
+			else if (abs(m_fSpeedY) > abs(m_fSpeedX) * 2) {
+				m_uSpriteX = 0; //ÇÏ
+			}
+			else {
+				m_uSpriteX = 448; //ÁÂÇÏ
+			}
 		}
 	}
 
-	m_uSpriteX += 100;
-	if (m_uSpriteX >= 300) {
-		m_uSpriteX = 0;
+	static int pm = 1;
+	if (m_Timer.tickAlram(0.2)) {
+		m_uSpriteY += 64 * pm;
+		if (m_uSpriteY == 192) {
+			pm *= -1;
+			m_uSpriteY += 64 * pm * 2;
+		} 
+		if (m_uSpriteY == 0) {
+			pm *= -1;
+		}
+
+	
 	}
 
 	scale(m_v3Center.y - m_BefCenterY);
 	m_BefCenterY = m_v3Center.y;
 
-	ImagePartialChange({ m_uSpriteX,m_uSpriteY,99,99 });
+	ImagePartialChange({ m_uSpriteX,m_uSpriteY,64,64 });
 
 
 	if (I_Input.IsKeyDown(DIK_1)) { //Down

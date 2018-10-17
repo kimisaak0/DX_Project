@@ -15,7 +15,7 @@ bool	SceneGame_1_DX::Init()
 	m_gameBg1.setBgImage(L"../INPUT/DATA/image/GameBg.png");
 	m_gameBg2.CreateFullImgObj({ g_rtClient.right, 0, (UINT)g_rtClient.right, (UINT)g_rtClient.bottom}, L"../INPUT/DATA/image/GameBg.png");
 	
-	m_Hero.CreatePartImgObj({ 300,450,80,80 }, { 0,200,99,99 }, { 300,400 }, L"../INPUT/DATA/image/ship.png");
+	m_Hero.CreatePartImgObj({ 300,450,100,100 }, { 128,0,64,64 }, { 512,192 }, L"../INPUT/DATA/image/hero_no_wing.png");
 	m_Hero.Init();
 
 	m_mob1.CreatePartImgObj({ 1000, 450, 96, 96 }, { 0, 0, 96, 96 }, { 288, 288 }, L"../INPUT/DATA/image/monster1.png");
