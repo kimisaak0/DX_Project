@@ -5,9 +5,9 @@ BtnObjC_1_DX::BtnObjC_1_DX()
 
 }
 
-bool BtnObjC_1_DX::setBtnImage(uXYWH _uXYWH,  const TCHAR* pTexFile)
+bool BtnObjC_1_DX::setBtnImage(iXYWH _uXYWH,  const TCHAR* pTexFile)
 {
-	CreatePartImgObj(_uXYWH, { 0,0,300,75 }, { 300,225 }, pTexFile);
+	CreatePartImgObj(_uXYWH, { 0,0,300,70 }, { 300,210 }, pTexFile);
 
 	return true;
 }
@@ -20,15 +20,20 @@ bool BtnObjC_1_DX::Init()
 
 bool BtnObjC_1_DX::Frame()
 {
-	if(I_ClsMgr.RectInPt(m_uSRegion, I_Input.getMouseInfo().xy)) {
-		ImagePartialChange({ 0,75,300,75 });
-		if (I_Input.getMouseInfo().left == p_HOLD) {
-			ImagePartialChange({ 0,150,300,75 });
+	MouseInfo mi = I_Input.getMouseInfo();
+
+	if(I_ClsMgr.RectInPt(m_uSRegion, mi.xy)) {
+		if (mi.left == p_DOWN) {
+			//ImagePartialChange({ 0,140,300,70 });
+			//사운드 추가
 			return true;
+		}
+		else if(mi.left == p_FREE) {
+			ImagePartialChange({ 0,70,300,70 });
 		}
 	}
 	else {
-		ImagePartialChange({ 0,0,300,75 });
+		ImagePartialChange({ 0,0,300,70 });
 	}
 
 	g_pD3dContext->UpdateSubresource(m_pVertexBuffer, 0, NULL, m_pVertexList, 0, 0);

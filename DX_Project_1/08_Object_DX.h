@@ -18,12 +18,12 @@ protected:
 	PCT_VERTEX m_pVertexList[4];
 	
 	uWH   m_uImageSize;
-	uLTRB m_uImagePart;
+	iLTRB m_uImagePart;
 
-	uLTRB m_uSRegion;
+	iLTRB m_uSRegion;
 	fLTRB m_fPRegion;
 
-	uPOINT m_ptCenter;
+	POINT m_ptCenter;
 	D3DXVECTOR3 m_v3Center;
 
 	timerC_DX m_Timer;
@@ -34,22 +34,22 @@ private:
 	void UpdateCP(); //중점 갱신
 	void UpdateVertexList(); //정점 리스트 갱신
 
-	void SetPosition(uXYWH _xywh);
-	void ImagePartialSelect(uXYWH imgXYWH, uWH imgSize);
+	void SetPosition(iXYWH _xywh);
+	void ImagePartialSelect(iXYWH imgXYWH, uWH imgSize);
 	HRESULT Create(const TCHAR* pTexFile);
 
 public:
-	void CreateFullImgObj(uXYWH _xywh, const TCHAR* pTexFile);
-	void CreatePartImgObj(uXYWH _xywh, uXYWH imgXYWH, uWH imgSize, const TCHAR* pTexFile);
+	void CreateFullImgObj(iXYWH _xywh, const TCHAR* pTexFile);
+	void CreatePartImgObj(iXYWH _xywh, iXYWH imgXYWH, uWH imgSize, const TCHAR* pTexFile);
 
-	void ImagePartialChange(uXYWH);
+	void ImagePartialChange(iXYWH);
 
 	void ImageFileChange(const TCHAR* pTexFile);
 
 	void MoveX(float fDis);
 	void MoveY(float fDis);
 
-	uLTRB getPos();
+	iLTRB getPos();
 
 	void spin(float fAngle);
 	void scale(float size);

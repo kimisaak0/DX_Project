@@ -228,15 +228,13 @@ MouseInfo input_DX::getMouseInfo()
 	MouseInfo ret;
 	POINT MousePos;
 
-	for (int iB = 0; iB < 3; iB++) {
-		m_MouseBefState.rgbButtons[iB] = m_MouseCurState.rgbButtons[iB];
-	}
-
 	GetCursorPos(&MousePos);
 	ScreenToClient(g_hWnd, &MousePos);
 
 	ret.xy = MousePos;
 
+	ret.xy.x = MousePos.x * g_rtClient.right / (g_rtClient.right + g_rtWindow.left);
+	ret.xy.y = MousePos.y * g_rtClient.bottom / (g_rtClient.bottom + g_rtWindow.top);
 
 	for (int iB = 0; iB < 3; iB++)
 	if (m_MouseBefState.rgbButtons[iB] & 0x80) {
@@ -270,6 +268,10 @@ MouseInfo input_DX::getMouseInfo()
 				case 2: ret.middle = p_FREE;
 			}
 		}
+	}
+
+	for (int iB = 0; iB < 3; iB++) {
+		m_MouseBefState.rgbButtons[iB] = m_MouseCurState.rgbButtons[iB];
 	}
 
 	return ret;

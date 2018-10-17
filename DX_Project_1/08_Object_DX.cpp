@@ -9,19 +9,19 @@ Object_DX::Object_DX()
 //화면좌표계 -> 투영좌표게
 void Object_DX::transStoP()
 {
-	m_fPRegion.left = (m_uSRegion.left / (float)g_rtClient.right) * 2 - 1.0f;
-	m_fPRegion.top = -((m_uSRegion.top / (float)g_rtClient.bottom) * 2 - 1.0f);
-	m_fPRegion.right = (m_uSRegion.right / (float)g_rtClient.right) * 2 - 1.0f;
-	m_fPRegion.bottom = -((m_uSRegion.bottom / (float)g_rtClient.bottom) * 2 - 1.0f);
+	m_fPRegion.left = (m_uSRegion.left / ((float)g_rtClient.right)) * 2 - 1.0f;
+	m_fPRegion.top = -((m_uSRegion.top / ((float)g_rtClient.bottom)) * 2 - 1.0f);
+	m_fPRegion.right = (m_uSRegion.right / ((float)g_rtClient.right)) * 2 - 1.0f;
+	m_fPRegion.bottom = -((m_uSRegion.bottom / ((float)g_rtClient.bottom)) * 2 - 1.0f);
 }
 
 //투영좌표계 -> 화면좌표계
 void Object_DX::transPtoS()
 {
-	m_uSRegion.left = (UINT)((m_fPRegion.left + 1.0f) / 2 * (float)g_rtClient.right);
-	m_uSRegion.top = (UINT)((m_fPRegion.top - 1.0f) / -2 * (float)g_rtClient.bottom);
-	m_uSRegion.right = (UINT)((m_fPRegion.right + 1.0f) / 2 * (float)g_rtClient.right);
-	m_uSRegion.bottom = (UINT)((m_fPRegion.bottom - 1.0f) / -2 * (float)g_rtClient.bottom);
+	m_uSRegion.left = (UINT)((m_fPRegion.left + 1.0f) / 2 * ((float)g_rtClient.right));
+	m_uSRegion.top = (UINT)((m_fPRegion.top - 1.0f) / -2 * ((float)g_rtClient.bottom));
+	m_uSRegion.right = (UINT)((m_fPRegion.right + 1.0f) / 2 * ((float)g_rtClient.right));
+	m_uSRegion.bottom = (UINT)((m_fPRegion.bottom - 1.0f) / -2 * ((float)g_rtClient.bottom));
 }
 
 
@@ -29,8 +29,8 @@ void Object_DX::transPtoS()
 //중점 갱신
 void Object_DX::UpdateCP()
 {
-	m_ptCenter.x = (m_uSRegion.right - m_uSRegion.left) / 2;
-	m_ptCenter.y = (m_uSRegion.bottom - m_uSRegion.top) / 2;
+	m_ptCenter.x = (m_uSRegion.right + m_uSRegion.left) / 2;
+	m_ptCenter.y = (m_uSRegion.bottom + m_uSRegion.top) / 2;
 
 	m_v3Center.x = 0.0f;
 	m_v3Center.y = 0.0f;
@@ -60,7 +60,7 @@ void Object_DX::UpdateVertexList()
 
 
 //생성 위치 지정하기
-void Object_DX::SetPosition(uXYWH _xywh)
+void Object_DX::SetPosition(iXYWH _xywh)
 {
 	//화면 좌표계 저장
 	m_uSRegion = _xywh;
@@ -73,7 +73,7 @@ void Object_DX::SetPosition(uXYWH _xywh)
 }
 
 //이미지 자르기
-void Object_DX::ImagePartialSelect(uXYWH imgXYWH, uWH imgSize)
+void Object_DX::ImagePartialSelect(iXYWH imgXYWH, uWH imgSize)
 {
 	m_uImagePart = imgXYWH;
 	m_uImageSize = imgSize;
@@ -176,14 +176,14 @@ void Object_DX::ImageFileChange(const TCHAR* pTexFile)
 }
 
 //전체 이미지 오브젝트 생성
-void Object_DX::CreateFullImgObj(uXYWH _xywh, const TCHAR* pTexFile) {
+void Object_DX::CreateFullImgObj(iXYWH _xywh, const TCHAR* pTexFile) {
 	SetPosition(_xywh);
 	ImagePartialSelect({ 0,0,1,1 }, { 1,1 });
 	Create(pTexFile);
 }
 
 //부분 이미지 오브젝트 생성
-void Object_DX::CreatePartImgObj(uXYWH _xywh, uXYWH imgXYWH, uWH imgSize, const TCHAR* pTexFile)
+void Object_DX::CreatePartImgObj(iXYWH _xywh, iXYWH imgXYWH, uWH imgSize, const TCHAR* pTexFile)
 {
 	SetPosition(_xywh);
 	ImagePartialSelect(imgXYWH, imgSize);
@@ -191,12 +191,12 @@ void Object_DX::CreatePartImgObj(uXYWH _xywh, uXYWH imgXYWH, uWH imgSize, const 
 }
 
 //이미지 선택 영역 변경
-void Object_DX::ImagePartialChange(uXYWH _uXYWH)
+void Object_DX::ImagePartialChange(iXYWH _uXYWH)
 {
 	ImagePartialSelect(_uXYWH, m_uImageSize);
 }
 
-uLTRB Object_DX::getPos()
+iLTRB Object_DX::getPos()
 {
 	return m_uSRegion;
 }

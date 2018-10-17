@@ -4,8 +4,8 @@
 
 class HeroObjC_DX : public Object_DX
 {
-	UINT m_uSpriteX;
-	UINT m_uSpriteY;
+	LONG m_uSpriteX;
+	LONG m_uSpriteY;
 
 	float m_fSpeedX;
 	float m_fSpeedY;
@@ -17,7 +17,7 @@ public:
 	list<shot1> shot1_list;
 
 public:
-	void Shot1Fire(uPOINT mousePos);
+	void Shot1Fire(POINT mousePos);
 
 public:
 	virtual bool Init();

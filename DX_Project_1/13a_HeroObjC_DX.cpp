@@ -9,17 +9,17 @@ HeroObjC_DX::HeroObjC_DX()
 
 }
 
-void HeroObjC_DX::Shot1Fire(uPOINT mousePos)
+void HeroObjC_DX::Shot1Fire(POINT mousePos)
 {
-	uXYWH temp = { m_ptCenter.x, m_ptCenter.y, 50,50 };
+	iXYWH pos = { m_ptCenter.x, m_ptCenter.y, 30,30 };
 
 	float dx = mousePos.x - m_ptCenter.x;
-	float dy = mousePos.y - m_ptCenter.y;
+	float dy = (mousePos.y - m_ptCenter.y) * 2;
 	double distance = sqrt(pow(dx, 2) + pow(dy, 2));
 
 	shot1 shot;
-	shot.CreateFullImgObj(temp, L"../INPUT/DATA/image/shot1.png");
-	shot.setSpeed((dx / distance) / 100 , (dy / distance) / 100);
+	shot.CreateFullImgObj(pos, L"../INPUT/DATA/image/shot1.png");
+	shot.setSpeed((dx / distance) / 1000 , (-dy / distance) / 1000);
 
 	shot1_list.push_back(shot);
 }
@@ -32,13 +32,25 @@ bool HeroObjC_DX::Init()
 
 bool HeroObjC_DX::Frame() 
 {
-	if (I_Input.getMouseInfo().left == p_HOLD) {
+	//총알 발사
+	if (I_Input.getMouseInfo().left == p_DOWN) {
 		Shot1Fire(I_Input.getMouseInfo().xy);
 	}
 
+	//총알 프레임
 	list<shot1>::iterator shot1It;
 	for (shot1It = shot1_list.begin(); shot1It != shot1_list.end(); shot1It++) {
 		shot1It->Frame();
+	}
+
+	//총알 삭제하기
+	for (shot1It = shot1_list.begin(); shot1It != shot1_list.end(); ) {
+		if (!shot1It->getExist()) {
+			shot1It = shot1_list.erase(shot1It);
+		}
+		else {
+			shot1It++;
+		}
 	}
 
 	//이동
@@ -90,7 +102,7 @@ bool HeroObjC_DX::Frame()
 	scale(m_v3Center.y - m_BefCentery);
 	m_BefCentery = m_v3Center.y;
 
-	ImagePartialChange({ m_uSpriteX,m_uSpriteY,100,100 });
+	ImagePartialChange({ m_uSpriteX,m_uSpriteY,99,99 });
 
 
 	if (I_Input.IsKeyDown(DIK_1)) { //Down
@@ -104,6 +116,11 @@ bool HeroObjC_DX::Frame()
 
 bool HeroObjC_DX::Render()
 {
+	list<shot1>::iterator shot1It;
+	for (shot1It = shot1_list.begin(); shot1It != shot1_list.end(); shot1It++) {
+		shot1It->Render();
+	}
+
 	Object_DX::Render();
 	return true;
 }

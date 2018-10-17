@@ -94,6 +94,9 @@
     <ClInclude Include="14a_shot1.h">
       <Filter>04%29 Obj\d%29 shot</Filter>
     </ClInclude>
+    <ClInclude Include="13b_MobObjC_1_DX.h">
+      <Filter>04%29 Obj\c%29 Character</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="12a_BgObjC_DX.cpp">

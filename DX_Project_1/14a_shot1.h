@@ -9,8 +9,14 @@ protected:
 	float m_fSpeedX;
 	float m_fSpeedY;
 
+	float m_BefCentery;
+
+	timerC_DX m_ExistTimer;
+
 public:
 	void setSpeed(float dx, float dy);
+
+	bool getExist();
 
 public:
 	bool Frame();

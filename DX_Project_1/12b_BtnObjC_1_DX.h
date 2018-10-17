@@ -4,7 +4,7 @@
 class BtnObjC_1_DX : public Object_DX
 {
 public:
-	bool setBtnImage(uXYWH _uXYWH, const TCHAR* pTexFile);
+	bool setBtnImage(iXYWH _uXYWH, const TCHAR* pTexFile);
 
 public:
 	virtual bool Init();

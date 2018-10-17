@@ -18,6 +18,7 @@ bool	SceneLobby_DX::Init()
 
 }
 
+
 bool	SceneLobby_DX::Frame()
 {
 	if (m_btnStart.Frame()) {

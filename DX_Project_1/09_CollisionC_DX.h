@@ -7,10 +7,10 @@ public:
 	static CollisionC_DX& GetInstance();
 
 public:
-	ClsInfo RectInRect(uLTRB rtDest, uLTRB rtSrc);
-	bool RectInPt(uLTRB rtDest, uPOINT pt);
-	ClsInfo CircleInCircle(uLTRB rtDest, uLTRB rtSrc);
-	bool CircleInPt(uLTRB rtDest, uPOINT pt);
+	ClsInfo RectInRect(iLTRB rtDest, iLTRB rtSrc);
+	bool RectInPt(iLTRB rtDest, POINT pt);
+	ClsInfo CircleInCircle(iLTRB rtDest, iLTRB rtSrc);
+	bool CircleInPt(iLTRB rtDest, POINT pt);
 
 protected:
 	CollisionC_DX();

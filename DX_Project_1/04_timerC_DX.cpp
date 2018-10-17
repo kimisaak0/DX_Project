@@ -25,6 +25,8 @@ bool	timerC_DX::Init()
 	//일단 카운터 가져오기
 	QueryPerformanceCounter(&m_liBefTime);
 	QueryPerformanceCounter(&m_liBef1sTime);
+	QueryPerformanceCounter(&m_BefTickTime);
+
 
 	//타이머 지원 여부 확인
 	if (m_liBefTime.QuadPart == 0) {

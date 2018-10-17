@@ -237,23 +237,22 @@ struct fLTRB
 	float bottom;
 };
 
-struct uXYWH
+struct iXYWH
 {
-	UINT ltx;
-	UINT lty;
+	LONG ltx;
+	LONG lty;
 	UINT width;
 	UINT height;
 };
 
-
-struct uLTRB
+struct iLTRB
 {
-	UINT left;
-	UINT top;
-	UINT right;
-	UINT bottom;
+	LONG left;
+	LONG top;
+	LONG right;
+	LONG bottom;
 
-	uLTRB& operator= (const uXYWH& _xywh) {
+	iLTRB& operator= (const iXYWH& _xywh) {
 		left = _xywh.ltx;
 		top = _xywh.lty;
 		right = _xywh.ltx + _xywh.width;
@@ -265,7 +264,7 @@ struct uLTRB
 
 struct circle
 {
-	uPOINT pCenter;
+	POINT pCenter;
 	double dRadius;
 };
 
@@ -279,13 +278,11 @@ struct ClsInfo
 
 struct MouseInfo
 {
-	uPOINT xy;
+	POINT xy;
 	
 	push left;
 	push right;
 	push middle;
-
-
 };
 
 #pragma endregion

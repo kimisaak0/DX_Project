@@ -8,6 +8,8 @@ RECT         g_rtWindow;		   //윈도우 영역
 RECT         g_rtClient;		   //클라이언트 영역 (작업영역)
 wndC_DX*     g_pWindow;            //현재 생성된 윈도우에 대한 포인터
 
+RECT         g_rtScreen;
+
 //윈도우 프로시져 Static함수
 LRESULT CALLBACK wndC_DX::MsgProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -63,7 +65,7 @@ bool wndC_DX::registWnd(LPCTSTR LWndName)
 		return false;
 	}
 
-	g_hWnd = CreateWindowEx(WS_EX_TOPMOST,             // 윈도우 창 확장 스타일
+	g_hWnd = CreateWindowEx(0,//WS_EX_TOPMOST,             // 윈도우 창 확장 스타일
 		m_wndC.lpszClassName, m_wndC.lpszClassName,	   // 윈도우 클래스 이름(중요), 타이틀 바에 나타날 문자열.
 		WS_SYSMENU | WS_BORDER | WS_VISIBLE,           // 생성될 윈도우 창의 스타일 지정 
 		CW_USEDEFAULT, CW_USEDEFAULT,				   // 윈도우 X,Y 좌표
@@ -79,6 +81,16 @@ bool wndC_DX::registWnd(LPCTSTR LWndName)
 
 	GetWindowRect(g_hWnd, &g_rtWindow);
 	GetClientRect(g_hWnd, &g_rtClient);
+
+	//g_rtScreen.right = g_rtWindow.right - 16;
+	//g_rtScreen.left = 
+
+
+
+	//g_rtWindow.right - 16.0f)) * 2
+	//g_rtWindow.bottom - 39.f)) * 2
+	//t)g_rtWindow.right - 16.f)) *
+	//float)g_rtWindow.bottom - 39.f
 
 	return true;
 }

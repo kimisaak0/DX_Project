@@ -16,7 +16,7 @@ PS_OUTPUT PS( VS_OUTPUT vIn)
 {
 	PS_OUTPUT vOut;
 	vOut.c = g_txTextureA.Sample(sample0, vIn.t);
-	if (vOut.c.a < 1) {
+	if (vOut.c.a < 0.3) {
 		discard;
 	}
 	return vOut;

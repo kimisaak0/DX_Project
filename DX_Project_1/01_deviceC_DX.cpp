@@ -114,8 +114,8 @@ HRESULT	deviceC_DX::CreateSwapChain()
 
 	sd.BufferCount = 1;                                  //버퍼 개수         
 	sd.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;   //버퍼의 색상 포맷 (필수)
-	sd.BufferDesc.Width = g_rtClient.right;
-	sd.BufferDesc.Height = g_rtClient.bottom;
+	sd.BufferDesc.Width = g_rtWindow.right;
+	sd.BufferDesc.Height = g_rtWindow.bottom;
 	sd.BufferDesc.RefreshRate.Numerator = 60;            //화면 주사율 (분자)
 	sd.BufferDesc.RefreshRate.Denominator = 1;           //화면 주사율 (분모)
 	sd.SampleDesc.Count = 1;                             //멀티샘플링용 
