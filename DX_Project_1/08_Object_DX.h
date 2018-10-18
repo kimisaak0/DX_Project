@@ -58,6 +58,7 @@ public:
 	iLTRB getPos();
 
 	void spin(float fAngle);
+	void spin(float dx, float dy);
 	void scale(float size);
 
 	void ColorChange(float r, float g, float b, float a);

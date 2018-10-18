@@ -106,6 +106,9 @@
     <ClInclude Include="12c_Compass_DX.h">
       <Filter>04%29 Obj\b%29 UIObj</Filter>
     </ClInclude>
+    <ClInclude Include="12d_Compass_pc_DX.h">
+      <Filter>04%29 Obj\b%29 UIObj</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="12a_BgObjC_DX.cpp">
@@ -169,7 +172,10 @@
       <Filter>04%29 Obj\e%29 mapObj</Filter>
     </ClCompile>
     <ClCompile Include="12c_Compass_DX.cpp">
-      <Filter>02%29 function</Filter>
+      <Filter>04%29 Obj\b%29 UIObj</Filter>
+    </ClCompile>
+    <ClCompile Include="12d_Compass_pc_DX.cpp">
+      <Filter>04%29 Obj\b%29 UIObj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

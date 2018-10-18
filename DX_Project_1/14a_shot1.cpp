@@ -2,7 +2,7 @@
 
 shot1::shot1()
 {
-	m_BefCentery = m_v3Center.y;
+	m_BefCenterY = m_v3Center.y;
 	m_iDamage = 10;
 	m_ExistTimer.Init();
 }
@@ -27,8 +27,8 @@ bool shot1::Frame()
 
 	Object_DX::Frame();
 
-	scale(m_v3Center.y - m_BefCentery);
-	m_BefCentery = m_v3Center.y;
+	scale(1-(m_v3Center.y - m_BefCenterY));
+	m_BefCenterY = m_v3Center.y;
 
 	if (m_ExistTimer.tickAlram(2)) {
 		m_bExist = false;

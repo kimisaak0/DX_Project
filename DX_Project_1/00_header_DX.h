@@ -161,6 +161,14 @@ extern double g_dGameTime;
 extern double g_dSPF;
 extern int    g_iFPS;
 
+//게임 씬에서
+extern int g_iWaveX;
+extern int g_iWaveY;
+
+//Hero
+extern float g_PCSpeedX;
+extern float g_PCSpeedY;
+
 #pragma endregion
 
 #pragma region //열거형 정의

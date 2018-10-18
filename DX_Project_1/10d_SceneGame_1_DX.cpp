@@ -1,9 +1,12 @@
 #include "10d_SceneGame_1_DX.h"
 
+int g_iWaveX;
+int g_iWaveY;
+
 SceneGame_1_DX::SceneGame_1_DX()
 {
-	m_iWaveX = -0.0005f;
-	m_iWaveY = 0.0f;
+	g_iWaveX = rand() % 10;
+	g_iWaveY = rand() % 10;
 }
 
 bool	SceneGame_1_DX::Init()
@@ -20,12 +23,24 @@ bool	SceneGame_1_DX::Init()
 
 	m_Timer.Init();
 	m_Timer_mapobj.Init();
+	m_Timer_wave.Init();
+
+	m_UI_compass.Init();
+	m_UI_pc_compass.Init();
 	
 	return true;
 }
 
 bool	SceneGame_1_DX::Frame()
 {
+#pragma region //파도 변화
+	if (m_Timer_wave.tickAlram(5 + rand()%10)) {
+		g_iWaveX = rand() % 10;
+		g_iWaveY = rand() % 10;
+	}
+
+#pragma endregion
+
 #pragma region //몹이나 맵 오브젝트 생성
 	
 	if (m_Timer_mapobj.tickAlram(1)) {
@@ -51,23 +66,28 @@ bool	SceneGame_1_DX::Frame()
 	m_gameBg1.Frame();
 	m_gameBg2.Frame();
 
-	m_Hero.MoveX(m_iWaveX);
-	m_Hero.MoveY(m_iWaveY);
+	m_UI_compass.Frame();
+	m_UI_pc_compass.Frame();
+
+	m_Hero.MoveX(g_iWaveX/10000.f);
+	m_Hero.MoveY(g_iWaveY/10000.f);
 
 	m_Hero.Frame();
 
 	list<MobC_1>::iterator Mob1It;
 	for (Mob1It = m_Mob1_List.begin(); Mob1It != m_Mob1_List.end(); Mob1It++) {
+		Mob1It->MoveX(g_iWaveX / 10000.f);
+		Mob1It->MoveY(g_iWaveY / 50000.f);
 		Mob1It->Frame();
 	}
 
 	list<mapObj_1>::iterator MapObj1It;
 	for (MapObj1It = m_mapObj1_List.begin(); MapObj1It != m_mapObj1_List.end(); MapObj1It++) {
+		MapObj1It->MoveX(g_iWaveX / 10000.f);
+		MapObj1It->MoveY(g_iWaveY / 50000.f);
 		MapObj1It->Frame();
 	}
 
-
-	
 #pragma endregion
 
 #pragma region //충돌 처리
@@ -310,8 +330,8 @@ bool	SceneGame_1_DX::Render()
 	//배경 
 	{
 		//맵 스크롤
-		m_gameBg1.MoveX(-0.0005f);
-		m_gameBg2.MoveX(-0.0005f);
+		m_gameBg1.MoveX(-0.00005f);
+		m_gameBg2.MoveX(-0.00005f);
 		if (m_gameBg1.getPos().right == 0) {
 			m_gameBg1.MoveX(4);
 		}
@@ -320,6 +340,12 @@ bool	SceneGame_1_DX::Render()
 		}
 		m_gameBg1.Render();
 		m_gameBg2.Render();
+	}
+
+	//UI
+	{
+		m_UI_compass.Render();
+		m_UI_pc_compass.Render();
 	}
 
 	//캐릭터 
@@ -356,6 +382,9 @@ bool	SceneGame_1_DX::Release()
 	}
 
 	m_Hero.Release();
+
+	m_UI_compass.Release();
+	m_UI_pc_compass.Release();
 
 	m_gameBg1.Release();
 	m_gameBg2.Release();

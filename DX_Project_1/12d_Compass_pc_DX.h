@@ -1,12 +1,12 @@
 #pragma once
 #include "08_Object_DX.h"
 
-class compass_UI : public Object_DX
+class compass_PC_UI : public Object_DX
 {
 	Object_DX m_Arrow;
 
-	int       befWaveX;
-	int       befWaveY;
+	float       befSpeedX;
+	float       befSpeedY;
 
 	float     befscale;
 
@@ -20,6 +20,6 @@ public:
 	virtual bool Release();
 
 public:
-	compass_UI();
-	virtual ~compass_UI();
+	compass_PC_UI();
+	virtual ~compass_PC_UI();
 };

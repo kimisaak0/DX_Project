@@ -16,13 +16,16 @@ bool mapObj_1::Init()
 
 bool mapObj_1::Frame()
 {
-	if (m_uSRegion.right < 0) {
+	if (m_uSRegion.right < 0 || m_uSRegion.bottom < 200 || m_uSRegion.top > 750) {
 		m_bExist = false;
 	}
 
 	if (m_iHP < 0) {
 		m_bExist = false;
 	}
+
+	scale(1-(m_v3Center.y - m_BefCenterY));
+	m_BefCenterY = m_v3Center.y;
 
 	if (m_bExist) {
 		MoveX(-m_fSpeedX);

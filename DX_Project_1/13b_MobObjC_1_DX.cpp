@@ -13,7 +13,7 @@ void MobC_1::Shot1Fire(POINT HeroPos)
 bool MobC_1::Init()
 {
 	m_BefCenterY = m_v3Center.y;
-	m_fSpeedX = 1 / ((float)(rand() % 10000) + 500.f);
+	m_fSpeedX = 1 / ((float)(rand() % 3000) + 500.f);
 
 	m_iMAXHP = m_iCURHP = 100;
 	
@@ -22,13 +22,17 @@ bool MobC_1::Init()
 
 bool MobC_1::Frame()
 {
-	if (m_uSRegion.right < 0) {
+	if (m_uSRegion.right < 0 || m_uSRegion.bottom < 200 || m_uSRegion.top > 750) {
 		m_bExist = false;
 	}
+
 
 	if (m_iCURHP < 0) {
 		m_bExist = false;
 	}
+
+	scale(1-(m_v3Center.y - m_BefCenterY));
+	m_BefCenterY = m_v3Center.y;
 
 	float HPPercent = m_iCURHP / m_iMAXHP;
 

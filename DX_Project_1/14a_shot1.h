@@ -7,7 +7,7 @@ protected:
 	float m_fSpeedX;
 	float m_fSpeedY;
 
-	float m_BefCentery;
+	float m_BefCenterY;
 
 	timerC_DX m_ExistTimer;
 public:

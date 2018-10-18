@@ -1,11 +1,17 @@
 #include "13a_HeroObjC_DX.h"
 
+float g_PCSpeedX;
+float g_PCSpeedY;
+
 HeroObjC_DX::HeroObjC_DX()
 {
 	m_uSpriteX = 128;
 	m_uSpriteY = 0;
-	m_fSpeedX = 0.0001;
+	m_fSpeedX = 0.0001f;
 	m_fSpeedY = 0;
+
+	g_PCSpeedX = m_fSpeedX;
+	g_PCSpeedY = m_fSpeedY;
 
 }
 
@@ -28,6 +34,8 @@ bool HeroObjC_DX::Init()
 {
 	m_BefCenterY = m_v3Center.y;
 	m_BulletTimer = 0;
+
+
 	return true;
 }
 
@@ -70,18 +78,22 @@ bool HeroObjC_DX::Frame()
 	//가속도 조정
 	if (I_Input.IsKeyDown(0x1e)) { //Left
 		m_fSpeedX += -0.000001f;
+		g_PCSpeedX = m_fSpeedX;
 	}
 
 	if (I_Input.IsKeyDown(0x20)) { //Right
 		m_fSpeedX += 0.000001f;
+		g_PCSpeedX = m_fSpeedX;
 	}
 
 	if (I_Input.IsKeyDown(0x11)) { //Up
 		m_fSpeedY += 0.000001f;
+		g_PCSpeedY = m_fSpeedY;
 	}
 
 	if (I_Input.IsKeyDown(0x1f)) { //Down
 		m_fSpeedY += -0.000001f;
+		g_PCSpeedY = m_fSpeedY;
 	}
 
 
@@ -145,11 +157,10 @@ bool HeroObjC_DX::Frame()
 		if (m_uSpriteY == 0) {
 			pm *= -1;
 		}
-
-	
 	}
 
-	scale(m_v3Center.y - m_BefCenterY);
+	
+	scale(1-(m_v3Center.y - m_BefCenterY));
 	m_BefCenterY = m_v3Center.y;
 
 	ImagePartialChange({ m_uSpriteX,m_uSpriteY,64,64 });

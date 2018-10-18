@@ -244,6 +244,20 @@ void Object_DX::MoveX(float fDis)
 	transPtoS();
 
 	UpdateCP();
+
+	//if (m_fPRegion.left < -1) {
+	//	for (int iV = 0; iV < 4; iV++) {
+	//		m_pVertexList[iV].p.x -= m_fPRegion.left;
+	//	}
+	//}
+
+	//if (m_fPRegion.right > 1) {
+	//	for (int iV = 0; iV < 4; iV++) {
+	//		m_pVertexList[iV].p.x -= m_fPRegion.right;
+	//	}
+	//}
+
+
 }
 
 //y축 이동
@@ -254,11 +268,12 @@ void Object_DX::MoveY(float fDis)
 	}
 
 	m_fPRegion.top += fDis;
-	m_fPRegion.bottom+= fDis;
+	m_fPRegion.bottom += fDis;
 
 	transPtoS();
 
 	UpdateCP();
+	
 }
 
 //회전
@@ -275,7 +290,7 @@ void Object_DX::spin(float fAngle)
 		m_pVertexList[iV].p.y -= m_v3Center.y;
 
 		vertex.x = m_pVertexList[iV].p.x * C + m_pVertexList[iV].p.y * S / 2;
-		vertex.y = m_pVertexList[iV].p.x *-S * 2 + m_pVertexList[iV].p.y * C;
+		vertex.y = m_pVertexList[iV].p.x * -S * 2 + m_pVertexList[iV].p.y * C;
 
 		vertex.x += m_v3Center.x;
 		vertex.y += m_v3Center.y;
@@ -285,6 +300,30 @@ void Object_DX::spin(float fAngle)
 	}
 }
 
+void Object_DX::spin(float dx, float dy)
+{
+	float C = cosf(dx);
+	float S = sinf(dy);
+
+	for (int iV = 0; iV < 4; iV++) {
+
+		D3DXVECTOR3 vertex = m_pVertexList[iV].p;
+
+		m_pVertexList[iV].p.x -= m_v3Center.x;
+		m_pVertexList[iV].p.y -= m_v3Center.y;
+
+		vertex.x = m_pVertexList[iV].p.x * C + m_pVertexList[iV].p.y * S / 2;
+		vertex.y = m_pVertexList[iV].p.x * -S * 2 + m_pVertexList[iV].p.y * C;
+
+		vertex.x += m_v3Center.x;
+		vertex.y += m_v3Center.y;
+
+		m_pVertexList[iV].p = vertex;
+
+	}
+}
+
+
 //크기 조절
 void Object_DX::scale(float size)
 {//값 넣을 때 주의
@@ -293,8 +332,8 @@ void Object_DX::scale(float size)
 		m_pVertexList[iV].p.x -= m_v3Center.x;
 		m_pVertexList[iV].p.y -= m_v3Center.y;
 
-		m_pVertexList[iV].p.x *= (1-size);
-		m_pVertexList[iV].p.y *= (1-size);
+		m_pVertexList[iV].p.x *= size;
+		m_pVertexList[iV].p.y *= size;
 
 		m_pVertexList[iV].p.x += m_v3Center.x;
 		m_pVertexList[iV].p.y += m_v3Center.y;

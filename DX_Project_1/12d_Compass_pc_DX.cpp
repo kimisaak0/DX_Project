@@ -1,18 +1,18 @@
-#include "12c_Compass_DX.h"
+#include "12d_Compass_pc_DX.h"
 
-compass_UI::compass_UI()
+compass_PC_UI::compass_PC_UI()
 {
-	befWaveX = 0;
-	befWaveY = 0;
+	befSpeedX = 0;
+	befSpeedY = 0;
 	befscale = 1;
 }
 
-void compass_UI::updateArrow()
+void compass_PC_UI::updateArrow()
 {
 	m_Arrow.scale(1 / befscale);
 
-	float dx = g_iWaveX - befWaveX;
-	float dy = g_iWaveY - befWaveY;
+	float dx = g_PCSpeedX - befSpeedX;
+	float dy = g_PCSpeedY - befSpeedY;
 	float distance = sqrt(pow(dx, 2) + pow(dy, 2));
 
 	D3DXVECTOR2 vDirection = { dx, dy };
@@ -33,13 +33,13 @@ void compass_UI::updateArrow()
 	m_Arrow.scale(befscale);
 }
 
-bool compass_UI::Init()
+bool compass_PC_UI::Init()
 {
-	CreateFullImgObj({ 1000, 25, 100, 100 }, L"../INPUT/DATA/image/compass_back.png");
-	
-	m_Arrow.CreateFullImgObj({ 1038,43, 27,63 }, L"../INPUT/DATA/image/Direction_arrow.png");
-	
-	if (g_iWaveX != 0  || g_iWaveY != 0) {
+	CreateFullImgObj({ 600, 25, 100, 100 }, L"../INPUT/DATA/image/compass_back.png");
+
+	m_Arrow.CreateFullImgObj({ 638,43, 27,63 }, L"../INPUT/DATA/image/Direction_arrow_pc.png");
+
+	if (g_iWaveX != 0 || g_iWaveY != 0) {
 		updateArrow();
 	}
 
@@ -47,15 +47,15 @@ bool compass_UI::Init()
 	return true;
 }
 
-bool compass_UI::Frame()
+bool compass_PC_UI::Frame()
 {
-	
+
 	m_Arrow.Frame();
 
-	if (befWaveX != g_iWaveX || befWaveY != g_iWaveY) {
+	if (befSpeedX != g_PCSpeedX || befSpeedY != g_PCSpeedY) {
 		updateArrow();
-		befWaveX = g_iWaveX;
-		befWaveY = g_iWaveY;
+		befSpeedX = g_PCSpeedX;
+		befSpeedY = g_PCSpeedY;
 	}
 
 
@@ -63,7 +63,7 @@ bool compass_UI::Frame()
 	return true;
 }
 
-bool compass_UI::Render()
+bool compass_PC_UI::Render()
 {
 	Object_DX::Render();
 	m_Arrow.Render();
@@ -71,7 +71,7 @@ bool compass_UI::Render()
 	return true;
 }
 
-bool compass_UI::Release()
+bool compass_PC_UI::Release()
 {
 
 	Object_DX::Release();
@@ -80,7 +80,7 @@ bool compass_UI::Release()
 
 
 
-compass_UI::~compass_UI()
+compass_PC_UI::~compass_PC_UI()
 {
 
 }
