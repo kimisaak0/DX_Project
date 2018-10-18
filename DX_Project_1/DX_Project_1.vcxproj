@@ -37,6 +37,7 @@
     <ClInclude Include="11_SceneMgr_DX.h" />
     <ClInclude Include="12a_BgObjC_DX.h" />
     <ClInclude Include="12b_BtnObjC_1_DX.h" />
+    <ClInclude Include="12c_Compass_DX.h" />
     <ClInclude Include="13a_HeroObjC_DX.h" />
     <ClInclude Include="13b_MobObjC_1_DX.h" />
     <ClInclude Include="14a_shot1.h" />
@@ -59,6 +60,7 @@
     <ClCompile Include="11_SceneMgrC_DX.cpp" />
     <ClCompile Include="12a_BgObjC_DX.cpp" />
     <ClCompile Include="12b_BtnObjC_1_DX.cpp" />
+    <ClCompile Include="12c_Compass_DX.cpp" />
     <ClCompile Include="13a_HeroObjC_DX.cpp" />
     <ClCompile Include="13b_MobObjC_1_DX.cpp" />
     <ClCompile Include="14a_shot1.cpp" />
