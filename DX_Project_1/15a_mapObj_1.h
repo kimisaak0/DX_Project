@@ -1,8 +1,7 @@
 #pragma once
 #include "08_Object_DX.h"
-#include "14a_shot1.h"
 
-class HeroObjC_DX : public Object_DX
+class mapObj_1 : public Object_DX
 {
 	LONG m_uSpriteX;
 	LONG m_uSpriteY;
@@ -12,13 +11,10 @@ class HeroObjC_DX : public Object_DX
 
 	float m_BefCenterY;
 
-	float m_BulletTimer;
-
 public:
-	list<shot1> shot1_list;
+	bool  m_bExist;
 
-public:
-	void Shot1Fire(POINT mousePos);
+	int   m_iHP;
 
 public:
 	virtual bool Init();
@@ -27,6 +23,6 @@ public:
 	virtual bool Release();
 
 public:
-	HeroObjC_DX();
-	virtual ~HeroObjC_DX();
+	mapObj_1();
+	virtual ~mapObj_1();
 };

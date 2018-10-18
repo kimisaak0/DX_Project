@@ -3,6 +3,7 @@
 shot1::shot1()
 {
 	m_BefCentery = m_v3Center.y;
+	m_iDamage = 10;
 	m_ExistTimer.Init();
 }
 

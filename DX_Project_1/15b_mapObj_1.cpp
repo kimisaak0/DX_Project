@@ -1,38 +1,28 @@
-#include "13b_MobObjC_1_DX.h"
+#include "15a_mapObj_1.h"
 
-MobC_1::MobC_1()
+mapObj_1::mapObj_1()
 {
 	m_bExist = true;
+
+	m_iHP = 30;
 }
 
-void MobC_1::Shot1Fire(POINT HeroPos)
-{
-
-}
-
-bool MobC_1::Init()
+bool mapObj_1::Init()
 {
 	m_BefCenterY = m_v3Center.y;
 	m_fSpeedX = 1 / ((float)(rand() % 10000) + 500.f);
-
-	m_iMAXHP = m_iCURHP = 100;
-	
 	return true;
 }
 
-bool MobC_1::Frame()
+bool mapObj_1::Frame()
 {
 	if (m_uSRegion.right < 0) {
 		m_bExist = false;
 	}
 
-	if (m_iCURHP < 0) {
+	if (m_iHP < 0) {
 		m_bExist = false;
 	}
-
-	float HPPercent = m_iCURHP / m_iMAXHP;
-
-	ColorChange(1,HPPercent, HPPercent, 1);
 
 	if (m_bExist) {
 		MoveX(-m_fSpeedX);
@@ -42,7 +32,7 @@ bool MobC_1::Frame()
 	return true;
 }
 
-bool MobC_1::Render()
+bool mapObj_1::Render()
 {
 	if (m_bExist) {
 		Object_DX::Render();
@@ -50,13 +40,13 @@ bool MobC_1::Render()
 	return true;
 }
 
-bool MobC_1::Release()
+bool mapObj_1::Release()
 {
 	Object_DX::Release();
 	return true;
 }
 
-MobC_1::~MobC_1()
+mapObj_1::~mapObj_1()
 {
 
 }

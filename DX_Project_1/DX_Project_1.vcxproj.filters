@@ -32,6 +32,9 @@
     <Filter Include="04%29 Obj\d%29 shot">
       <UniqueIdentifier>{096d56d4-286c-4780-ae41-1ddbf3f91c0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04%29 Obj\e%29 mapObj">
+      <UniqueIdentifier>{9b42b3ab-ab8d-4970-a47b-7575c677f3c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="12a_BgObjC_DX.h">
@@ -97,6 +100,9 @@
     <ClInclude Include="13b_MobObjC_1_DX.h">
       <Filter>04%29 Obj\c%29 Character</Filter>
     </ClInclude>
+    <ClInclude Include="15a_mapObj_1.h">
+      <Filter>04%29 Obj\e%29 mapObj</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="12a_BgObjC_DX.cpp">
@@ -155,6 +161,9 @@
     </ClCompile>
     <ClCompile Include="13b_MobObjC_1_DX.cpp">
       <Filter>04%29 Obj\c%29 Character</Filter>
+    </ClCompile>
+    <ClCompile Include="15b_mapObj_1.cpp">
+      <Filter>04%29 Obj\e%29 mapObj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

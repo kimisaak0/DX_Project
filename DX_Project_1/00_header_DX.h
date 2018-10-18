@@ -273,7 +273,7 @@ struct ClsInfo
 	bool bDoCls;
 	direction drClsSrc;
 	direction drClsDest;
-	uPOINT ptInLength;
+	POINT ptInLength;
 };
 
 struct MouseInfo
@@ -286,3 +286,6 @@ struct MouseInfo
 };
 
 #pragma endregion
+
+#define  stpX(x)	((x) / ((float)g_rtClient.right))
+#define  stpY(y)    -((y) / ((float)g_rtClient.bottom))

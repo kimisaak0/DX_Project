@@ -53,6 +53,11 @@ void Object_DX::UpdateVertexList()
 	m_pVertexList[2].p = D3DXVECTOR3(m_fPRegion.right, m_fPRegion.top, 0.0f);
 	m_pVertexList[3].p = D3DXVECTOR3(m_fPRegion.right, m_fPRegion.bottom, 0.0f);
 
+
+	for (int pl = 0; pl < 4; pl++) {
+		m_pVertexList[pl].c = D3DXVECTOR4(1,1,1,1);
+	}
+
 	//중점 갱신
 	UpdateCP();
 }
@@ -160,6 +165,31 @@ HRESULT Object_DX::Create(const TCHAR* pTexFile)
 	SAFE_RELEASE(pErrorBlob);
 	SAFE_RELEASE(pPSBlop);
 	SAFE_RELEASE(pVSBlob);
+
+	//블렌드 스테이트 생성
+	D3D11_BLEND_DESC BlendState;
+	ZeroMemory(&BlendState, sizeof(D3D11_BLEND_DESC));
+
+	BlendState.AlphaToCoverageEnable = FALSE;
+	BlendState.IndependentBlendEnable = FALSE;
+
+	BlendState.RenderTarget[0].BlendEnable = TRUE;
+
+	BlendState.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+
+	BlendState.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	BlendState.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+
+	BlendState.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	BlendState.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+	BlendState.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+
+	BlendState.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	if (FAILED(hr = g_pD3dDevice->CreateBlendState(&BlendState, &m_pAlphaBlend)))
+	{
+		return hr;
+	}
 
 	//텍스쳐 로드
 	hr = D3DX11CreateShaderResourceViewFromFile(g_pD3dDevice, pTexFile, NULL, NULL, &m_pTextureSRV, NULL);
@@ -271,6 +301,12 @@ void Object_DX::scale(float size)
 	}
 }
 
+void Object_DX::ColorChange(float r, float g, float b, float a)
+{
+	for (int pl = 0; pl < 4; pl++) {
+		m_pVertexList[pl].c = D3DXVECTOR4(r, g, b, a);
+	}
+}
 
 
 bool Object_DX::Init()
@@ -295,6 +331,7 @@ bool Object_DX::Render()
 	g_pD3dContext->VSSetShader(m_pVS, NULL, NULL);
 	g_pD3dContext->PSSetShader(m_pPS, NULL, NULL);
 	g_pD3dContext->PSSetShaderResources(0, 1, &m_pTextureSRV);
+	g_pD3dContext->OMSetBlendState(m_pAlphaBlend, 0, -1);
 
 	g_pD3dContext->Draw(4, 0);
 

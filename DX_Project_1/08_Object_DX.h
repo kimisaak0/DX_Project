@@ -13,6 +13,8 @@ protected:
 	ID3D11PixelShader*          m_pPS;             // ÇÈ¼¿ ½¦ÀÌ´õ
 	ID3D11InputLayout*          m_pInputLayout;    // ÀÎÇ² ·¹ÀÌ¾Æ¿ô
 	ID3D11ShaderResourceView*   m_pTextureSRV;     // ÅØ½ºÃÄ SRV
+	ID3D11BlendState*           m_pAlphaBlend;
+	ID3D11SamplerState*         m_pSamplerState;
 
 protected:
 	PCT_VERTEX m_pVertexList[4];
@@ -20,13 +22,17 @@ protected:
 	uWH   m_uImageSize;
 	iLTRB m_uImagePart;
 
-	iLTRB m_uSRegion;
 	fLTRB m_fPRegion;
 
 	POINT m_ptCenter;
 	D3DXVECTOR3 m_v3Center;
 
 	timerC_DX m_Timer;
+
+public:
+	iLTRB m_uSRegion;
+
+	bool m_bExist;
 
 private:
 	void transStoP(); //È­¸é -> Åõ¿µ
@@ -53,6 +59,8 @@ public:
 
 	void spin(float fAngle);
 	void scale(float size);
+
+	void ColorChange(float r, float g, float b, float a);
 
 public:
 	virtual bool Init();

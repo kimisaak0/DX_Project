@@ -12,9 +12,10 @@ class MobC_1 : public Object_DX
 
 	float m_BefCenterY;
 
-
-
 public:
+	float   m_iCURHP;
+	float   m_iMAXHP;
+
 	list<shot1> shot1_list;
 
 public:

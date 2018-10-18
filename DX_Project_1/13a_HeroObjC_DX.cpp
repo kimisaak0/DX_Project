@@ -27,14 +27,22 @@ void HeroObjC_DX::Shot1Fire(POINT mousePos)
 bool HeroObjC_DX::Init()
 {
 	m_BefCenterY = m_v3Center.y;
+	m_BulletTimer = 0;
 	return true;
 }
 
 bool HeroObjC_DX::Frame() 
 {
+#pragma region // 1π¯ ≈∫»Ø
+
 	//√—æÀ πﬂªÁ
+	m_BulletTimer += g_dSPF;
+	
 	if (I_Input.getMouseInfo().left == p_DOWN) {
-		Shot1Fire(I_Input.getMouseInfo().xy);
+	//	if (m_BulletTimer >= 0.25) {
+			Shot1Fire(I_Input.getMouseInfo().xy);
+	//		m_BulletTimer -= 0.25;
+	//	}
 	}
 
 	//√—æÀ «¡∑π¿”
@@ -45,13 +53,14 @@ bool HeroObjC_DX::Frame()
 
 	//√—æÀ ªË¡¶«œ±‚
 	for (shot1It = shot1_list.begin(); shot1It != shot1_list.end(); ) {
-		if (!shot1It->getExist()) {
+		if (!shot1It->m_bExist) {
 			shot1It = shot1_list.erase(shot1It);
 		}
 		else {
 			shot1It++;
 		}
 	}
+#pragma endregion
 
 	//¿Ãµø
 	MoveX(m_fSpeedX);
@@ -144,11 +153,6 @@ bool HeroObjC_DX::Frame()
 	m_BefCenterY = m_v3Center.y;
 
 	ImagePartialChange({ m_uSpriteX,m_uSpriteY,64,64 });
-
-
-	if (I_Input.IsKeyDown(DIK_1)) { //Down
-		spin(0.01f);
-	}
 
 	Object_DX::Frame();
 	return true;

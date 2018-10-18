@@ -40,6 +40,7 @@
     <ClInclude Include="13a_HeroObjC_DX.h" />
     <ClInclude Include="13b_MobObjC_1_DX.h" />
     <ClInclude Include="14a_shot1.h" />
+    <ClInclude Include="15a_mapObj_1.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="00_main_DX.cpp" />
@@ -61,6 +62,7 @@
     <ClCompile Include="13a_HeroObjC_DX.cpp" />
     <ClCompile Include="13b_MobObjC_1_DX.cpp" />
     <ClCompile Include="14a_shot1.cpp" />
+    <ClCompile Include="15b_mapObj_1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="PixelShader.psh" />

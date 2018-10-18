@@ -4,14 +4,14 @@
 class shot1 : public Object_DX
 {
 protected:
-	bool m_bExist;
-
 	float m_fSpeedX;
 	float m_fSpeedY;
 
 	float m_BefCentery;
 
 	timerC_DX m_ExistTimer;
+public:
+	int   m_iDamage;;
 
 public:
 	void setSpeed(float dx, float dy);

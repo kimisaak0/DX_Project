@@ -4,11 +4,15 @@
 #include "12a_BgObjC_DX.h"
 #include "13a_HeroObjC_DX.h"
 #include "13b_MobObjC_1_DX.h"
+#include "15a_mapObj_1.h"
 
 
 
 class SceneGame_1_DX : public SceneC_DX
 {
+	timerC_DX    m_Timer;
+	timerC_DX    m_Timer_mapobj;
+
 	float m_iWaveX;
 	float m_iWaveY;
 
@@ -16,7 +20,10 @@ class SceneGame_1_DX : public SceneC_DX
 	BgObj_DX     m_gameBg2;
 
 	HeroObjC_DX  m_Hero;
-	MobC_1       m_mob1;
+
+	list<MobC_1> m_Mob1_List;
+
+	list<mapObj_1> m_mapObj1_List;
 	
 		
 public:
