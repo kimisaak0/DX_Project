@@ -22,6 +22,10 @@ bool shot1::getExist()
 
 bool shot1::Frame()
 {
+	if (m_uSRegion.right < 0 || m_uSRegion.left > 1500|| m_uSRegion.bottom < 220 || m_uSRegion.top > 750) {
+		m_bExist = false;
+	}
+
 	MoveX(m_fSpeedX*10);
 	MoveY(m_fSpeedY*10);
 

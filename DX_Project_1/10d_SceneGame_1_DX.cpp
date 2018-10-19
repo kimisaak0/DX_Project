@@ -146,6 +146,7 @@ bool	SceneGame_1_DX::Frame()
 					m_Hero.MoveY(stpX((cls.ptInLength.y) * 1));
 				}
 				I_SoundMgr.PlayEffect(7);
+				Mob1It_2->m_bExist = false;
 				m_Hero.m_iCURHP -= 25;
 			}
 		}
@@ -167,6 +168,7 @@ bool	SceneGame_1_DX::Frame()
 					m_Hero.MoveY(stpX((cls.ptInLength.y) * 1));
 				}
 				I_SoundMgr.PlayEffect(7);
+				MapObj1It_2->m_bExist = false;
 				m_Hero.m_iCURHP -= 10;
 			}
 		}

@@ -53,8 +53,8 @@ bool HeroObjC_DX::Init()
 
 bool HeroObjC_DX::Frame() 
 {
-	float HPPercent = m_iCURHP / m_iMAXHP;
-	ColorChange(1, 1, 1, HPPercent);
+	float HPPercent = (float)m_iCURHP / (float)m_iMAXHP;
+	ColorChange(1, 1, 1, (HPPercent/2)+0.5);
 
 	if (m_uSRegion.right < 0 || m_uSRegion.bottom < 220 || m_uSRegion.top > 750) {
 		m_bExist = false;
