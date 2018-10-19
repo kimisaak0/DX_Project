@@ -21,7 +21,7 @@ void HeroObjC_DX::Shot1Fire(POINT mousePos)
 	double distance = sqrt(pow(dx, 2) + pow(dy, 2));
 
 	shot1 shot;
-	shot.CreateFullImgObj(pos, L"../INPUT/DATA/image/shot1.png");
+	shot.CreateFullImgObj(pos, L"image/shot1.png");
 	shot.setSpeed((dx / distance) / 1000 , (-dy / distance) / 1000);
 
 	shot1_list.push_back(shot);

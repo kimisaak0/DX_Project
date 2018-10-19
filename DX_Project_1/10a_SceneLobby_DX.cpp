@@ -12,10 +12,10 @@ bool	SceneLobby_DX::Init()
 	m_bNextScene = false;
 	m_bBGM = true;
 
-	m_bg.setBgImage(L"../INPUT/DATA/image/startBg.png");
+	m_bg.setBgImage(L"image/startBg.png");
 	
-	m_btnStart.setBtnImage({ 600,200,300,75 }, L"../INPUT/DATA/image/btnStart.png");
-	m_btnBGM.setBtnImage({ 600,300, 300,75 }, L"../INPUT/DATA/image/btnBGM.png");
+	m_btnStart.setBtnImage({ 600,200,300,75 }, L"image/btnStart.png");
+	m_btnBGM.setBtnImage({ 600,300, 300,75 }, L"image/btnBGM.png");
 	
 
 

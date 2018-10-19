@@ -27,14 +27,14 @@ bool coreC_DX::gameInit()
 	m_GameTimer.Init();
 	I_SoundMgr.Init();
 
-	I_SoundMgr.Load("../INPUT/DATA/sound/bgm.mp3", false);
-	I_SoundMgr.Load("../INPUT/DATA/sound/btn_click.ogg", false);
-	I_SoundMgr.Load("../INPUT/DATA/sound/DieMan.wav", false);
-	I_SoundMgr.Load("../INPUT/DATA/sound/BoltLighting.wav", false);
-	I_SoundMgr.Load("../INPUT/DATA/sound/ShotSpark.wav", false);
-	I_SoundMgr.Load("../INPUT/DATA/sound/brokenObj.wav", false);
-	I_SoundMgr.Load("../INPUT/DATA/sound/HeatMob.wav", false);
-	I_SoundMgr.Load("../INPUT/DATA/sound/AttackMan.wav", false);
+	I_SoundMgr.Load("sound/bgm.mp3", false);
+	I_SoundMgr.Load("sound/btn_click.ogg", false);
+	I_SoundMgr.Load("sound/DieMan.wav", false);
+	I_SoundMgr.Load("sound/BoltLighting.wav", false);
+	I_SoundMgr.Load("sound/ShotSpark.wav", false);
+	I_SoundMgr.Load("sound/brokenObj.wav", false);
+	I_SoundMgr.Load("sound/HeatMob.wav", false);
+	I_SoundMgr.Load("sound/AttackMan.wav", false);
 	
 
 	//SwapChain의 백버퍼 정보로 DXWrite객체 생성 

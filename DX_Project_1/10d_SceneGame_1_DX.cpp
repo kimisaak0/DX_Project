@@ -29,17 +29,17 @@ bool	SceneGame_1_DX::Init()
 	m_bNextScene = false;
 	m_bBGM = true;
 
-	m_gameBg1.setBgImage(L"../INPUT/DATA/image/GameBg.png");
-	m_gameBg2.CreateFullImgObj({ g_rtClient.right, 0, (UINT)g_rtClient.right, (UINT)g_rtClient.bottom}, L"../INPUT/DATA/image/GameBg.png");
+	m_gameBg1.setBgImage(L"image/GameBg.png");
+	m_gameBg2.CreateFullImgObj({ g_rtClient.right, 0, (UINT)g_rtClient.right, (UINT)g_rtClient.bottom}, L"image/GameBg.png");
 	
-	m_Hero.CreatePartImgObj({ 300,450,100,100 }, { 128,0,64,64 }, { 512,192 }, L"../INPUT/DATA/image/hero_no_wing.png");
+	m_Hero.CreatePartImgObj({ 300,450,100,100 }, { 128,0,64,64 }, { 512,192 }, L"image/hero_no_wing.png");
 	m_Hero.Init();
 
 	m_Timer.Init();
 	m_Timer_mapobj.Init();
 	m_Timer_wave.Init();
 
-	m_btnBGM.setBtnImage({ 50,50, 300,75 }, L"../INPUT/DATA/image/btnBGM.png");
+	m_btnBGM.setBtnImage({ 50,50, 300,75 }, L"image/btnBGM.png");
 
 	m_UI_compass.Init();
 	m_UI_pc_compass.Init();
@@ -81,7 +81,7 @@ bool	SceneGame_1_DX::Frame()
 	if (m_Timer_mapobj.tickAlram(1)) {
 		if (m_mapObj1_List.size() < 25) {
 			mapObj_1 objTemp;
-			objTemp.CreatePartImgObj({ 1510, 200 + rand() % 500, 50, 50 }, { 0, (rand() % 4) * 100 , 100, 100 }, { 100, 400 }, L"../INPUT/DATA/image/mapObj.png");
+			objTemp.CreatePartImgObj({ 1510, 200 + rand() % 500, 50, 50 }, { 0, (rand() % 4) * 100 , 100, 100 }, { 100, 400 }, L"image/mapObj.png");
 			objTemp.Init();
 			m_mapObj1_List.push_back(objTemp);
 		}
@@ -90,7 +90,7 @@ bool	SceneGame_1_DX::Frame()
 	if (m_Mob1_List.size() < 20) {
 		if (m_Timer.tickAlram(1)) {
 			MobC_1 mobATemp;
-			mobATemp.CreatePartImgObj({ 1510, 200 + rand() % 500, 40, 40 }, { 0, 100, 95, 95 }, { 288, 288 }, L"../INPUT/DATA/image/monster1.png");
+			mobATemp.CreatePartImgObj({ 1510, 200 + rand() % 500, 40, 40 }, { 0, 100, 95, 95 }, { 288, 288 }, L"image/monster1.png");
 			mobATemp.Init();
 			m_Mob1_List.push_back(mobATemp);
 		}

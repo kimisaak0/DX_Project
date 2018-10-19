@@ -35,9 +35,9 @@ void compass_UI::updateArrow()
 
 bool compass_UI::Init()
 {
-	CreateFullImgObj({ 600, 25, 100, 100 }, L"../INPUT/DATA/image/compass_back.png");
+	CreateFullImgObj({ 600, 25, 100, 100 }, L"image/compass_back.png");
 	
-	m_Arrow.CreateFullImgObj({ 638,43, 27,63 }, L"../INPUT/DATA/image/Direction_arrow.png");
+	m_Arrow.CreateFullImgObj({ 638,43, 27,63 }, L"image/Direction_arrow.png");
 	
 	if (g_iWaveX != 0  || g_iWaveY != 0) {
 		updateArrow();

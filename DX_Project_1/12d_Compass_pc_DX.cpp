@@ -73,9 +73,9 @@ void compass_PC_UI::updateArrow()
 
 bool compass_PC_UI::Init()
 {
-	CreateFullImgObj({ 500, 25, 100, 100 }, L"../INPUT/DATA/image/compass_back.png");
+	CreateFullImgObj({ 500, 25, 100, 100 }, L"image/compass_back.png");
 
-	m_Arrow.CreateFullImgObj({ 538,43, 27,63 }, L"../INPUT/DATA/image/Direction_arrow_pc.png");
+	m_Arrow.CreateFullImgObj({ 538,43, 27,63 }, L"image/Direction_arrow_pc.png");
 
 	Object_DX::Init();
 	return true;
