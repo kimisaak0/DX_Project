@@ -19,6 +19,10 @@ bool	SceneGame_1_DX::Init()
 	for (MobAIt = m_Mob1_List.begin(); MobAIt != m_Mob1_List.end(); ) {
 		MobAIt = m_Mob1_List.erase(MobAIt);
 	}
+	list<mapObj_1>::iterator MapObj1It;
+	for (MapObj1It = m_mapObj1_List.begin(); MapObj1It != m_mapObj1_List.end(); ) {
+		MapObj1It = m_mapObj1_List.erase(MapObj1It);
+	}
 
 	m_iSceneID = 1;
 	m_iNextSceneID = 0;
