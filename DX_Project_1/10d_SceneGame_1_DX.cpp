@@ -5,13 +5,16 @@ int g_iWaveY;
 
 SceneGame_1_DX::SceneGame_1_DX()
 {
-	g_iWaveX = rand() % 10;
-	g_iWaveY = rand() % 10;
+
 
 }
 
 bool	SceneGame_1_DX::Init()
 {
+
+	g_iWaveX = rand() % 10 + 1;
+	g_iWaveY = rand() % 10 + 1;
+
 	list<MobC_1>::iterator MobAIt;
 	for (MobAIt = m_Mob1_List.begin(); MobAIt != m_Mob1_List.end(); ) {
 		MobAIt = m_Mob1_List.erase(MobAIt);

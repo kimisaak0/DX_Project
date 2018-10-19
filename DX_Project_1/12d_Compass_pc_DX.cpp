@@ -85,8 +85,6 @@ bool compass_PC_UI::Frame()
 {
 
 	m_Arrow.Frame();
-
-
 	updateArrow();
 	
 
