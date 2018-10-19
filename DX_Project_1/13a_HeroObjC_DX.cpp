@@ -5,13 +5,8 @@ float g_PCSpeedY;
 
 HeroObjC_DX::HeroObjC_DX()
 {
-	m_uSpriteX = 128;
-	m_uSpriteY = 0;
-	m_fSpeedX = 0.0001f;
-	m_fSpeedY = 0;
-
-	g_PCSpeedX = m_fSpeedX;
-	g_PCSpeedY = m_fSpeedY;
+	
+	
 
 
 }
@@ -34,11 +29,21 @@ void HeroObjC_DX::Shot1Fire(POINT mousePos)
 
 bool HeroObjC_DX::Init()
 {
+	m_uSpriteX = 128;
+	m_uSpriteY = 0;
+
 	m_BefCenterY = m_v3Center.y;
 	m_BulletTimer = 0;
 	m_iMAXHP = m_iCURHP = 100;
 
 	SetPosition({300,450,100,100});
+
+	m_fSpeedX = 0.0001f;
+	m_fSpeedY = 0;
+
+	g_PCSpeedX = m_fSpeedX;
+	g_PCSpeedY = m_fSpeedY;
+
 
 	m_bExist = true;
 
