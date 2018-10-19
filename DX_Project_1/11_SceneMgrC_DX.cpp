@@ -26,7 +26,12 @@ bool SceneMgrC_DX::Frame()
 				m_pScene->Init();
 			}
 		} break;
-
+		case 1: {
+			if (m_pScene->getNextScene()) {
+				m_pScene = m_pLobby;
+				m_pScene->Init();
+			} break;
+		}
 	}
 
 	m_pScene->Frame();

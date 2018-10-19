@@ -25,6 +25,17 @@ bool coreC_DX::gameInit()
 	//디바이스 생성 작업 실행.
 	InitDevice();
 	m_GameTimer.Init();
+	I_SoundMgr.Init();
+
+	I_SoundMgr.Load("../INPUT/DATA/sound/bgm.mp3", false);
+	I_SoundMgr.Load("../INPUT/DATA/sound/btn_click.ogg", false);
+	I_SoundMgr.Load("../INPUT/DATA/sound/DieMan.wav", false);
+	I_SoundMgr.Load("../INPUT/DATA/sound/BoltLighting.wav", false);
+	I_SoundMgr.Load("../INPUT/DATA/sound/ShotSpark.wav", false);
+	I_SoundMgr.Load("../INPUT/DATA/sound/brokenObj.wav", false);
+	I_SoundMgr.Load("../INPUT/DATA/sound/HeatMob.wav", false);
+	I_SoundMgr.Load("../INPUT/DATA/sound/AttackMan.wav", false);
+	
 
 	//SwapChain의 백버퍼 정보로 DXWrite객체 생성 
 	IDXGISurface1* pBackBuffer = nullptr;
@@ -70,6 +81,8 @@ bool coreC_DX::gameFrame()
 {
 	m_GameTimer.Frame();
 	I_Input.Frame();
+
+	I_SoundMgr.Frame();
 	
 	if (I_Input.IsKeyDownOnce(0x0d)) {
 		m_swTimerRender = !m_swTimerRender;
@@ -170,6 +183,7 @@ bool coreC_DX::gameRelease()
 {
 	//release
 	{
+		I_SoundMgr.Release();
 		m_SceneMgr.Release();
 	}
 

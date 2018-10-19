@@ -177,6 +177,9 @@
     <ClCompile Include="12d_Compass_pc_DX.cpp">
       <Filter>04%29 Obj\b%29 UIObj</Filter>
     </ClCompile>
+    <ClCompile Include="10b_SceneOver_DX.cpp">
+      <Filter>03%29 scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="VertexShader.vsh">

@@ -3,6 +3,7 @@
 #include "04_timerC_DX.h"
 #include "05_writeC_DX.h"
 #include "06_inputC_DX.h"
+#include "07_soundC_DX.h"
 #include "08_Object_DX.h"
 
 #include "11_SceneMgr_DX.h"

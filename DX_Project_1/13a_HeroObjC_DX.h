@@ -14,8 +14,13 @@ class HeroObjC_DX : public Object_DX
 
 	float m_BulletTimer;
 
+	int   m_iMAXHP;
+
 public:
 	list<shot1> shot1_list;
+
+	bool  m_bExist;
+	int   m_iCURHP;
 
 public:
 	void Shot1Fire(POINT mousePos);

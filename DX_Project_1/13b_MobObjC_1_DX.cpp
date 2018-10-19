@@ -22,12 +22,12 @@ bool MobC_1::Init()
 
 bool MobC_1::Frame()
 {
-	if (m_uSRegion.right < 0 || m_uSRegion.bottom < 200 || m_uSRegion.top > 750) {
+	if (m_uSRegion.right < 0 || m_uSRegion.bottom < 220 || m_uSRegion.top > 750) {
 		m_bExist = false;
 	}
 
 
-	if (m_iCURHP < 0) {
+	if (m_iCURHP <= 0) {
 		m_bExist = false;
 	}
 

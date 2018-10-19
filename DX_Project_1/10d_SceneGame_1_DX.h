@@ -2,6 +2,7 @@
 #include "10_SceneC_DX.h"
 
 #include "12a_BgObjC_DX.h"
+#include "12b_BtnObjC_1_DX.h"
 #include "12c_Compass_DX.h"
 #include "12d_Compass_pc_DX.h"
 
@@ -13,6 +14,9 @@
 
 class SceneGame_1_DX : public SceneC_DX
 {
+	bool         m_bBGM;
+
+private:
 	timerC_DX    m_Timer;
 	timerC_DX    m_Timer_mapobj;
 	timerC_DX    m_Timer_wave;
@@ -20,11 +24,14 @@ class SceneGame_1_DX : public SceneC_DX
 private:
 	compass_UI    m_UI_compass;
 	compass_PC_UI m_UI_pc_compass;
+	BtnObjC_1_DX  m_btnBGM;
+	 
 
 	BgObj_DX     m_gameBg1;
 	BgObj_DX     m_gameBg2;
 
 	HeroObjC_DX  m_Hero;
+	bool         m_bHeroExist;
 
 	list<MobC_1> m_Mob1_List;
 

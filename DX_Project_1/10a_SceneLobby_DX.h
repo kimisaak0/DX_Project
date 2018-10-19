@@ -5,10 +5,11 @@
 
 class SceneLobby_DX : public SceneC_DX
 {
-	bool sw;
-
 	BgObj_DX m_bg;
 	BtnObjC_1_DX m_btnStart;
+	BtnObjC_1_DX m_btnBGM;
+
+	bool m_bBGM;
 
 public:
 	virtual bool	Init();

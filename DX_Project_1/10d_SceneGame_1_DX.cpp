@@ -7,13 +7,20 @@ SceneGame_1_DX::SceneGame_1_DX()
 {
 	g_iWaveX = rand() % 10;
 	g_iWaveY = rand() % 10;
+
 }
 
 bool	SceneGame_1_DX::Init()
 {
-	m_iSceneID = 0;
+	list<MobC_1>::iterator MobAIt;
+	for (MobAIt = m_Mob1_List.begin(); MobAIt != m_Mob1_List.end(); ) {
+		MobAIt = m_Mob1_List.erase(MobAIt);
+	}
+
+	m_iSceneID = 1;
 	m_iNextSceneID = 0;
 	m_bNextScene = false;
+	m_bBGM = true;
 
 	m_gameBg1.setBgImage(L"../INPUT/DATA/image/GameBg.png");
 	m_gameBg2.CreateFullImgObj({ g_rtClient.right, 0, (UINT)g_rtClient.right, (UINT)g_rtClient.bottom}, L"../INPUT/DATA/image/GameBg.png");
@@ -25,18 +32,39 @@ bool	SceneGame_1_DX::Init()
 	m_Timer_mapobj.Init();
 	m_Timer_wave.Init();
 
+	m_btnBGM.setBtnImage({ 50,50, 300,75 }, L"../INPUT/DATA/image/btnBGM.png");
+
 	m_UI_compass.Init();
 	m_UI_pc_compass.Init();
 	
+
+
 	return true;
 }
 
 bool	SceneGame_1_DX::Frame()
 {
+	if (m_btnBGM.Frame()) {
+		m_bBGM = !m_bBGM;
+	}
+
+	if (m_bBGM) {
+		I_SoundMgr.Play(0, true, true);
+	}
+	else {
+		I_SoundMgr.Stop(0);
+	}
+
+	if (!(m_Hero.m_bExist)) {
+		I_SoundMgr.PlayEffect(2);
+		m_bNextScene = true;
+	}
+
 #pragma region //파도 변화
 	if (m_Timer_wave.tickAlram(5 + rand()%10)) {
-		g_iWaveX = rand() % 10;
-		g_iWaveY = rand() % 10;
+		I_SoundMgr.PlayEffect(3);
+		g_iWaveX = rand() % 5;
+		g_iWaveY = rand() % 5;
 	}
 
 #pragma endregion
@@ -69,22 +97,22 @@ bool	SceneGame_1_DX::Frame()
 	m_UI_compass.Frame();
 	m_UI_pc_compass.Frame();
 
-	m_Hero.MoveX(g_iWaveX/10000.f);
-	m_Hero.MoveY(g_iWaveY/10000.f);
+	m_Hero.MoveX(g_iWaveX/50000.f);
+	m_Hero.MoveY(g_iWaveY/50000.f);
 
 	m_Hero.Frame();
 
 	list<MobC_1>::iterator Mob1It;
 	for (Mob1It = m_Mob1_List.begin(); Mob1It != m_Mob1_List.end(); Mob1It++) {
-		Mob1It->MoveX(g_iWaveX / 10000.f);
-		Mob1It->MoveY(g_iWaveY / 50000.f);
+		Mob1It->MoveX(g_iWaveX / 50000.f);
+		Mob1It->MoveY(g_iWaveY / 10000.f);
 		Mob1It->Frame();
 	}
 
 	list<mapObj_1>::iterator MapObj1It;
 	for (MapObj1It = m_mapObj1_List.begin(); MapObj1It != m_mapObj1_List.end(); MapObj1It++) {
-		MapObj1It->MoveX(g_iWaveX / 10000.f);
-		MapObj1It->MoveY(g_iWaveY / 50000.f);
+		MapObj1It->MoveX(g_iWaveX / 50000.f);
+		MapObj1It->MoveY(g_iWaveY / 10000.f);
 		MapObj1It->Frame();
 	}
 
@@ -114,6 +142,8 @@ bool	SceneGame_1_DX::Frame()
 				else if (cls.drClsDest == d_BOTTOM) {
 					m_Hero.MoveY(stpX((cls.ptInLength.y) * 1));
 				}
+				I_SoundMgr.PlayEffect(7);
+				m_Hero.m_iCURHP -= 25;
 			}
 		}
 
@@ -133,6 +163,8 @@ bool	SceneGame_1_DX::Frame()
 				else if (cls.drClsDest == d_BOTTOM) {
 					m_Hero.MoveY(stpX((cls.ptInLength.y) * 1));
 				}
+				I_SoundMgr.PlayEffect(7);
+				m_Hero.m_iCURHP -= 10;
 			}
 		}
 	}
@@ -183,6 +215,7 @@ bool	SceneGame_1_DX::Frame()
 		for (shot1It = m_Hero.shot1_list.begin(); shot1It != m_Hero.shot1_list.end(); shot1It++) {
 			cls = I_ClsMgr.RectInRect(Mob1It->m_uSRegion, shot1It->m_uSRegion);
 			if (cls.bDoCls) {
+				I_SoundMgr.PlayEffect(6);
 				shot1It->m_bExist = false;
 				if (cls.drClsDest == d_RIGHT) {
 					Mob1It->MoveX(stpX((cls.ptInLength.x) * -1));
@@ -264,6 +297,7 @@ bool	SceneGame_1_DX::Frame()
 		for (shot1It = m_Hero.shot1_list.begin(); shot1It != m_Hero.shot1_list.end(); shot1It++) {
 			cls = I_ClsMgr.RectInRect(MapObj1It->m_uSRegion, shot1It->m_uSRegion);
 			if (cls.bDoCls) {
+				I_SoundMgr.PlayEffect(5);
 				shot1It->m_bExist = false;
 				if (cls.drClsDest == d_RIGHT) {
 					MapObj1It->MoveX(stpX((cls.ptInLength.x) * -1));
@@ -342,11 +376,6 @@ bool	SceneGame_1_DX::Render()
 		m_gameBg2.Render();
 	}
 
-	//UI
-	{
-		m_UI_compass.Render();
-		m_UI_pc_compass.Render();
-	}
 
 	//캐릭터 
 	{
@@ -364,6 +393,12 @@ bool	SceneGame_1_DX::Render()
 		MapObj1It->Render();
 	}
 
+	//UI
+	{
+		m_btnBGM.Render();
+		m_UI_compass.Render();
+		m_UI_pc_compass.Render();
+	}
 
 	return true;
 }
@@ -385,6 +420,7 @@ bool	SceneGame_1_DX::Release()
 
 	m_UI_compass.Release();
 	m_UI_pc_compass.Release();
+	m_btnBGM.Release();
 
 	m_gameBg1.Release();
 	m_gameBg2.Release();

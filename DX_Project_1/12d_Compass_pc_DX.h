@@ -5,8 +5,7 @@ class compass_PC_UI : public Object_DX
 {
 	Object_DX m_Arrow;
 
-	float       befSpeedX;
-	float       befSpeedY;
+	int       initNum;
 
 	float     befscale;
 

@@ -46,7 +46,7 @@ protected:
 	~Sound_DX();
 };
 
-#define I_SoundMgr SoundMgrC::GetInstance()
+#define I_SoundMgr Sound_DX::GetInstance()
 
 
 

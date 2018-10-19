@@ -5,6 +5,7 @@
 #include "05_writeC_DX.h"
 #include "06_inputC_DX.h"
 #include "09_CollisionC_DX.h"
+#include "07_soundC_DX.h"
 
 
 
@@ -14,7 +15,7 @@ protected:
 	int   m_iSceneID;
 	bool  m_bNextScene;
 	int   m_iNextSceneID;
-
+	
 public:
 	int getSceneID();
 	bool getNextScene();

@@ -3,7 +3,7 @@
 shot1::shot1()
 {
 	m_BefCenterY = m_v3Center.y;
-	m_iDamage = 10;
+	m_iDamage = 30;
 	m_ExistTimer.Init();
 }
 
@@ -22,8 +22,8 @@ bool shot1::getExist()
 
 bool shot1::Frame()
 {
-	MoveX(m_fSpeedX);
-	MoveY(m_fSpeedY);
+	MoveX(m_fSpeedX*10);
+	MoveY(m_fSpeedY*10);
 
 	Object_DX::Frame();
 

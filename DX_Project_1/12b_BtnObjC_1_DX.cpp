@@ -23,9 +23,8 @@ bool BtnObjC_1_DX::Frame()
 	MouseInfo mi = I_Input.getMouseInfo();
 
 	if(I_ClsMgr.RectInPt(m_uSRegion, mi.xy)) {
-		if (mi.left == p_DOWN) {
-			//ImagePartialChange({ 0,140,300,70 });
-			//사운드 추가
+		if (mi.left == p_HOLD) {
+			I_SoundMgr.PlayEffect(1);
 			return true;
 		}
 		else if(mi.left == p_FREE) {

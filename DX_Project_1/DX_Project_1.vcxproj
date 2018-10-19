@@ -56,6 +56,7 @@
     <ClCompile Include="08_Object_DX.cpp" />
     <ClCompile Include="09_CollisionC_DX.cpp" />
     <ClCompile Include="10a_SceneLobby_DX.cpp" />
+    <ClCompile Include="10b_SceneOver_DX.cpp" />
     <ClCompile Include="10d_SceneGame_1_DX.cpp" />
     <ClCompile Include="10_SceneC_DX.cpp" />
     <ClCompile Include="11_SceneMgrC_DX.cpp" />

@@ -2,6 +2,7 @@
 #include "00_header_DX.h"
 #include "06_inputC_DX.h"
 #include "04_timerC_DX.h"
+#include "07_soundC_DX.h"
 
 #include "09_CollisionC_DX.h"
 
@@ -40,11 +41,13 @@ private:
 	void UpdateCP(); //중점 갱신
 	void UpdateVertexList(); //정점 리스트 갱신
 
-	void SetPosition(iXYWH _xywh);
 	void ImagePartialSelect(iXYWH imgXYWH, uWH imgSize);
 	HRESULT Create(const TCHAR* pTexFile);
 
 public:
+
+	void SetPosition(iXYWH _xywh);
+
 	void CreateFullImgObj(iXYWH _xywh, const TCHAR* pTexFile);
 	void CreatePartImgObj(iXYWH _xywh, iXYWH imgXYWH, uWH imgSize, const TCHAR* pTexFile);
 
