@@ -17,10 +17,7 @@ bool	SceneLobby_DX::Init()
 	m_btnStart.setBtnImage({ 600,200,300,75 }, L"image/btnStart.png");
 	m_btnBGM.setBtnImage({ 600,300, 300,75 }, L"image/btnBGM.png");
 	
-
-
 	return true;
-
 }
 
 
@@ -58,7 +55,6 @@ bool	SceneLobby_DX::Render()
 bool	SceneLobby_DX::Release()
 {
 	m_bg.Release();
-
 	m_btnStart.Release();
 	m_btnBGM.Release();
 

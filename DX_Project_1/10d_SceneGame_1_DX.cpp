@@ -11,15 +11,6 @@ SceneGame_1_DX::SceneGame_1_DX()
 
 bool	SceneGame_1_DX::Init()
 {
-
-	g_iWaveX = rand() % 10 + 1;
-	g_iWaveY = rand() % 10 + 1;
-
-	list<MobC_1>::iterator MobAIt;
-	for (MobAIt = m_Mob1_List.begin(); MobAIt != m_Mob1_List.end(); ) {
-		MobAIt = m_Mob1_List.erase(MobAIt);
-	}
-
 	m_iSceneID = 1;
 	m_iNextSceneID = 0;
 	m_bNextScene = false;
@@ -39,8 +30,6 @@ bool	SceneGame_1_DX::Init()
 
 	m_UI_compass.Init();
 	m_UI_pc_compass.Init();
-	
-
 
 	return true;
 }
@@ -412,13 +401,15 @@ bool	SceneGame_1_DX::Release()
 {
 	
 	list<MobC_1>::iterator Mob1It;
-	for (Mob1It = m_Mob1_List.begin(); Mob1It != m_Mob1_List.end(); Mob1It++) {
+	for (Mob1It = m_Mob1_List.begin(); Mob1It != m_Mob1_List.end(); ) {
 		Mob1It->Release();
+		Mob1It = m_Mob1_List.erase(Mob1It);
 	}
 
 	list<mapObj_1>::iterator MapObj1It;
-	for (MapObj1It = m_mapObj1_List.begin(); MapObj1It != m_mapObj1_List.end(); MapObj1It++) {
+	for (MapObj1It = m_mapObj1_List.begin(); MapObj1It != m_mapObj1_List.end(); ) {
 		MapObj1It->Release();
+		MapObj1It = m_mapObj1_List.erase(MapObj1It);
 	}
 
 	m_Hero.Release();
@@ -429,7 +420,6 @@ bool	SceneGame_1_DX::Release()
 
 	m_gameBg1.Release();
 	m_gameBg2.Release();
-
 
 	return true;
 }

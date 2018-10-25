@@ -5,7 +5,6 @@ Object_DX::Object_DX()
 	
 }
 
-
 //화면좌표계 -> 투영좌표게
 void Object_DX::transStoP()
 {
@@ -23,8 +22,6 @@ void Object_DX::transPtoS()
 	m_uSRegion.right = (UINT)((m_fPRegion.right + 1.0f) / 2 * ((float)g_rtClient.right));
 	m_uSRegion.bottom = (UINT)((m_fPRegion.bottom - 1.0f) / -2 * ((float)g_rtClient.bottom));
 }
-
-
 
 //중점 갱신
 void Object_DX::UpdateCP()
@@ -119,7 +116,6 @@ HRESULT Object_DX::Create(const TCHAR* pTexFile)
 	//정점 쉐이더 생성
 	ID3DBlob*  pErrorBlob;
 	ID3DBlob*  pVSBlob;
-
 
 	hr = D3DX11CompileFromFile(L"VertexShader.vsh", NULL, NULL, "VS", "vs_5_0", NULL, NULL, NULL, &pVSBlob, &pErrorBlob, NULL);
 	if (FAILED(hr)) {
@@ -244,20 +240,6 @@ void Object_DX::MoveX(float fDis)
 	transPtoS();
 
 	UpdateCP();
-
-	//if (m_fPRegion.left < -1) {
-	//	for (int iV = 0; iV < 4; iV++) {
-	//		m_pVertexList[iV].p.x -= m_fPRegion.left;
-	//	}
-	//}
-
-	//if (m_fPRegion.right > 1) {
-	//	for (int iV = 0; iV < 4; iV++) {
-	//		m_pVertexList[iV].p.x -= m_fPRegion.right;
-	//	}
-	//}
-
-
 }
 
 //y축 이동
@@ -273,7 +255,6 @@ void Object_DX::MoveY(float fDis)
 	transPtoS();
 
 	UpdateCP();
-	
 }
 
 //회전
@@ -319,10 +300,8 @@ void Object_DX::spin(float dx, float dy)
 		vertex.y += m_v3Center.y;
 
 		m_pVertexList[iV].p = vertex;
-
 	}
 }
-
 
 //크기 조절
 void Object_DX::scale(float size)

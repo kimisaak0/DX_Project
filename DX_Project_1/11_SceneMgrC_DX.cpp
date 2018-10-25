@@ -22,12 +22,14 @@ bool SceneMgrC_DX::Frame()
 	switch (m_pScene->getSceneID()) {
 		case 0: {
 			if (m_pScene->getNextScene()) {
+				m_pScene->Release();
 				m_pScene = m_pGame1;
 				m_pScene->Init();
 			}
 		} break;
 		case 1: {
 			if (m_pScene->getNextScene()) {
+				m_pScene->Release();
 				m_pScene = m_pLobby;
 				m_pScene->Init();
 			} break;

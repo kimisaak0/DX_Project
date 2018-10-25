@@ -5,10 +5,6 @@ float g_PCSpeedY;
 
 HeroObjC_DX::HeroObjC_DX()
 {
-	
-	
-
-
 }
 
 void HeroObjC_DX::Shot1Fire(POINT mousePos)
@@ -32,7 +28,7 @@ bool HeroObjC_DX::Init()
 	m_uSpriteX = 128;
 	m_uSpriteY = 0;
 
-	m_BefCenterY = m_v3Center.y;
+    m_BefCenterY = m_v3Center.y;
 	m_BulletTimer = 0;
 	m_iMAXHP = m_iCURHP = 100;
 
@@ -44,9 +40,7 @@ bool HeroObjC_DX::Init()
 	g_PCSpeedX = m_fSpeedX;
 	g_PCSpeedY = m_fSpeedY;
 
-
 	m_bExist = true;
-
 
 	return true;
 }
@@ -170,17 +164,19 @@ bool HeroObjC_DX::Frame()
 			}
 		}
 
-		static int pm = 1;
-		if (m_Timer.tickAlram(0.2)) {
-			m_uSpriteY += 64 * pm;
-			if (m_uSpriteY == 192) {
-				pm *= -1;
-				m_uSpriteY += 64 * pm * 2;
-			}
-			if (m_uSpriteY == 0) {
-				pm *= -1;
-			}
-		}
+		//반복 스프라이트에 문제가 있음.
+
+		//static int pm = 1;
+		//if (m_Timer.tickAlram(0.2)) {
+		//	m_uSpriteY += 64 * pm;
+		//	if (m_uSpriteY >= 192) {
+		//		pm *= -1;
+		//		m_uSpriteY += 64 * pm * 2;
+		//	}
+		//	if (m_uSpriteY <= 0) {
+		//		pm *= -1;
+		//	}
+		//}
 
 
 		scale(1 - (m_v3Center.y - m_BefCenterY));
