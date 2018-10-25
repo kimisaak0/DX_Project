@@ -13,9 +13,9 @@ void compass_UI::updateArrow()
 
 	float dx = g_iWaveX - befWaveX;
 	float dy = g_iWaveY - befWaveY;
-	float distance = sqrt(pow(dx, 2) + pow(dy, 2));
+	float distance = sqrt((float)pow(dx, 2) + (float)pow(dy, 2));
 
-	D3DXVECTOR2 vDirection = { dx, dy };
+	D3DXVECTOR2 vDirection = { (FLOAT)dx, (FLOAT)dy };
 	//D3DXVec2Normalize(&vDirection, &vDirection);
 	vDirection /= distance;
 

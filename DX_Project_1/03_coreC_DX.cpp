@@ -1,5 +1,6 @@
 #include "03_coreC_DX.h"
 
+float g_dSPF;
 
 coreC_DX::coreC_DX(LPCTSTR LWndName) : wndC_DX(LWndName)
 {
@@ -80,6 +81,8 @@ bool coreC_DX::gameRun()
 bool coreC_DX::gameFrame()
 {
 	m_GameTimer.Frame();
+
+	g_dSPF = m_GameTimer.getSPF();
 	I_Input.Frame();
 
 	I_SoundMgr.Frame();
@@ -127,7 +130,7 @@ bool coreC_DX::gameRender()
 		m_Font.SetTextColor(ColorF(1, 1, 1, 1));
 
 		_stprintf_s(pBuffer, _T("FPS:%d, SPF:%10.5f, GameTime:%10.2f"),
-			g_iFPS, g_dSPF, g_dGameTime);
+			m_GameTimer.getFPS(), m_GameTimer.getSPF(), m_GameTimer.getGameTime());
 		m_Font.DrawText(pBuffer);
 	}
 

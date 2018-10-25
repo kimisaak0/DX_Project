@@ -12,13 +12,13 @@ void HeroObjC_DX::Shot1Fire(POINT mousePos)
 	I_SoundMgr.PlayEffect(4);
 	iXYWH pos = { m_ptCenter.x, m_ptCenter.y, 30,30 };
 
-	float dx = mousePos.x - m_ptCenter.x;
-	float dy = (mousePos.y - m_ptCenter.y) * 2;
-	double distance = sqrt(pow(dx, 2) + pow(dy, 2));
+	float dx = (float)mousePos.x - (float)m_ptCenter.x;
+	float dy = ((float)mousePos.y - (float)m_ptCenter.y) * 2;
+	float distance = sqrt(pow(dx, 2) + pow(dy, 2));
 
 	shot1 shot;
 	shot.CreateFullImgObj(pos, L"image/shot1.png");
-	shot.setSpeed((dx / distance) / 1000 , (-dy / distance) / 1000);
+	shot.setSpeed((dx / distance), (-dy / distance));
 
 	shot1_list.push_back(shot);
 }
@@ -34,7 +34,7 @@ bool HeroObjC_DX::Init()
 
 	SetPosition({300,450,100,100});
 
-	m_fSpeedX = 0.0001f;
+	m_fSpeedX = 0.1;
 	m_fSpeedY = 0;
 
 	g_PCSpeedX = m_fSpeedX;
@@ -48,7 +48,7 @@ bool HeroObjC_DX::Init()
 bool HeroObjC_DX::Frame() 
 {
 	float HPPercent = (float)m_iCURHP / (float)m_iMAXHP;
-	ColorChange(1, 1, 1, (HPPercent/2)+0.5);
+	ColorChange(1, 1, 1, (HPPercent/2)+0.5f);
 
 	if (m_uSRegion.right < 0 || m_uSRegion.bottom < 220 || m_uSRegion.top > 750) {
 		m_bExist = false;
@@ -94,22 +94,22 @@ bool HeroObjC_DX::Frame()
 
 		//가속도 조정
 		if (I_Input.IsKeyDown(0x1e)) { //Left
-			m_fSpeedX += -0.000001f;
+			m_fSpeedX += -0.01f;
 			g_PCSpeedX = m_fSpeedX;
 		}
 
 		if (I_Input.IsKeyDown(0x20)) { //Right
-			m_fSpeedX += 0.000001f;
+			m_fSpeedX += 0.01f;
 			g_PCSpeedX = m_fSpeedX;
 		}
 
 		if (I_Input.IsKeyDown(0x11)) { //Up
-			m_fSpeedY += 0.000001f;
+			m_fSpeedY += 0.01f;
 			g_PCSpeedY = m_fSpeedY;
 		}
 
 		if (I_Input.IsKeyDown(0x1f)) { //Down
-			m_fSpeedY += -0.000001f;
+			m_fSpeedY += -0.01f;
 			g_PCSpeedY = m_fSpeedY;
 		}
 

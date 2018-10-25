@@ -13,7 +13,7 @@ void MobC_1::Shot1Fire(POINT HeroPos)
 bool MobC_1::Init()
 {
 	m_BefCenterY = m_v3Center.y;
-	m_fSpeedX = 1 / ((float)(rand() % 3000) + 500.f);
+	m_fSpeedX = (rand() % 30) + 5;
 
 	m_iMAXHP = m_iCURHP = 100;
 	
@@ -39,7 +39,7 @@ bool MobC_1::Frame()
 	ColorChange(1,HPPercent, HPPercent, 1);
 
 	if (m_bExist) {
-		MoveX(-m_fSpeedX);
+		MoveX(-m_fSpeedX/100);
 
 		Object_DX::Frame();
 	}

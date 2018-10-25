@@ -156,14 +156,12 @@ extern RECT      g_rtWindow;
 extern RECT      g_rtClient;      
 extern wndC_DX*  g_pWindow;
 
-//타이머에서
-extern double g_dGameTime;
-extern double g_dSPF;
-extern int    g_iFPS;
+//core
+extern float g_dSPF;
 
 //게임 씬에서
-extern int g_iWaveX;
-extern int g_iWaveY;
+extern float g_iWaveX;
+extern float g_iWaveY;
 
 //Hero
 extern float g_PCSpeedX;

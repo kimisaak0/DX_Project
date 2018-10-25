@@ -231,11 +231,11 @@ iLTRB Object_DX::getPos()
 void Object_DX::MoveX(float fDis)
 {
 	for (int iV = 0; iV < 4; iV++) {
-		m_pVertexList[iV].p.x += fDis;
+		m_pVertexList[iV].p.x += fDis * g_dSPF;
 	}
 
-	m_fPRegion.left += fDis;
-	m_fPRegion.right += fDis;
+	m_fPRegion.left += fDis * g_dSPF;
+	m_fPRegion.right += fDis * g_dSPF;
 
 	transPtoS();
 
@@ -246,11 +246,11 @@ void Object_DX::MoveX(float fDis)
 void Object_DX::MoveY(float fDis)
 {
 	for (int iV = 0; iV < 4; iV++) {
-		m_pVertexList[iV].p.y += fDis;
+		m_pVertexList[iV].p.y += fDis * g_dSPF;
 	}
 
-	m_fPRegion.top += fDis;
-	m_fPRegion.bottom += fDis;
+	m_fPRegion.top += fDis * g_dSPF;
+	m_fPRegion.bottom += fDis * g_dSPF;
 
 	transPtoS();
 
@@ -281,27 +281,27 @@ void Object_DX::spin(float fAngle)
 	}
 }
 
-void Object_DX::spin(float dx, float dy)
-{
-	float C = cosf(dx);
-	float S = sinf(dy);
-
-	for (int iV = 0; iV < 4; iV++) {
-
-		D3DXVECTOR3 vertex = m_pVertexList[iV].p;
-
-		m_pVertexList[iV].p.x -= m_v3Center.x;
-		m_pVertexList[iV].p.y -= m_v3Center.y;
-
-		vertex.x = m_pVertexList[iV].p.x * C + m_pVertexList[iV].p.y * S / 2;
-		vertex.y = m_pVertexList[iV].p.x * -S * 2 + m_pVertexList[iV].p.y * C;
-
-		vertex.x += m_v3Center.x;
-		vertex.y += m_v3Center.y;
-
-		m_pVertexList[iV].p = vertex;
-	}
-}
+//void Object_DX::spin(float dx, float dy)
+//{
+//	float C = cosf(dx);
+//	float S = sinf(dy);
+//
+//	for (int iV = 0; iV < 4; iV++) {
+//
+//		D3DXVECTOR3 vertex = m_pVertexList[iV].p;
+//
+//		m_pVertexList[iV].p.x -= m_v3Center.x;
+//		m_pVertexList[iV].p.y -= m_v3Center.y;
+//
+//		vertex.x = m_pVertexList[iV].p.x * C + m_pVertexList[iV].p.y * S / 2;
+//		vertex.y = m_pVertexList[iV].p.x * -S * 2 + m_pVertexList[iV].p.y * C;
+//
+//		vertex.x += m_v3Center.x;
+//		vertex.y += m_v3Center.y;
+//
+//		m_pVertexList[iV].p = vertex;
+//	}
+//}
 
 //크기 조절
 void Object_DX::scale(float size)

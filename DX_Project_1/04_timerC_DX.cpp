@@ -1,9 +1,5 @@
 #include "04_timerC_DX.h"
 
-double g_dGameTime = 0;
-double g_dSPF = 0;
-int    g_iFPS = 0;
-
 timerC_DX::timerC_DX()
 {
 	m_liFrequency.QuadPart = 0;
@@ -42,18 +38,18 @@ bool	timerC_DX::Frame()
 {
 	//현재 시간 확인
 	QueryPerformanceCounter(&m_liCurTime);
-	g_dSPF = static_cast<double>(m_liCurTime.QuadPart - m_liBefTime.QuadPart) / static_cast<double>(m_liFrequency.QuadPart);
+	m_dSPF = static_cast<float>(m_liCurTime.QuadPart - m_liBefTime.QuadPart) / static_cast<float>(m_liFrequency.QuadPart);
 	m_liBefTime = m_liCurTime;
 
-	g_dGameTime += g_dSPF;
+	m_dGameTime += m_dSPF;
 
 	static double fpsPivot;
 
-	fpsPivot += g_dSPF;
+	fpsPivot += m_dSPF;
 	m_iFPSGether++;
 	if (fpsPivot >= 1.0)
 	{
-		g_iFPS = m_iFPSGether;
+		m_iFPS = m_iFPSGether;
 		m_iFPSGether = 0;
 		fpsPivot -= 1.0;
 	}
@@ -80,6 +76,19 @@ bool    timerC_DX::tickAlram(double tick)
 	return false;
 }
 
+
+float  timerC_DX::getGameTime()
+{
+	return m_dGameTime;
+}
+float  timerC_DX::getSPF()
+{
+	return m_dSPF;
+}
+int     timerC_DX::getFPS()
+{
+	return m_iFPS;
+}
 
 timerC_DX::~timerC_DX()
 {

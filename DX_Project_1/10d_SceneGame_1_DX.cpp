@@ -1,7 +1,7 @@
 #include "10d_SceneGame_1_DX.h"
 
-int g_iWaveX;
-int g_iWaveY;
+float g_iWaveX;
+float g_iWaveY;
 
 SceneGame_1_DX::SceneGame_1_DX()
 {
@@ -55,8 +55,8 @@ bool	SceneGame_1_DX::Frame()
 #pragma region //파도 변화
 	if (m_Timer_wave.tickAlram(5 + rand()%10)) {
 		I_SoundMgr.PlayEffect(3);
-		g_iWaveX = rand() % 5;
-		g_iWaveY = rand() % 5;
+		g_iWaveX = (rand() % 5) / 10.f;
+		g_iWaveY = (rand() % 5) / 10.f;
 	}
 
 #pragma endregion
@@ -89,22 +89,22 @@ bool	SceneGame_1_DX::Frame()
 	m_UI_compass.Frame();
 	m_UI_pc_compass.Frame();
 
-	m_Hero.MoveX(g_iWaveX/50000.f);
-	m_Hero.MoveY(g_iWaveY/50000.f);
+	m_Hero.MoveX(g_iWaveX);
+	m_Hero.MoveY(g_iWaveY);
 
 	m_Hero.Frame();
 
 	list<MobC_1>::iterator Mob1It;
 	for (Mob1It = m_Mob1_List.begin(); Mob1It != m_Mob1_List.end(); Mob1It++) {
-		Mob1It->MoveX(g_iWaveX / 50000.f);
-		Mob1It->MoveY(g_iWaveY / 10000.f);
+		Mob1It->MoveX(g_iWaveX);
+		Mob1It->MoveY(g_iWaveY);
 		Mob1It->Frame();
 	}
 
 	list<mapObj_1>::iterator MapObj1It;
 	for (MapObj1It = m_mapObj1_List.begin(); MapObj1It != m_mapObj1_List.end(); MapObj1It++) {
-		MapObj1It->MoveX(g_iWaveX / 50000.f);
-		MapObj1It->MoveY(g_iWaveY / 10000.f);
+		MapObj1It->MoveX(g_iWaveX);
+		MapObj1It->MoveY(g_iWaveY);
 		MapObj1It->Frame();
 	}
 

@@ -26,8 +26,8 @@ bool shot1::Frame()
 		m_bExist = false;
 	}
 
-	MoveX(m_fSpeedX*10);
-	MoveY(m_fSpeedY*10);
+	MoveX(m_fSpeedX);
+	MoveY(m_fSpeedY);
 
 	Object_DX::Frame();
 
