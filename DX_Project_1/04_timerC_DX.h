@@ -7,6 +7,7 @@ private:
 	LARGE_INTEGER  m_liFrequency;  //초당 주파수
 	LARGE_INTEGER  m_liCurTime;    //현재 프레임에서의 시간
 	LARGE_INTEGER  m_liBefTime;    //이전 프레임에서의 시간
+	LARGE_INTEGER  m_liFBefTime;   //이전 프레임에서의 시간
 	LARGE_INTEGER  m_liBef1sTime;  //1초전 시간
 
 	int            m_iFPSGether;   //초당 프레임 누적용

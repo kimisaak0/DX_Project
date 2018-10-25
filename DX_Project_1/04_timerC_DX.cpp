@@ -40,26 +40,23 @@ bool	timerC_DX::Init()
 
 bool	timerC_DX::Frame()
 {
-	//타이머 정밀도
-	double precision = 0.001;
-
 	//현재 시간 확인
 	QueryPerformanceCounter(&m_liCurTime);
 	g_dSPF = static_cast<double>(m_liCurTime.QuadPart - m_liBefTime.QuadPart) / static_cast<double>(m_liFrequency.QuadPart);
-	
+	m_liBefTime = m_liCurTime;
 
-	if (((m_liCurTime.LowPart-m_liBefTime.LowPart) / (m_liFrequency.LowPart/1000) ) >= precision) {
-		m_liBefTime = m_liCurTime;
-		g_dGameTime += precision;
-	}
+	g_dGameTime += g_dSPF;
 
-	if (((m_liCurTime.LowPart - m_liBef1sTime.LowPart) / (m_liFrequency.LowPart)) >= 1.0) {
-		m_liBef1sTime = m_liCurTime;
+	static double fpsPivot;
+
+	fpsPivot += g_dSPF;
+	m_iFPSGether++;
+	if (fpsPivot >= 1.0)
+	{
 		g_iFPS = m_iFPSGether;
 		m_iFPSGether = 0;
+		fpsPivot -= 1.0;
 	}
-
-	m_iFPSGether++;
 
 	return true;
 }
